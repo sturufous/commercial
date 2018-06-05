@@ -1,0 +1,45 @@
+<!--
+  Generated template for the DetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-fab bottom right>
+    <button ion-fab color="primary"><ion-icon name="disc" style="font-size:30pt"></ion-icon></button>
+  </ion-fab>
+  <div class="page-header card-corners">
+    <div class="page-header-image">
+      <img height="60" src="../assets/imgs/truck1.png">
+    </div>
+    <div class="page-header-title">
+      Client/Examiner Details
+    </div>
+  </div>
+
+  <div class="spacer" style="width: 748px; height: 7px;"></div>
+
+  <div class="sub-header card-corners">
+    <div class="sub-header-image">
+      <img height="40" src="../assets/imgs/truck1.png">
+    </div>
+    <div class="sub-header-title">
+      Client Details
+    </div>
+  </div>
+
+  <form [formGroup]="client">
+    <ion-item>
+      <ion-label floating>DL NUMBER:</ion-label>
+      <ion-input formControlName="dlNumber" type="number"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

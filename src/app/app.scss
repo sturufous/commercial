@@ -14,3 +14,217 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+
+$SIDEMENU_TOP: #35cb66;
+$SIDEMENU_BOTTOM: #dff4e2;
+$SIDEMENU_TRANSPARENCY: rgba(255, 255, 255, 0.4);
+
+.body-text {
+    font-size: 10pt;
+    padding: 0;
+    color: #444;
+}
+
+.slider-text {
+    font-size: 13pt;
+    color: #444;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.side-menu-gradient {
+    background: -webkit-linear-gradient(to left, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    background: -o-linear-gradient(to left, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    background: -moz-linear-gradient(to left, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    background: linear-gradient(to left, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+}
+
+.side-menu-item {
+    background: none;
+    color: black;
+    font-weight: 500;
+    border-top: 1px solid #FFF;
+    border-bottom: 0px;
+    .item-content {
+        background: none;
+        &.activated {
+            background: $SIDEMENU_TRANSPARENCY;
+        }
+    }
+    &.active-page-highlight {
+        .item-content {
+            background: $SIDEMENU_TRANSPARENCY;
+        }
+    }
+}
+
+.profile-image {
+    img {
+        border-radius: 50%;
+        margin: 10px;
+        border: 10px solid $SIDEMENU_TRANSPARENCY;
+    }
+}
+
+.page-header, .sub-header {
+    position: relative;
+    background-color: #1b8dd6;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.page-header {
+    height:70px;
+    padding: 5px;
+}
+
+.sub-header {
+    height:50px;
+    margin-top: 7px;
+    padding: 5px;
+}
+
+.page-header-image, .sub-header-image, .page-header-title, .sub-header-title, .side-border-list {
+    display: block;
+    position: absolute;
+}
+.page-header-image {
+    top: 5px;
+    background: transparent !important;
+}
+
+.page-header-title, .sub-header-title {
+    font-family: 'righteous';
+    color: white;
+}
+
+.page-header-title {
+    font-size: xx-large;
+    top: 16px;
+    left: 70px;
+ }
+
+.sub-header-title {
+    font-size: x-large;
+    top: 8px;
+    left: 50px;
+ }
+
+.sub-header-image {
+    top: 5px;
+    background: transparent !important;
+}
+
+.card-corners {
+    -webkit-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+}
+
+.thumbnail-font {
+    font-size: x-large;
+    padding-top: 40px;
+    color: #444;
+}
+
+.side-borders {
+    border-left: 1px solid rgb(240, 239, 239);
+    border-right: 1px solid rgb(240, 239, 239);
+}
+
+.neuron-list, .padded-item, .last-neuron-list, .top-border-list, .bottom-border-list {
+    border-left: 1px solid rgb(240, 239, 239);
+    border-right: 1px solid rgb(240, 239, 239);
+}
+
+.top-border-list {
+    border-top: 1px solid rgb(240, 239, 239);
+}
+
+.bottom-border-list {
+    border-bottom: 1px solid rgb(240, 239, 239);
+}
+
+.last-neuron-list {
+    border-bottom: 1px solid rgb(240, 239, 239);
+    color: blue;   
+}
+
+.left-pad {
+    padding-left: 10px;
+}
+
+.text-area {
+    height: 400px;
+}
+
+.swipe-button-delete, .swipe-button-update, .swipe-button-reset {
+    font-size: 10pt;
+    font-weight: bold;
+    color: white;
+}
+
+.swipe-button-delete {
+    background-color: rgb(255, 100, 100);
+}
+
+.swipe-button-reset {
+    background-color: rgb(27, 214, 27);
+}
+
+.swipe-button-update {
+    background-color: rgb(34, 30, 253);
+}
+
+.padded-item {
+    padding: 10px;
+}
+
+.grid {
+    padding: 0;
+}
+
+ion-icon {
+    font-size: 20pt;
+    vertical-align: middle;
+    padding-left: 5px;
+    padding-right: 5px;
+ }
+
+ .list-img-left {
+     height: 70px;
+     vertical-align: middle;
+     padding-left: 10px;
+ }
+
+ .toolbar-background {
+     background-color: white;
+ }
+
+ .big-image {
+    width: 100%; 
+    height: auto; 
+    margin-left: auto; 
+    margin-right: auto;
+ }
+
+ .spacer {
+    width: 100%; 
+    height: 7px;
+ }
+
+ ion-slide.swiper-slide {
+    align-items: flex-start;
+}
+
+.item-md {
+    padding-left: 0 !important;
+}
+
+.shadow-div {
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.button-md {
+    margin: 0;
+}

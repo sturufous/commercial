@@ -5,13 +5,40 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <ion-fab bottom right>
+    <button ion-fab color="primary"><ion-icon name="md-arrow-dropleft" style="font-size:30pt"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="viewPresets()"><ion-icon name="md-list"></ion-icon></button>
+      <button ion-fab (click)="fireNeuron()"><ion-icon name="ios-flash"></ion-icon></button>
+      <button ion-fab (click)="this.neuron.resetVariables()"><ion-icon name="md-refresh"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+  <div class="page-header card-corners">
+    <div class="page-header-image">
+      <img height="60" src="../assets/imgs/truck1.png">
+    </div>
+    <div class="page-header-title">
+      Commercial Vehicle Road Test
+    </div>
+  </div>
+  <div class="spacer" style="width: 748px; height: 7px;"></div>
+  <div>
+    <img src="../assets/imgs/home.png" class="big-image">
+  </div>
+  <div class="padded-item last-neuron-list" (click)="displayHelp()">
+      <ion-icon name="md-help-circle"></ion-icon>
+      Click here for help
+  </div>
+
+  <div class="spacer" style="width: 748px; height: 7px;"></div>
+
+  <div class="sub-header card-corners">
+    <div class="sub-header-image">
+      <img height="40" src="../assets/imgs/truck1.png">
+    </div>
+    <div class="sub-header-title">
+      Candidate List
+    </div>
+  </div>
+
 </ion-content>
