@@ -1,3 +1,30 @@
-page-details {
-
+.ios, .md {
+ 
+    page-details {
+ 
+        ion-input {
+            padding-left: 10px;
+            color: #6c6c6c;
+        }
+ 
+        ion-datetime {
+            padding-left: 10px;
+            color: #6c6c6c;
+        }
+ 
+        ion-label {
+            color: #6c6c6c;
+        }
+ 
+        [floating] {
+            margin-left: 10px;
+        }
+ 
+        button {
+            float: right;
+            margin-right: 20px;
+        }
+ 
+    }
+ 
 }

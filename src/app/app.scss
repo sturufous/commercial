@@ -85,73 +85,14 @@ $SIDEMENU_TRANSPARENCY: rgba(255, 255, 255, 0.4);
     padding: 5px;
 }
 
-.page-header-image, .sub-header-image, .page-header-title, .sub-header-title, .side-border-list {
-    display: block;
-    position: absolute;
-}
-.page-header-image {
-    top: 5px;
-    background: transparent !important;
-}
-
-.page-header-title, .sub-header-title {
+h1 {
     font-family: 'righteous';
     color: white;
-}
-
-.page-header-title {
-    font-size: xx-large;
-    top: 16px;
-    left: 70px;
- }
-
-.sub-header-title {
-    font-size: x-large;
-    top: 8px;
-    left: 50px;
- }
-
-.sub-header-image {
-    top: 5px;
-    background: transparent !important;
 }
 
 .card-corners {
     -webkit-border-radius: 10px 10px 0 0;
     border-radius: 10px 10px 0 0;
-}
-
-.thumbnail-font {
-    font-size: x-large;
-    padding-top: 40px;
-    color: #444;
-}
-
-.side-borders {
-    border-left: 1px solid rgb(240, 239, 239);
-    border-right: 1px solid rgb(240, 239, 239);
-}
-
-.neuron-list, .padded-item, .last-neuron-list, .top-border-list, .bottom-border-list {
-    border-left: 1px solid rgb(240, 239, 239);
-    border-right: 1px solid rgb(240, 239, 239);
-}
-
-.top-border-list {
-    border-top: 1px solid rgb(240, 239, 239);
-}
-
-.bottom-border-list {
-    border-bottom: 1px solid rgb(240, 239, 239);
-}
-
-.last-neuron-list {
-    border-bottom: 1px solid rgb(240, 239, 239);
-    color: blue;   
-}
-
-.left-pad {
-    padding-left: 10px;
 }
 
 .text-area {
@@ -176,10 +117,6 @@ $SIDEMENU_TRANSPARENCY: rgba(255, 255, 255, 0.4);
     background-color: rgb(34, 30, 253);
 }
 
-.padded-item {
-    padding: 10px;
-}
-
 .grid {
     padding: 0;
 }
@@ -191,23 +128,6 @@ ion-icon {
     padding-right: 5px;
  }
 
- .list-img-left {
-     height: 70px;
-     vertical-align: middle;
-     padding-left: 10px;
- }
-
- .toolbar-background {
-     background-color: white;
- }
-
- .big-image {
-    width: 100%; 
-    height: auto; 
-    margin-left: auto; 
-    margin-right: auto;
- }
-
  .spacer {
     width: 100%; 
     height: 7px;
@@ -217,14 +137,35 @@ ion-icon {
     align-items: flex-start;
 }
 
-.item-md {
-    padding-left: 0 !important;
-}
-
 .shadow-div {
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
 .button-md {
     margin: 0;
+}
+
+.item-trns {
+    background-color: rgba(0, 0, 0, 0);
+    border: 0, 0, 0, 0;
+}
+
+.list-md {
+    margin-bottom: 0;
+}
+
+.ion-list {
+    padding-bottom: 0;
+}
+
+.item-md {
+    padding-left: 5px;
+}
+
+.good {
+    background-color: green;
+}
+
+.bad {
+    background-color: red;
 }

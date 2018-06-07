@@ -14,5 +14,56 @@
 
 
 <ion-content padding>
+  <ion-fab bottom right>
+    <button ion-fab (click)="save()" color="primary"><ion-icon name="disc" style="font-size:30pt"></ion-icon></button>
+  </ion-fab>
+  <ion-list class="page-header card-corners">
+    <ion-item class="item-trns">
+      <ion-avatar item-start>
+        <img src="../assets/imgs/truck1.png">
+      </ion-avatar>
+      <h1>Examination</h1>
+    </ion-item>
+  </ion-list>
 
-</ion-content>
+  <div class="spacer" style="width: 748px; height: 7px;"></div>
+      
+  <ion-list>
+      <ion-item (click)="presentLeftTurn()"><ion-icon name="md-arrow-dropleft-circle"></ion-icon>LEFT TURN<ion-badge item-end [ngClass]="badgeColor(leftTurn.length)">{{ leftTurn.length }}</ion-badge></ion-item>
+      <ion-item (click)="presentRightTurn()"><ion-icon name="md-arrow-dropright-circle"></ion-icon>RIGHT TURN<ion-badge item-end [ngClass]="badgeColor(rightTurn.length)">{{ rightTurn.length }}</ion-badge></ion-item>
+      <ion-item (click)="presentRoadPosition()"><ion-icon name="md-eye"></ion-icon>ROAD POSITION<ion-badge item-end [ngClass]="badgeColor(roadPosition.length)">{{ roadPosition.length }}</ion-badge></ion-item>
+      <ion-item (click)="presentSpeed()"><ion-icon name="md-speedometer"></ion-icon>SPEED<ion-badge item-end [ngClass]="badgeColor(speed.length)">{{ speed.length }}</ion-badge></ion-item>
+      <ion-item (click)="presentBacking()"><ion-icon name="md-rewind"></ion-icon>BACKING<ion-badge item-end [ngClass]="badgeColor(backing.length)">{{ backing.length }}</ion-badge></ion-item>
+      <ion-item (click)="presentShifting()"><ion-icon name="md-cog"></ion-icon>SHIFTING<ion-badge item-end [ngClass]="badgeColor(shifting.length)">{{ shifting.length }}</ion-badge></ion-item>
+      <ion-item (click)="presentRightOfWay()"><ion-icon name="md-hand"></ion-icon>RIGHT OF WAY<ion-badge item-end [ngClass]="badgeColor(rightOfWay.length)">{{ rightOfWay.length }}</ion-badge></ion-item>
+      <ion-item (click)="presentUncoupling()"><ion-icon name="md-unlock"></ion-icon>UNCOUPLING<ion-badge item-end [ngClass]="badgeColor(uncoupling.length)">{{ uncoupling.length }}</ion-badge></ion-item>
+      <ion-item (click)="presentCoupling()"><ion-icon name="md-lock"></ion-icon>COUPLING<ion-badge item-end [ngClass]="badgeColor(coupling.length)">{{ coupling.length }}</ion-badge></ion-item>
+      <ion-item-divider color="light"><h2>COUPLING</h2></ion-item-divider>
+      <ion-item>
+          <ion-label floating>RIGHT TURN:</ion-label>
+          <ion-select [ngModel]="rightTurn">
+            <ion-option value="blank"></ion-option>
+            <ion-option value="improper-turn">1. Improper Turn - cut/wide/setup</ion-option>
+            <ion-option value="wrong-lane">2. Ends in wrong lane</ion-option>
+            <ion-option value="observation">3. Observation before/during turn</ion-option>
+            <ion-option value="signal">4. Signal - timing/no/cancel</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>ROAD POSITION:</ion-label>
+            <ion-select [ngModel]="roadPosition">
+              <ion-option value="blank"></ion-option>
+              <ion-option value="too-far-over">1. Too far left/right</ion-option>
+              <ion-option value="steering">2. Steering</ion-option>
+              <ion-option value="lane-selection">3. Lane Selection</ion-option>
+              <ion-option value="too-far-ahead-back">4. Stops too far ahead/back</ion-option>
+              <ion-option value="parking">5. Parking</ion-option>
+              <ion-option value="conditions-mirrors">6. Fails to observe conditions/mirrors</ion-option>
+              <ion-option value="too-close">7. Follows too close</ion-option>
+              <ion-option value="lane-change">8. Lane Change</ion-option>
+              <ion-option value="off-track">9. Off track/straddles</ion-option>
+              <ion-option value="signal">10. Signal - timing/no/cancel</ion-option>
+            </ion-select>
+          </ion-item>
+       </ion-list>
+  </ion-content>

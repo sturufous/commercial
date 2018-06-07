@@ -14,32 +14,68 @@
 
 <ion-content padding>
   <ion-fab bottom right>
-    <button ion-fab color="primary"><ion-icon name="disc" style="font-size:30pt"></ion-icon></button>
+    <button ion-fab (click)="save()" color="primary"><ion-icon name="disc" style="font-size:30pt"></ion-icon></button>
   </ion-fab>
-  <div class="page-header card-corners">
-    <div class="page-header-image">
-      <img height="60" src="../assets/imgs/truck1.png">
-    </div>
-    <div class="page-header-title">
-      Client/Examiner Details
-    </div>
-  </div>
+  <ion-list class="page-header card-corners">
+    <ion-item class="item-trns">
+      <ion-avatar item-start>
+        <img src="../assets/imgs/truck1.png">
+      </ion-avatar>
+      <h1>Client/Examiner Details</h1>
+    </ion-item>
+  </ion-list>
 
   <div class="spacer" style="width: 748px; height: 7px;"></div>
 
-  <div class="sub-header card-corners">
-    <div class="sub-header-image">
-      <img height="40" src="../assets/imgs/truck1.png">
-    </div>
-    <div class="sub-header-title">
-      Client Details
-    </div>
-  </div>
+  <ion-list>
+    <ion-item-divider color="light"><h2>CLIENT DETAILS</h2></ion-item-divider>
 
-  <form [formGroup]="client">
-    <ion-item>
-      <ion-label floating>DL NUMBER:</ion-label>
-      <ion-input formControlName="dlNumber" type="number"></ion-input>
-    </ion-item>
-  </form>
+   <form [formGroup]="client">
+      <ion-item>
+        <ion-label floating>DL Number:</ion-label>
+        <ion-input formControlName="dlNumber" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Surname:</ion-label>
+        <ion-input formControlName="surname" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Given Name:</ion-label>
+          <ion-input formControlName="givenName" type="text"></ion-input>
+        </ion-item>
+      </form>
+  </ion-list>
+
+  <div class="spacer" style="width: 748px; height: 10px;"></div>
+
+  <ion-list>
+    <ion-item-divider color="light"><h2>EXAMINER DETAILS</h2></ion-item-divider>
+     <form [formGroup]="examiner">
+        <ion-item>
+          <ion-label floating>Appt Time:</ion-label>
+          <ion-datetime formControlName="apptTime" displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Unit / ESP School:</ion-label>
+          <ion-input formControlName="unit" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Route Number:</ion-label>
+          <ion-input formControlName="route" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Appt Date:</ion-label>
+          <ion-datetime formControlName="apptDate" displayFormat="MM/DD/YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Home Office:</ion-label>
+          <ion-input type="tel" [(ngModel)]="phoneNumber" [textMask]="{mask: masks.phoneNumber}" formControlName="telephone"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>DE Initials:</ion-label>
+            <ion-input formControlName="initials" type="text"></ion-input>
+          </ion-item>
+        </form>
+    </ion-list>
+  
 </ion-content>
