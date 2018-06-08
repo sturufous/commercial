@@ -33,7 +33,7 @@
    <form [formGroup]="client">
       <ion-item>
         <ion-label floating>DL Number:</ion-label>
-        <ion-input formControlName="dlNumber" type="number"></ion-input>
+        <ion-input [textMask]="{mask: masks.dlNumber}" formControlName="dlNumber"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label floating>Surname:</ion-label>
@@ -69,7 +69,7 @@
         </ion-item>
         <ion-item>
           <ion-label floating>Home Office:</ion-label>
-          <ion-input type="tel" [(ngModel)]="phoneNumber" [textMask]="{mask: masks.phoneNumber}" formControlName="telephone"></ion-input>
+          <ion-input type="tel" [textMask]="{mask: masks.phoneNumber}" formControlName="telephone"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>DE Initials:</ion-label>

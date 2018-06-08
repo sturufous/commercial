@@ -40,7 +40,7 @@ export class DetailsPage {
       this.http = http;
 
       this.client = formBuilder.group({
-        dlNumber: ['1234567', LicenseValidator.isValid],
+        dlNumber: ['1234567'],
         surname: ['Morse', Validators.compose([Validators.maxLength(30), Validators.required])],
         givenName: ['Stuart', Validators.compose([Validators.maxLength(30), Validators.required])]
       })
@@ -55,6 +55,7 @@ export class DetailsPage {
       });
 
       this.masks = {
+        dlNumber: ['D', 'L', ':', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
         phoneNumber: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
         cardNumber: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
         cardExpiry: [/[0-1]/, /\d/, '/', /[1-2]/, /\d/],
