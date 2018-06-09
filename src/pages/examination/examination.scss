@@ -1,20 +1,45 @@
 page-examination {
 
     ion-icon {
-        font-size: 26pt;
-        color: #6c6c6c;
+        font-size: 24pt;
+        color: #4c4c4c;
     }
 
     ion-item {
         color: #6c6c6c;
     }
 
-    button {
-        font-size: 18pt;
+    .button {
+        font-size: 11pt;
         vertical-align: middle;
+        text-transform: none;
     }
 
     .card-content-md {
         padding: 0;
+    }
+
+    .card-header {
+        padding: 10px; 
+        background-color: #94d0f5
+    }
+
+    .icon-light {
+        color: black;
+        font-size: 20pt;
+        padding-left: 0;
+    }
+
+    button {
+        ion-badge {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            opacity: 0.9;
+
+            & ~ ion-icon {
+                margin-right: 1.2rem;
+            }
+        }
     }
 }

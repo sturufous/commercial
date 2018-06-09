@@ -21,16 +21,35 @@
       <ion-avatar item-start>
         <img src="../assets/imgs/truck1.png">
       </ion-avatar>
-      <h1>Client/Examiner Details</h1>
+      <h1>Examination Details</h1>
     </ion-item>
   </ion-list>
 
   <div class="spacer" style="width: 748px; height: 7px;"></div>
 
   <ion-list>
+    <ion-item-divider color="light"><h2>CLASS OF ROAD TEST</h2></ion-item-divider>
+    <ion-slides #testSlider (ionSlideDidChange)="slideChanged(this)" pager>
+      <ion-slide>
+        <img src="../assets/imgs/class-1-slide.png">
+      </ion-slide>
+      <ion-slide>
+        <img src="../assets/imgs/class-3-slide.png">
+      </ion-slide>
+      <ion-slide>
+          <img src="../assets/imgs/class-2-slide.png">
+      </ion-slide>
+      <ion-slide>
+        <img src="../assets/imgs/class-4U-slide.png">
+      </ion-slide>
+      <ion-slide>
+        <img src="../assets/imgs/class-4-17-slide.png">
+      </ion-slide>
+    </ion-slides>
+  
     <ion-item-divider color="light"><h2>CLIENT DETAILS</h2></ion-item-divider>
 
-   <form [formGroup]="client">
+    <form [formGroup]="client">
       <ion-item>
         <ion-label floating>DL Number:</ion-label>
         <ion-input [textMask]="{mask: masks.dlNumber}" formControlName="dlNumber"></ion-input>

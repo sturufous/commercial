@@ -6,6 +6,8 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LicenseValidator } from '../../validators/licenseNumber';
 import { TextMaskModule } from 'angular2-text-mask';
+import { ViewChild } from '@angular/core';
+import { Slides } from 'ionic-angular';
 
 /**
  * Generated class for the DetailsPage page.
@@ -21,6 +23,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 })
 export class DetailsPage {
 
+  @ViewChild('testSlider') slider;
   sharedData: ShareProvider = null;
   modalController: ModalController = null;
   http: Http = null;
@@ -29,6 +32,7 @@ export class DetailsPage {
   submitAttempt: boolean = false;
   masks: any;
   phoneNumber: any;
+  classes: any = ['1','3','2','4U','4-17']
 
   constructor(public navCtrl: NavController, 
     shareProvider: ShareProvider, 
@@ -40,7 +44,7 @@ export class DetailsPage {
       this.http = http;
 
       this.client = formBuilder.group({
-        dlNumber: ['1234567'],
+        dlNumber: ['DL:1234567'],
         surname: ['Morse', Validators.compose([Validators.maxLength(30), Validators.required])],
         givenName: ['Stuart', Validators.compose([Validators.maxLength(30), Validators.required])]
       })
@@ -61,12 +65,14 @@ export class DetailsPage {
         cardExpiry: [/[0-1]/, /\d/, '/', /[1-2]/, /\d/],
         orderCode: [/[a-zA-z]/, ':', /\d/, /\d/, /\d/, /\d/]
     };
+
+    this.sharedData.licenseClass = '1';
   }
   
   save() {
 
     this.submitAttempt = true;
-  console.log("Entering save");
+    console.log("Entering save");
     if (!this.client.valid) {
       return {
         "bad client": true
@@ -80,6 +86,11 @@ export class DetailsPage {
     console.log("success!");
     console.log(this.client.value);
     console.log(this.examiner.value);
+  }
+
+  slideChanged() {
+    this.sharedData.licenseClass = this.classes[this.slider.getActiveIndex()];
+    console.log("License class = " + this.sharedData.licenseClass);
   }
 
   ionViewDidLoad() {

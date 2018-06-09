@@ -7,7 +7,23 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Examination</ion-title>
+    <div style="float: left">
+      <ion-title style="padding-top: 5px">Examination</ion-title>
+    </div>
+    <div style="float: right;font-family: 'Roboto', 'Helvetica Neue', sans-serif">
+      <button ion-button icon-only clear>
+        <ion-badge item-end secondary>
+          {{ sharedData.licenseClass }}
+        </ion-badge>
+        <ion-icon name="md-bus" style="font-size:26pt; padding-right: 10px"></ion-icon>
+      </button>
+      <button ion-button icon-only clear>
+        <ion-badge item-end [ngClass]="badgeColor(getTotalDemeritCount())">
+          {{ getTotalDemeritCount() }}
+        </ion-badge>
+        <ion-icon name="notifications" style="font-size:26pt; padding-right: 10px"></ion-icon>
+      </button>
+    </div>
   </ion-navbar>
 
 </ion-header>
@@ -30,265 +46,364 @@
   
   <ion-list>
     <ion-item>
-      <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
-      <button ion-button small round style="vertical-align: 5%" (click)="presentLeftTurn()">LEFT TURN</button>
-      <ion-badge item-end [ngClass]="badgeColor(leftTurn.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ getDemerits(leftTurn) }}</ion-badge>
-      <ion-badge item-end [ngClass]="badgeColor(leftTurn.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ leftTurn.length }}</ion-badge>
+      <div>
+        <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+        <button ion-button small round style="vertical-align: 5%" (click)="presentLeftTurn()">LEFT TURN</button>
+        <ion-badge item-end [ngClass]="badgeColor(leftTurn.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ getDemeritCount(leftTurn) }}</ion-badge>
+        <ion-badge item-end [ngClass]="badgeColor(leftTurn.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ leftTurn.length }}</ion-badge>
+      </div>
+
+      <ion-card [hidden]="hideDemerits.leftTurn || leftTurn.length == 0">
+          <ion-card-content>
+            <ion-list>
+              <div class="card-header">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
+                    <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+              <ion-item-sliding *ngFor="let item of leftTurn">
+                <ion-item>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col col-5>{{ item.value }}</ion-col>
+                      <ion-col col-4>{{ item.time | date: 'mediumTime' }}</ion-col>
+                      <ion-col col-3>{{ item.demerits }} Points</ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+                <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="deleteInfraction(item, leftTurn)">Delete</button>
+                    <button ion-button>Display</button>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
     </ion-item>
 
-    <ion-card [hidden]="hideDemerits.leftTurn || leftTurn.length == 0">
+
+    <ion-item>
+      <div>
+        <ion-icon name="md-arrow-dropright-circle"></ion-icon>
+        <button ion-button small round style="vertical-align: 5%" (click)="presentRightTurn()">RIGHT TURN</button>
+        <ion-badge item-end [ngClass]="badgeColor(rightTurn.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ getDemeritCount(rightTurn) }}</ion-badge>
+        <ion-badge item-end [ngClass]="badgeColor(rightTurn.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ rightTurn.length }}</ion-badge>
+      </div>
+
+      <ion-card [hidden]="hideDemerits.rightTurn || rightTurn.length == 0">
         <ion-card-content>
           <ion-list>
-            <ion-item-sliding *ngFor="let item of leftTurn">
+            <div class="card-header">
+              <ion-grid>
+                <ion-row>
+                  <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
+                  <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
+                  <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+            <ion-item-sliding *ngFor="let item of rightTurn">
               <ion-item>
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
-                    <ion-col col-5>{{ item.time | date: 'mediumTime' }}</ion-col>
-                    <ion-col col-2>{{ item.demerits }}</ion-col>
+                    <ion-col col-4>{{ item.time | date: 'mediumTime' }}</ion-col>
+                    <ion-col col-3>{{ item.demerits }} Points</ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button (click)="deleteInfraction(item, leftTurn)">Delete</button>
-                  <button ion-button color="danger">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, rightTurn)">Delete</button>
+                  <button ion-button>Display</button>
               </ion-item-options>
             </ion-item-sliding>
           </ion-list>
         </ion-card-content>
       </ion-card>
-
-    <ion-item>
-      <ion-icon name="md-arrow-dropright-circle"></ion-icon>
-      <button ion-button small round style="vertical-align: 5%" (click)="presentRightTurn()">RIGHT TURN</button>
-      <ion-badge item-end [ngClass]="badgeColor(rightTurn.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ getDemerits(rightTurn) }}</ion-badge>
-      <ion-badge item-end [ngClass]="badgeColor(rightTurn.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ rightTurn.length }}</ion-badge>
     </ion-item>
 
-    <ion-card [hidden]="hideDemerits.rightTurn || rightTurn.length == 0">
-      <ion-card-content>
-        <ion-list>
-          <ion-item-sliding *ngFor="let item of rightTurn">
-            <ion-item>
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-5>{{ item.value }}</ion-col>
-                  <ion-col col-5>{{ item.time | date: 'mediumTime' }}</ion-col>
-                  <ion-col col-2>{{ item.demerits }}</ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-            <ion-item-options side="right">
-                <button ion-button (click)="deleteInfraction(item, rightTurn)">Delete</button>
-                <button ion-button color="danger">Display</button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-
     <ion-item>
-      <ion-icon name="md-eye"></ion-icon>
-      <button ion-button small round style="vertical-align: 5%" (click)="presentRoadPosition()">ROAD POSITION</button>
-      <ion-badge item-end [ngClass]="badgeColor(roadPosition.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ getDemerits(roadPosition) }}</ion-badge>
-      <ion-badge item-end [ngClass]="badgeColor(roadPosition.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ roadPosition.length }}</ion-badge>
-    </ion-item>
+      <div>
+        <ion-icon name="md-eye"></ion-icon>
+        <button ion-button small round style="vertical-align: 5%" (click)="presentRoadPosition()">ROAD POSITION</button>
+        <ion-badge item-end [ngClass]="badgeColor(roadPosition.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ getDemeritCount(roadPosition) }}</ion-badge>
+        <ion-badge item-end [ngClass]="badgeColor(roadPosition.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ roadPosition.length }}</ion-badge>
+      </div>
 
-    <ion-card [hidden]="hideDemerits.roadPosition || roadPosition.length == 0">
-      <ion-card-content>
-        <ion-list>
-          <ion-item-sliding *ngFor="let item of roadPosition">
-            <ion-item>
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-5>{{ item.value }}</ion-col>
-                  <ion-col col-5>{{ item.time | date: 'mediumTime' }}</ion-col>
-                  <ion-col col-2>{{ item.demerits }}</ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-            <ion-item-options side="right">
-                <button ion-button (click)="deleteInfraction(item, roadPosition)">Delete</button>
-                <button ion-button color="danger">Display</button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-item>
-      <ion-icon name="ios-speedometer"></ion-icon>
-      <button ion-button small round style="vertical-align: 5%" (click)="presentSpeed()">SPEED</button>
-      <ion-badge item-end [ngClass]="badgeColor(speed.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ getDemerits(speed) }}</ion-badge>
-      <ion-badge item-end [ngClass]="badgeColor(speed.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ speed.length }}</ion-badge>
-    </ion-item>
-
-    <ion-card [hidden]="hideDemerits.speed || speed.length == 0">
+      <ion-card [hidden]="hideDemerits.roadPosition || roadPosition.length == 0">
         <ion-card-content>
           <ion-list>
-            <ion-item-sliding *ngFor="let item of speed">
+            <div class="card-header">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
+                    <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+              <ion-item-sliding *ngFor="let item of roadPosition">
               <ion-item>
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
-                    <ion-col col-5>{{ item.time | date: 'mediumTime' }}</ion-col>
-                    <ion-col col-2>{{ item.demerits }}</ion-col>
+                    <ion-col col-4>{{ item.time | date: 'mediumTime' }}</ion-col>
+                    <ion-col col-3>{{ item.demerits }} Points</ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button (click)="deleteInfraction(item, speed)">Delete</button>
-                  <button ion-button color="danger">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, roadPosition)">Delete</button>
+                  <button ion-button>Display</button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+
+    <ion-item>
+      <div>
+        <ion-icon name="ios-speedometer"></ion-icon>
+        <button ion-button small round style="vertical-align: 5%" (click)="presentSpeed()">SPEED</button>
+        <ion-badge item-end [ngClass]="badgeColor(speed.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ getDemeritCount(speed) }}</ion-badge>
+        <ion-badge item-end [ngClass]="badgeColor(speed.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ speed.length }}</ion-badge>
+      </div>
+
+      <ion-card [hidden]="hideDemerits.speed || speed.length == 0">
+        <ion-card-content>
+          <ion-list>
+            <div class="card-header">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
+                    <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+              <ion-item-sliding *ngFor="let item of speed">
+              <ion-item>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5>{{ item.value }}</ion-col>
+                    <ion-col col-4>{{ item.time | date: 'mediumTime' }}</ion-col>
+                    <ion-col col-3>{{ item.demerits }} Points</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+              <ion-item-options side="right">
+                  <button ion-button color="danger" (click)="deleteInfraction(item, speed)">Delete</button>
+                  <button ion-button>Display</button>
               </ion-item-options>
             </ion-item-sliding>
           </ion-list>
         </ion-card-content>
       </ion-card>    
-
-    <ion-item>
-      <ion-icon name="md-rewind"></ion-icon>
-      <button ion-button small round style="vertical-align: 5%" (click)="presentBacking()">BACKING</button>
-      <ion-badge item-end [ngClass]="badgeColor(backing.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ getDemerits(backing) }}</ion-badge>
-      <ion-badge item-end [ngClass]="badgeColor(backing.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ backing.length }}</ion-badge>
     </ion-item>
 
-    <ion-card [hidden]="hideDemerits.backing || backing.length == 0">
+    <ion-item>
+      <div>
+        <ion-icon name="md-rewind"></ion-icon>
+        <button ion-button small round style="vertical-align: 5%" (click)="presentBacking()">BACKING</button>
+        <ion-badge item-end [ngClass]="badgeColor(backing.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ getDemeritCount(backing) }}</ion-badge>
+        <ion-badge item-end [ngClass]="badgeColor(backing.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ backing.length }}</ion-badge>
+      </div>
+
+      <ion-card [hidden]="hideDemerits.backing || backing.length == 0">
         <ion-card-content>
           <ion-list>
-            <ion-item-sliding *ngFor="let item of backing">
+            <div class="card-header">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
+                    <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+              <ion-item-sliding *ngFor="let item of backing">
               <ion-item>
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
-                    <ion-col col-5>{{ item.time | date: 'mediumTime' }}</ion-col>
-                    <ion-col col-2>{{ item.demerits }}</ion-col>
+                    <ion-col col-4>{{ item.time | date: 'mediumTime' }}</ion-col>
+                    <ion-col col-3>{{ item.demerits }} Points</ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button (click)="deleteInfraction(item, backing)">Delete</button>
-                  <button ion-button color="danger">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, backing)">Delete</button>
+                  <button ion-button>Display</button>
               </ion-item-options>
             </ion-item-sliding>
           </ion-list>
         </ion-card-content>
       </ion-card>   
-
-    <ion-item>
-      <ion-icon name="md-cog"></ion-icon>
-      <button ion-button small round style="vertical-align: 5%" (click)="presentShifting()">SHIFTING</button>
-      <ion-badge item-end [ngClass]="badgeColor(shifting.length)" (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ getDemerits(shifting) }}</ion-badge>
-      <ion-badge item-end [ngClass]="badgeColor(shifting.length)"  (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ shifting.length }}</ion-badge>
     </ion-item>
 
-    <ion-card [hidden]="hideDemerits.shifting || shifting.length == 0">
-      <ion-card-content>
-        <ion-list>
-          <ion-item-sliding *ngFor="let item of shifting">
-            <ion-item>
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-5>{{ item.value }}</ion-col>
-                  <ion-col col-5>{{ item.time | date: 'mediumTime' }}</ion-col>
-                  <ion-col col-2>{{ item.demerits }}</ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-            <ion-item-options side="right">
-                <button ion-button (click)="deleteInfraction(item, shifting)">Delete</button>
-                <button ion-button color="danger">Display</button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>   
-      
     <ion-item>
-      <ion-icon name="md-hand"></ion-icon>
-      <button ion-button small round style="vertical-align: 5%" (click)="presentRightOfWay()">RIGHT OF WAY</button>
-      <ion-badge item-end [ngClass]="badgeColor(rightOfWay.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ getDemerits(rightOfWay) }}</ion-badge>
-      <ion-badge item-end [ngClass]="badgeColor(rightOfWay.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ rightOfWay.length }}</ion-badge>
-    </ion-item>
+      <div>
+        <ion-icon name="md-cog"></ion-icon>
+        <button ion-button small round style="vertical-align: 5%" (click)="presentShifting()">SHIFTING</button>
+        <ion-badge item-end [ngClass]="badgeColor(shifting.length)" (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ getDemeritCount(shifting) }}</ion-badge>
+        <ion-badge item-end [ngClass]="badgeColor(shifting.length)"  (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ shifting.length }}</ion-badge>
+      </div>
 
-    <ion-card [hidden]="hideDemerits.rightOfWay || rightOfWay.length == 0">
-      <ion-card-content>
-        <ion-list>
-          <ion-item-sliding *ngFor="let item of rightOfWay">
-            <ion-item>
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-5>{{ item.value }}</ion-col>
-                  <ion-col col-5>{{ item.time | date: 'mediumTime' }}</ion-col>
-                  <ion-col col-2>{{ item.demerits }}</ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-            <ion-item-options side="right">
-                <button ion-button (click)="deleteInfraction(item, rightOfWay)">Delete</button>
-                <button ion-button color="danger">Display</button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>   
-
-    <ion-item>
-      <ion-icon name="md-unlock"></ion-icon>
-      <button ion-button small round style="vertical-align: 5%" (click)="presentUncoupling()">UNCOUPLING</button>
-      <ion-badge item-end [ngClass]="badgeColor(uncoupling.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ getDemerits(uncoupling) }}</ion-badge>
-      <ion-badge item-end [ngClass]="badgeColor(uncoupling.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ uncoupling.length }}</ion-badge>
-    </ion-item>
-
-    <ion-card [hidden]="hideDemerits.uncoupling || uncoupling.length == 0">
-      <ion-card-content>
-        <ion-list>
-          <ion-item-sliding *ngFor="let item of uncoupling">
-            <ion-item>
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-5>{{ item.value }}</ion-col>
-                  <ion-col col-5>{{ item.time | date: 'mediumTime' }}</ion-col>
-                  <ion-col col-2>{{ item.demerits }}</ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-            <ion-item-options side="right">
-                <button ion-button (click)="deleteInfraction(item, uncoupling)">Delete</button>
-                <button ion-button color="danger">Display</button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>   
-
-    <ion-item>
-      <ion-icon name="md-lock"></ion-icon>
-      <button ion-button small round style="vertical-align: 5%" (click)="presentCoupling()">COUPLING</button>
-      <ion-badge item-end [ngClass]="badgeColor(coupling.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ getDemerits(coupling) }}</ion-badge>
-      <ion-badge item-end [ngClass]="badgeColor(coupling.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ coupling.length }}</ion-badge>
-    </ion-item>
-
-    <ion-card [hidden]="hideDemerits.coupling || coupling.length == 0">
+      <ion-card [hidden]="hideDemerits.shifting || shifting.length == 0">
         <ion-card-content>
           <ion-list>
-            <ion-item-sliding *ngFor="let item of coupling">
+            <div class="card-header">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
+                    <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+              <ion-item-sliding *ngFor="let item of shifting">
               <ion-item>
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
-                    <ion-col col-5>{{ item.time | date: 'mediumTime' }}</ion-col>
-                    <ion-col col-2>{{ item.demerits }}</ion-col>
+                    <ion-col col-4>{{ item.time | date: 'mediumTime' }}</ion-col>
+                    <ion-col col-3>{{ item.demerits }} Points</ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button (click)="deleteInfraction(item, coupling)">Delete</button>
-                  <button ion-button color="danger">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, shifting)">Delete</button>
+                  <button ion-button>Display</button>
               </ion-item-options>
             </ion-item-sliding>
           </ion-list>
         </ion-card-content>
       </ion-card>   
+    </ion-item>
 
+    <ion-item>
+      <div>
+        <ion-icon name="md-hand"></ion-icon>
+        <button ion-button small round style="vertical-align: 5%" (click)="presentRightOfWay()">RIGHT OF WAY</button>
+        <ion-badge item-end [ngClass]="badgeColor(rightOfWay.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ getDemeritCount(rightOfWay) }}</ion-badge>
+        <ion-badge item-end [ngClass]="badgeColor(rightOfWay.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ rightOfWay.length }}</ion-badge>
+      </div>
+  
+      <ion-card [hidden]="hideDemerits.rightOfWay || rightOfWay.length == 0">
+        <ion-card-content>
+          <ion-list>
+              <div class="card-header">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
+                    <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+              <ion-item-sliding *ngFor="let item of rightOfWay">
+              <ion-item>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5>{{ item.value }}</ion-col>
+                    <ion-col col-4>{{ item.time | date: 'mediumTime' }}</ion-col>
+                    <ion-col col-3>{{ item.demerits }} Points</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+              <ion-item-options side="right">
+                  <button ion-button color="danger" (click)="deleteInfraction(item, rightOfWay)">Delete</button>
+                  <button ion-button>Display</button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>   
+    </ion-item>
+
+    <ion-item>
+      <div>
+        <ion-icon name="md-unlock"></ion-icon>
+        <button ion-button small round style="vertical-align: 5%" (click)="presentUncoupling()">UNCOUPLING</button>
+        <ion-badge item-end [ngClass]="badgeColor(uncoupling.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ getDemeritCount(uncoupling) }}</ion-badge>
+        <ion-badge item-end [ngClass]="badgeColor(uncoupling.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ uncoupling.length }}</ion-badge>
+      </div>
+
+      <ion-card [hidden]="hideDemerits.uncoupling || uncoupling.length == 0">
+        <ion-card-content>
+          <ion-list>
+            <div class="card-header">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
+                    <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+              <ion-item-sliding *ngFor="let item of uncoupling">
+              <ion-item>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5>{{ item.value }}</ion-col>
+                    <ion-col col-4>{{ item.time | date: 'mediumTime' }}</ion-col>
+                    <ion-col col-3>{{ item.demerits }} Points</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+              <ion-item-options side="right">
+                  <button ion-button color="danger" (click)="deleteInfraction(item, uncoupling)">Delete</button>
+                  <button ion-button>Display</button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>   
+    </ion-item>
+
+    <ion-item>
+      <div>
+        <ion-icon name="md-lock"></ion-icon>
+        <button ion-button small round style="vertical-align: 5%" (click)="presentCoupling()">COUPLING</button>
+        <ion-badge item-end [ngClass]="badgeColor(coupling.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ getDemeritCount(coupling) }}</ion-badge>
+        <ion-badge item-end [ngClass]="badgeColor(coupling.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ coupling.length }}</ion-badge>
+      </div>
+
+      <ion-card [hidden]="hideDemerits.coupling || coupling.length == 0">
+        <ion-card-content>
+          <ion-list>
+            <div class="card-header">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
+                    <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+              <ion-item-sliding *ngFor="let item of coupling">
+              <ion-item>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-5>{{ item.value }}</ion-col>
+                    <ion-col col-4>{{ item.time | date: 'mediumTime' }}</ion-col>
+                    <ion-col col-3>{{ item.demerits }} Points</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+              <ion-item-options side="right">
+                  <button ion-button color="danger" (click)="deleteInfraction(item, coupling)">Delete</button>
+                  <button ion-button >Display</button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>   
+    </ion-item>
   </ion-list>
 </ion-content>

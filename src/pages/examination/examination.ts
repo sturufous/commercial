@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { ShareProvider } from '../../providers/share/share';
 
 /**
  * Generated class for the ExaminationPage page.
@@ -42,8 +43,15 @@ export class ExaminationPage {
 
   alertCtrl: AlertController;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, alertCtrl: AlertController) {
+  sharedData: ShareProvider;
+
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams, 
+              alertCtrl: AlertController,
+              shareProvider: ShareProvider, 
+            ) {
     this.alertCtrl = alertCtrl;
+    this.sharedData = shareProvider;
   }
 
   deleteInfraction(infraction, infractions) {
@@ -64,7 +72,7 @@ export class ExaminationPage {
     return index;
   }
 
-  getDemerits(infractionType) {
+  getDemeritCount(infractionType) {
 
     let count: number = 0;
 
@@ -72,6 +80,23 @@ export class ExaminationPage {
       count += eval(infractionType[idx].demerits);
     }
 
+    return count;
+  }
+
+  getTotalDemeritCount() {
+
+    let count: number = 0;
+
+    count = this.getDemeritCount(this.leftTurn) +
+            this.getDemeritCount(this.rightTurn) +
+            this.getDemeritCount(this.roadPosition) +
+            this.getDemeritCount(this.speed) +
+            this.getDemeritCount(this.backing) +
+            this.getDemeritCount(this.shifting) +
+            this.getDemeritCount(this.rightOfWay) +
+            this.getDemeritCount(this.uncoupling) +
+            this.getDemeritCount(this.coupling);
+  
     return count;
   }
 
@@ -83,28 +108,28 @@ export class ExaminationPage {
           name: 'improper-turn',
           type: 'radio',
           label: 'Improper Turn - cut/wide/setup',
-          value: 'improper-turn#5',
+          value: 'Improper Turn#5',
           checked: false
         },
         {
           name: 'wrong-lane',
           type: 'radio',
           label: 'Ends in wrong lane',
-          value: 'wrong-lane#10',
+          value: 'Wrong Lane#10',
           checked: false
         },
         {
           name: 'observation',
           type: 'radio',
           label: 'Observation before/during turn',
-          value: 'observation#10',
+          value: 'Observation#10',
           checked: false
         },
         {
           name: 'signal',
           type: 'radio',
           label: 'Signal - timing/no/cancel',
-          value: 'signal#10',
+          value: 'Signal#10',
           checked: false
         }
       ],
@@ -134,7 +159,7 @@ export class ExaminationPage {
           name: 'improper-turn',
           type: 'radio',
           label: 'Improper Turn - cut/wide/setup',
-          value: 'improper-turn#5',
+          value: 'Improper Turn#5',
           checked: false
         },
         {
@@ -148,14 +173,14 @@ export class ExaminationPage {
           name: 'observation',
           type: 'radio',
           label: 'Observation before/during turn',
-          value: 'observation#10',
+          value: 'Observation#10',
           checked: false
         },
         {
           name: 'signal',
           type: 'radio',
           label: 'Signal - timing/no/cancel',
-          value: 'signal#10',
+          value: 'Signal#10',
           checked: false
         }
       ],
@@ -185,7 +210,7 @@ export class ExaminationPage {
           name: 'too-far-over',
           type: 'radio',
           label: 'Too far left/right',
-          value: 'too-far-over#5',
+          value: 'Too Far Over#5',
           checked: false
         },
         {
@@ -199,14 +224,14 @@ export class ExaminationPage {
           name: 'lane-selection',
           type: 'radio',
           label: 'Lane Selection',
-          value: 'lane-selection#5',
+          value: 'Lane Selection#5',
           checked: false
         },
         {
           name: 'too-far-ahead-back',
           type: 'radio',
           label: 'Stops too far ahead/back',
-          value: 'too-far-ahead-back#5',
+          value: 'Too Far Ahead/Back#5',
           checked: false
         },
         {
@@ -220,35 +245,35 @@ export class ExaminationPage {
           name: 'conditions-mirrors',
           type: 'radio',
           label: 'Fails to observe conditions/mirrors',
-          value: 'conditions-mirrors#10',
+          value: 'Conditions/Mirror#10',
           checked: false
         },
         {
           name: 'too-close',
           type: 'radio',
           label: 'Follows too close',
-          value: 'too-close#10',
+          value: 'Too Close#10',
           checked: false
         },
         {
           name: 'lane-change',
           type: 'radio',
           label: 'Lane Change',
-          value: 'lane-change#10',
+          value: 'Lane Change#10',
           checked: false
         },
         {
           name: 'off-track',
           type: 'radio',
           label: 'Off track/straddles',
-          value: 'off-track#10',
+          value: 'Off Track#10',
           checked: false
         },
         {
           name: 'signal',
           type: 'radio',
           label: 'Signal - timing/no/cancel',
-          value: 'signal#10',
+          value: 'Signal#10',
           checked: false
         }
       ],
@@ -278,49 +303,49 @@ export class ExaminationPage {
           name: 'too-slow',
           type: 'radio',
           label: 'Too slow for conditions',
-          value: 'too-slow#5',
+          value: 'Too Slow#5',
           checked: false
         },
         {
           name: 'uneven-speed',
           type: 'radio',
           label: 'Uneven speed control',
-          value: 'uneven-speed#5',
+          value: 'Uneven Speed#5',
           checked: false
         },
         {
           name: 'approach-too-fast',
           type: 'radio',
           label: 'Approach too fast',
-          value: 'approach-too-fast#5',
+          value: 'Approach Too Fast#5',
           checked: false
         },
         {
           name: 'improper-braking',
           type: 'radio',
           label: 'Improper use of brake/service/retarder',
-          value: 'improper-braking#5',
+          value: 'Improper Braking#5',
           checked: false
         },
         {
           name: 'too-fast',
           type: 'radio',
           label: 'Too fast for conditions',
-          value: 'too-fast#10',
+          value: 'Too Fast#10',
           checked: false
         },
         {
           name: 'rolling-stop',
           type: 'radio',
           label: 'Rolling stop',
-          value: 'rolling-stop#10',
+          value: 'Rolling Stop#10',
           checked: false
         },
         {
           name: 'amber-light',
           type: 'radio',
           label: 'Amber light',
-          value: 'amber-light#10',
+          value: 'Amber Light#10',
           checked: false
         }
       ],
@@ -350,28 +375,28 @@ export class ExaminationPage {
           name: 'no-horn',
           type: 'radio',
           label: 'Fails to sound horn',
-          value: 'no-horn#5',
+          value: 'No Horn#5',
           checked: false
         },
         {
           name: 'steering',
           type: 'radio',
           label: 'Steering',
-          value: 'steering#5',
+          value: 'Steering#5',
           checked: false
         },
         {
           name: 'walk-around',
           type: 'radio',
           label: 'Fails to walk around before backing/360 degree',
-          value: 'approach-too-fast#5',
+          value: 'No Walk Around#5',
           checked: false
         },
         {
           name: 'poor-observation',
           type: 'radio',
           label: 'Poor observation while backing',
-          value: 'poor-observation#10',
+          value: 'Poor Observation#10',
           checked: false
         }
       ],
@@ -401,28 +426,28 @@ export class ExaminationPage {
           name: 'wrong-gear',
           type: 'radio',
           label: 'Wrong gear',
-          value: 'wrong-gear#5',
+          value: 'Wrong Gear#5',
           checked: false
         },
         {
           name: 'misses-shift',
           type: 'radio',
           label: 'Misses shift',
-          value: 'misses-shift#5',
+          value: 'Misses Shift#5',
           checked: false
         },
         {
           name: 'clutch-throttle',
           type: 'radio',
           label: 'Improper use of clutch/throttle',
-          value: 'clutch-throttle#5',
+          value: 'Clutch/Throttle#5',
           checked: false
         },
         {
           name: 'difficulty-recovering',
           type: 'radio',
           label: 'Difficulty recovering shift or coasts',
-          value: 'difficulty-recovering#10',
+          value: 'Difficulty Recovering#10',
           checked: false
         }
       ],
@@ -452,28 +477,28 @@ export class ExaminationPage {
           name: 'uncertain',
           type: 'radio',
           label: 'Uncertain - take/yeald',
-          value: 'uncertain#5',
+          value: 'Uncertain#5',
           checked: false
         },
         {
           name: 'assumes',
           type: 'radio',
           label: 'Assumes',
-          value: 'assumes#10',
+          value: 'Assumes#10',
           checked: false
         },
         {
           name: 'unnecessary-stop',
           type: 'radio',
           label: 'Stops unnecessarily',
-          value: 'unnecessary-stop#10',
+          value: 'Unnecessary Stop#10',
           checked: false
         },
         {
           name: 'fail-to-yield',
           type: 'radio',
           label: 'Fails to yield to vehicle/pedestrian',
-          value: 'fail-to-yield#10',
+          value: 'Fails To Yield#10',
           checked: false
         }
       ],
@@ -503,21 +528,21 @@ export class ExaminationPage {
           name: 'uncertain',
           type: 'radio',
           label: 'Uncertain procedure',
-          value: 'uncertain#5',
+          value: 'Uncertain#5',
           checked: false
         },
         {
           name: 'no-brakes-trailer',
           type: 'radio',
           label: 'Brakes not applied/trailer not secured',
-          value: 'no-brakes-trailer#5',
+          value: 'No Brakes/Trailer Insecure#5',
           checked: false
         },
         {
           name: 'too-far-ahead',
           type: 'radio',
           label: 'Moves tractor too far ahead/clearance',
-          value: 'too-far-ahead#10',
+          value: 'Too Far Ahead#10',
           checked: false
         }
       ],
@@ -554,7 +579,7 @@ export class ExaminationPage {
           name: 'alignment',
           type: 'radio',
           label: 'Align tractor and trailer',
-          value: 'alignment#5',
+          value: 'Alignment#5',
           checked: false
         },
         {
@@ -568,14 +593,14 @@ export class ExaminationPage {
           name: 'proper-height',
           type: 'radio',
           label: 'Proper height/alignment/landing gear',
-          value: 'proper-height#10',
+          value: 'Proper Heightt#10',
           checked: false
         },
         {
           name: 'tug-test',
           type: 'radio',
           label: 'Tug test not complete',
-          value: 'tug-test#10',
+          value: 'Tug Test#10',
           checked: false
         }
       ],
