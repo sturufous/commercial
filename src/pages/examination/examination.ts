@@ -17,16 +17,6 @@ import { ShareProvider } from '../../providers/share/share';
 })
 export class ExaminationPage {
 
-  leftTurn: any = [];
-  rightTurn: any = [];
-  roadPosition: any = [];
-  speed: any = [];
-  backing: any = [];
-  shifting: any = [];
-  rightOfWay: any = [];
-  uncoupling: any = [];
-  coupling: any = [];
-
   hideDemerits: any = {
     leftTurn: true,
     rightTurn: true,
@@ -72,34 +62,6 @@ export class ExaminationPage {
     return index;
   }
 
-  getDemeritCount(infractionType) {
-
-    let count: number = 0;
-
-    for (let idx=0; idx < infractionType.length; idx++) {
-      count += eval(infractionType[idx].demerits);
-    }
-
-    return count;
-  }
-
-  getTotalDemeritCount() {
-
-    let count: number = 0;
-
-    count = this.getDemeritCount(this.leftTurn) +
-            this.getDemeritCount(this.rightTurn) +
-            this.getDemeritCount(this.roadPosition) +
-            this.getDemeritCount(this.speed) +
-            this.getDemeritCount(this.backing) +
-            this.getDemeritCount(this.shifting) +
-            this.getDemeritCount(this.rightOfWay) +
-            this.getDemeritCount(this.uncoupling) +
-            this.getDemeritCount(this.coupling);
-  
-    return count;
-  }
-
   presentLeftTurn() {
     let alert = this.alertCtrl.create({
       title: 'LEFT TURN',
@@ -141,8 +103,8 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.leftTurn.push(this.getDemeritObject(data));
-            console.log("Left turn = " + JSON.stringify(this.leftTurn));
+            this.sharedData.leftTurn.push(this.getDemeritObject(data));
+            console.log("Left turn = " + JSON.stringify(this.sharedData.leftTurn));
             return true;
           },
           role: 'submit'
@@ -192,8 +154,8 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.rightTurn.push(this.getDemeritObject(data));
-            console.log("Right turn = " + JSON.stringify(this.rightTurn));
+            this.sharedData.rightTurn.push(this.getDemeritObject(data));
+            console.log("Right turn = " + JSON.stringify(this.sharedData.rightTurn));
             return true;
           },
           role: 'submit'
@@ -285,8 +247,8 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.roadPosition.push(this.getDemeritObject(data));
-            console.log("Road position = " + JSON.stringify(this.roadPosition));
+            this.sharedData.roadPosition.push(this.getDemeritObject(data));
+            console.log("Road position = " + JSON.stringify(this.sharedData.roadPosition));
             return true;
           },
           role: 'submit'
@@ -357,8 +319,8 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.speed.push(this.getDemeritObject(data));
-            console.log("Speed = " + JSON.stringify(this.speed));
+            this.sharedData.speed.push(this.getDemeritObject(data));
+            console.log("Speed = " + JSON.stringify(this.sharedData.speed));
             return true;
           },
           role: 'submit'
@@ -408,8 +370,8 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.backing.push(this.getDemeritObject(data));
-            console.log("Backing = " + JSON.stringify(this.backing));
+            this.sharedData.backing.push(this.getDemeritObject(data));
+            console.log("Backing = " + JSON.stringify(this.sharedData.backing));
             return true;
           },
           role: 'submit'
@@ -459,8 +421,8 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.shifting.push(this.getDemeritObject(data));
-            console.log("Shifting = " + JSON.stringify(this.shifting));
+            this.sharedData.shifting.push(this.getDemeritObject(data));
+            console.log("Shifting = " + JSON.stringify(this.sharedData.shifting));
             return true;
           },
           role: 'submit'
@@ -510,8 +472,8 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.rightOfWay.push(this.getDemeritObject(data));
-            console.log("Right of way = " + JSON.stringify(this.rightOfWay));
+            this.sharedData.rightOfWay.push(this.getDemeritObject(data));
+            console.log("Right of way = " + JSON.stringify(this.sharedData.rightOfWay));
             return true;
           },
           role: 'submit'
@@ -554,8 +516,8 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.uncoupling.push(this.getDemeritObject(data));
-            console.log("Uncoupling = " + JSON.stringify(this.uncoupling));
+            this.sharedData.uncoupling.push(this.getDemeritObject(data));
+            console.log("Uncoupling = " + JSON.stringify(this.sharedData.uncoupling));
             return true;
           },
           role: 'submit'
@@ -612,8 +574,8 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.coupling.push(this.getDemeritObject(data));
-            console.log("Coupling = " + JSON.stringify(this.coupling));
+            this.sharedData.coupling.push(this.getDemeritObject(data));
+            console.log("Coupling = " + JSON.stringify(this.sharedData.coupling));
             return true;
           },
           role: 'submit'
@@ -629,14 +591,6 @@ export class ExaminationPage {
     let demerits = data.substring(delimLoc+1, data.length);
 
     return {value: description, time: new Date(), demerits: demerits}
-  }
-
-  badgeColor(length) {
-    if (length == 0) {
-      return 'good';
-    } else {
-      return 'bad';
-    }
   }
 
   ionViewDidLoad() {

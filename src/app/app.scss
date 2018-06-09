@@ -173,3 +173,30 @@ ion-icon {
     float: right;
     margin: 0;
 }
+
+.header-title {
+    float: left;
+}
+
+.header-badge {
+    font-size:26pt; 
+    padding-right: 10px;
+}
+
+button {
+    ion-badge {
+        position: absolute;
+        top: 2px;
+        right: 4px;
+        opacity: 0.9;
+
+        & ~ ion-icon {
+            margin-right: 1.2rem;
+        }
+    }
+}
+
+ion-title {
+    padding-top: 5px;
+}
+
