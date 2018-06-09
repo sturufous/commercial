@@ -103,9 +103,11 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.sharedData.leftTurn.push(this.getDemeritObject(data));
-            console.log("Left turn = " + JSON.stringify(this.sharedData.leftTurn));
-            return true;
+            if (data != null) {
+              this.sharedData.leftTurn.push(this.getDemeritObject(data));
+              console.log("Left turn = " + JSON.stringify(this.sharedData.leftTurn));
+              return true;
+            }
           },
           role: 'submit'
         }
@@ -128,7 +130,7 @@ export class ExaminationPage {
           name: 'wrong-lane',
           type: 'radio',
           label: 'Ends in wrong lane',
-          value: 'wrong-lane#10',
+          value: 'Wrong-lane#10',
           checked: false
         },
         {
@@ -154,9 +156,11 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.sharedData.rightTurn.push(this.getDemeritObject(data));
-            console.log("Right turn = " + JSON.stringify(this.sharedData.rightTurn));
-            return true;
+            if (data != null) {
+              this.sharedData.rightTurn.push(this.getDemeritObject(data));
+              console.log("Right turn = " + JSON.stringify(this.sharedData.rightTurn));
+              return true;
+            }
           },
           role: 'submit'
         }
@@ -179,7 +183,7 @@ export class ExaminationPage {
           name: 'steering',
           type: 'radio',
           label: 'Steering',
-          value: 'steering#5',
+          value: 'Steering#5',
           checked: false
         },
         {
@@ -200,7 +204,7 @@ export class ExaminationPage {
           name: 'parking',
           type: 'radio',
           label: 'Parking',
-          value: 'parking#5',
+          value: 'Parking#5',
           checked: false
         },
         {
@@ -247,9 +251,11 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.sharedData.roadPosition.push(this.getDemeritObject(data));
-            console.log("Road position = " + JSON.stringify(this.sharedData.roadPosition));
-            return true;
+            if (data != null) {
+              this.sharedData.roadPosition.push(this.getDemeritObject(data));
+              console.log("Road position = " + JSON.stringify(this.sharedData.roadPosition));
+              return true;
+            }
           },
           role: 'submit'
         }
@@ -319,9 +325,11 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.sharedData.speed.push(this.getDemeritObject(data));
-            console.log("Speed = " + JSON.stringify(this.sharedData.speed));
-            return true;
+            if (data != null) {
+              this.sharedData.speed.push(this.getDemeritObject(data));
+              console.log("Speed = " + JSON.stringify(this.sharedData.speed));
+              return true;
+            }
           },
           role: 'submit'
         }
@@ -370,9 +378,11 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.sharedData.backing.push(this.getDemeritObject(data));
-            console.log("Backing = " + JSON.stringify(this.sharedData.backing));
-            return true;
+            if (data != null) {
+              this.sharedData.backing.push(this.getDemeritObject(data));
+              console.log("Backing = " + JSON.stringify(this.sharedData.backing));
+              return true;
+            }
           },
           role: 'submit'
         }
@@ -421,9 +431,11 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.sharedData.shifting.push(this.getDemeritObject(data));
-            console.log("Shifting = " + JSON.stringify(this.sharedData.shifting));
-            return true;
+            if (data != null) {
+              this.sharedData.shifting.push(this.getDemeritObject(data));
+              console.log("Shifting = " + JSON.stringify(this.sharedData.shifting));
+              return true;
+            }
           },
           role: 'submit'
         }
@@ -472,9 +484,11 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.sharedData.rightOfWay.push(this.getDemeritObject(data));
-            console.log("Right of way = " + JSON.stringify(this.sharedData.rightOfWay));
-            return true;
+            if (data != null) {
+              this.sharedData.rightOfWay.push(this.getDemeritObject(data));
+              console.log("Right of way = " + JSON.stringify(this.sharedData.rightOfWay));
+              return true;
+            }
           },
           role: 'submit'
         }
@@ -516,9 +530,11 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.sharedData.uncoupling.push(this.getDemeritObject(data));
-            console.log("Uncoupling = " + JSON.stringify(this.sharedData.uncoupling));
-            return true;
+            if (data != null) {
+              this.sharedData.uncoupling.push(this.getDemeritObject(data));
+              console.log("Uncoupling = " + JSON.stringify(this.sharedData.uncoupling));
+              return true;
+            }
           },
           role: 'submit'
         }
@@ -534,7 +550,7 @@ export class ExaminationPage {
           name: 'uncertain',
           type: 'radio',
           label: 'Uncertain procedure',
-          value: 'uncertain#5',
+          value: 'Uncertain#5',
           checked: false
         },
         {
@@ -548,7 +564,7 @@ export class ExaminationPage {
           name: 'visual-inspection',
           type: 'radio',
           label: 'Visual inspection of jaws/hitch',
-          value: 'visual-inspection#10',
+          value: 'Visual Inspection#10',
           checked: false
         },
         {
@@ -574,9 +590,11 @@ export class ExaminationPage {
         {
           text: 'Ok',
           handler: data => {
-            this.sharedData.coupling.push(this.getDemeritObject(data));
-            console.log("Coupling = " + JSON.stringify(this.sharedData.coupling));
-            return true;
+            if (data != null) {
+              this.sharedData.coupling.push(this.getDemeritObject(data));
+              console.log("Coupling = " + JSON.stringify(this.sharedData.coupling));
+              return true;
+            }
           },
           role: 'submit'
         }
@@ -586,11 +604,15 @@ export class ExaminationPage {
 
   getDemeritObject(data) {
 
-    let delimLoc = data.indexOf('#');
-    let description = data.substring(0, delimLoc);
-    let demerits = data.substring(delimLoc+1, data.length);
+    if (data != undefined) {
+      let delimLoc = data.indexOf('#');
+      let description = data.substring(0, delimLoc);
+      let demerits = data.substring(delimLoc+1, data.length);
 
-    return {value: description, time: new Date(), demerits: demerits}
+      return {value: description, time: new Date(), demerits: demerits}
+    } 
+
+    return null;
   }
 
   ionViewDidLoad() {

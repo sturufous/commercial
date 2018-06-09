@@ -7,25 +7,24 @@
 <ion-header>
 
   <ion-navbar>
-      <div class="header-title">
-          <ion-title>Details</ion-title>
-        </div>
-        <div style="float: right">
-          <button ion-button icon-only clear>
-            <ion-badge item-end secondary>
-              {{ sharedData.licenseClass }}
-            </ion-badge>
-            <ion-icon class="header-badge" name="md-bus"></ion-icon>
-          </button>
-          <button ion-button icon-only clear>
-            <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.getTotalDemeritCount())">
-              {{ sharedData.getTotalDemeritCount() }}
-            </ion-badge>
-            <ion-icon name="notifications" class="header-badge"></ion-icon>
-          </button>
-        </div>
-      </ion-navbar>
-
+    <div class="header-title">
+      <ion-title>Details</ion-title>
+    </div>
+    <div style="float: right">
+      <button ion-button icon-only clear>
+        <ion-badge item-end secondary>
+          {{ sharedData.licenseClass }}
+        </ion-badge>
+        <ion-icon class="header-badge" name="md-bus"></ion-icon>
+      </button>
+      <button ion-button icon-only clear>
+        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.getTotalDemeritCount())">
+          {{ sharedData.getTotalDemeritCount() }}
+        </ion-badge>
+        <ion-icon name="notifications" class="header-badge"></ion-icon>
+      </button>
+    </div>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>

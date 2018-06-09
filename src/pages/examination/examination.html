@@ -47,10 +47,20 @@
   <ion-list>
     <ion-item>
       <div>
-        <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
-        <button ion-button small round style="vertical-align: 5%" (click)="presentLeftTurn()">LEFT TURN</button>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.leftTurn.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ sharedData.getDemeritCount(sharedData.leftTurn) }}</ion-badge>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.leftTurn.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ sharedData.leftTurn.length }}</ion-badge>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+            </ion-col>
+            <ion-col col-8 class="infraction-link" (click)="presentLeftTurn()">
+              LEFT TURN
+            </ion-col>
+            <ion-col col-3>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.leftTurn.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ sharedData.getDemeritCount(sharedData.leftTurn) }}</ion-badge>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.leftTurn.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ sharedData.leftTurn.length }}</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-card [hidden]="hideDemerits.leftTurn || sharedData.leftTurn.length == 0">
@@ -88,10 +98,20 @@
 
     <ion-item>
       <div>
-        <ion-icon name="md-arrow-dropright-circle"></ion-icon>
-        <button ion-button small round style="vertical-align: 5%" (click)="presentRightTurn()">RIGHT TURN</button>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.rightTurn.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ sharedData.getDemeritCount(sharedData.rightTurn) }}</ion-badge>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.rightTurn.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ sharedData.rightTurn.length }}</ion-badge>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+            </ion-col>
+            <ion-col col-8 class="infraction-link" (click)="presentRightTurn()">
+              RIGHT TURN
+            </ion-col>
+            <ion-col col-3>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.rightTurn.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ sharedData.getDemeritCount(sharedData.rightTurn) }}</ion-badge>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.rightTurn.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ sharedData.rightTurn.length }}</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-card [hidden]="hideDemerits.rightTurn || sharedData.rightTurn.length == 0">
@@ -128,10 +148,20 @@
 
     <ion-item>
       <div>
-        <ion-icon name="md-eye"></ion-icon>
-        <button ion-button small round style="vertical-align: 5%" (click)="presentRoadPosition()">ROAD POSITION</button>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.roadPosition.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ sharedData.getDemeritCount(sharedData.roadPosition) }}</ion-badge>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.roadPosition.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ sharedData.roadPosition.length }}</ion-badge>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+            </ion-col>
+            <ion-col col-8 class="infraction-link" (click)="presentRoadPosition()">
+              ROAD POSITION
+            </ion-col>
+            <ion-col col-3>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.roadPosition.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ sharedData.getDemeritCount(sharedData.roadPosition) }}</ion-badge>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.roadPosition.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ sharedData.roadPosition.length }}</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-card [hidden]="hideDemerits.roadPosition || sharedData.roadPosition.length == 0">
@@ -168,10 +198,20 @@
 
     <ion-item>
       <div>
-        <ion-icon name="ios-speedometer"></ion-icon>
-        <button ion-button small round style="vertical-align: 5%" (click)="presentSpeed()">SPEED</button>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.speed.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ sharedData.getDemeritCount(sharedData.speed) }}</ion-badge>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.speed.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ sharedData.speed.length }}</ion-badge>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+            </ion-col>
+            <ion-col col-8 class="infraction-link" (click)="presentSpeed()">
+              SPEED
+            </ion-col>
+            <ion-col col-3>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.speed.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ sharedData.getDemeritCount(sharedData.speed) }}</ion-badge>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.speed.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ sharedData.speed.length }}</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-card [hidden]="hideDemerits.speed || sharedData.speed.length == 0">
@@ -208,10 +248,20 @@
 
     <ion-item>
       <div>
-        <ion-icon name="md-rewind"></ion-icon>
-        <button ion-button small round style="vertical-align: 5%" (click)="presentBacking()">BACKING</button>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.backing.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ sharedData.getDemeritCount(sharedData.backing) }}</ion-badge>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.backing.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ sharedData.backing.length }}</ion-badge>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+            </ion-col>
+            <ion-col col-8 class="infraction-link" (click)="presentBacking()">
+              BACKING
+            </ion-col>
+            <ion-col col-3>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.backing.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ sharedData.getDemeritCount(sharedData.backing) }}</ion-badge>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.backing.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ sharedData.backing.length }}</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-card [hidden]="hideDemerits.backing || sharedData.backing.length == 0">
@@ -248,10 +298,20 @@
 
     <ion-item>
       <div>
-        <ion-icon name="md-cog"></ion-icon>
-        <button ion-button small round style="vertical-align: 5%" (click)="presentShifting()">SHIFTING</button>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.shifting.length)" (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ sharedData.getDemeritCount(sharedData.shifting) }}</ion-badge>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.shifting.length)"  (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ sharedData.shifting.length }}</ion-badge>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+            </ion-col>
+            <ion-col col-8 class="infraction-link" (click)="presentShifting()">
+              SHIFTING
+            </ion-col>
+            <ion-col col-3>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.shifting.length)" (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ sharedData.getDemeritCount(sharedData.shifting) }}</ion-badge>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.shifting.length)" (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ sharedData.shifting.length }}</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-card [hidden]="hideDemerits.shifting || sharedData.shifting.length == 0">
@@ -288,10 +348,20 @@
 
     <ion-item>
       <div>
-        <ion-icon name="md-hand"></ion-icon>
-        <button ion-button small round style="vertical-align: 5%" (click)="presentRightOfWay()">RIGHT OF WAY</button>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.rightOfWay.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ sharedData.getDemeritCount(sharedData.rightOfWay) }}</ion-badge>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.rightOfWay.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ sharedData.rightOfWay.length }}</ion-badge>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+            </ion-col>
+            <ion-col col-8 class="infraction-link" (click)="presentRightOfWay()">
+              RIGHT OF WAY
+            </ion-col>
+            <ion-col col-3>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.rightOfWay.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ sharedData.getDemeritCount(sharedData.rightOfWay) }}</ion-badge>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.rightOfWay.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ sharedData.rightOfWay.length }}</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
   
       <ion-card [hidden]="hideDemerits.rightOfWay || sharedData.rightOfWay.length == 0">
@@ -328,10 +398,20 @@
 
     <ion-item>
       <div>
-        <ion-icon name="md-unlock"></ion-icon>
-        <button ion-button small round style="vertical-align: 5%" (click)="presentUncoupling()">UNCOUPLING</button>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.uncoupling.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ sharedData.getDemeritCount(sharedData.uncoupling) }}</ion-badge>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.uncoupling.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ sharedData.uncoupling.length }}</ion-badge>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+            </ion-col>
+            <ion-col col-8 class="infraction-link" (click)="presentUncoupling()">
+              UNCOUPLING
+            </ion-col>
+            <ion-col col-3>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.uncoupling.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ sharedData.getDemeritCount(sharedData.uncoupling) }}</ion-badge>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.uncoupling.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ sharedData.uncoupling.length }}</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-card [hidden]="hideDemerits.uncoupling || sharedData.uncoupling.length == 0">
@@ -368,10 +448,20 @@
 
     <ion-item>
       <div>
-        <ion-icon name="md-lock"></ion-icon>
-        <button ion-button small round style="vertical-align: 5%" (click)="presentCoupling()">COUPLING</button>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.coupling.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ sharedData.getDemeritCount(sharedData.coupling) }}</ion-badge>
-        <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.coupling.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ sharedData.coupling.length }}</ion-badge>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+            </ion-col>
+            <ion-col col-8 class="infraction-link" (click)="presentCoupling()">
+              COUPLING
+            </ion-col>
+            <ion-col col-3>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.coupling.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ sharedData.getDemeritCount(sharedData.coupling) }}</ion-badge>
+              <ion-badge item-end [ngClass]="sharedData.badgeColor(sharedData.coupling.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ sharedData.coupling.length }}</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-card [hidden]="hideDemerits.coupling || sharedData.coupling.length == 0">

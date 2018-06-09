@@ -88,6 +88,11 @@ $SIDEMENU_TRANSPARENCY: rgba(255, 255, 255, 0.4);
 h1 {
     font-family: 'righteous';
     color: white;
+    padding-top: 4px;
+}
+
+h2 {
+    padding-top: 4px;
 }
 
 .card-corners {
@@ -188,7 +193,7 @@ button {
         position: absolute;
         top: 2px;
         right: 4px;
-        opacity: 0.9;
+        opacity: 0.85;
 
         & ~ ion-icon {
             margin-right: 1.2rem;

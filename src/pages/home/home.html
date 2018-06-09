@@ -25,10 +25,12 @@
   <div>
     <img src="../assets/imgs/home.png" class="big-image">
   </div>
-  <div (click)="displayHelp()">
-      <ion-icon name="md-help-circle"></ion-icon>
-      Click here for help
-  </div>
+  <ion-list>
+    <ion-item style="border-bottom:1px solid #DDD">
+      <ion-icon style="color:blue" name="md-help-circle"></ion-icon>
+      <span style="color:blue">Click here for help</span>
+    </ion-item>
+  </ion-list>
 
   <div class="spacer" style="width: 748px; height: 7px;"></div>
 
@@ -41,5 +43,27 @@
     </ion-item>
   </ion-list>
     
-  
+  <ion-list>
+    <ion-item>
+      <ion-icon name="md-close-circle"></ion-icon>
+      Stuart Morse, June 18, 2018
+    </ion-item>
+    <ion-item>
+      <ion-icon name="md-help-circle"></ion-icon>
+      Debra Morse, July 08, 2018
+    </ion-item>
+    <ion-item>
+      <ion-icon name="md-checkmark-circle"></ion-icon>
+      Aliyah Morse, May 12, 2018
+    </ion-item>
+    <ion-item>
+      <ion-icon name="md-help-circle"></ion-icon>
+      Kevin Sales, June 18, 2018
+    </ion-item>
+    <ion-item>
+      <ion-icon name="md-checkmark-circle"></ion-icon>
+      Warren Windells, August 13, 2018
+    </ion-item>
+  </ion-list>
+    
 </ion-content>
