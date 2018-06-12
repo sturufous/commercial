@@ -32,7 +32,9 @@ export class ShareProvider {
         let count: number = 0;
     
         for (let idx=0; idx < infractionType.length; idx++) {
-          count += eval(infractionType[idx].demerits);
+            if (infractionType[idx] !== null) {
+                count += eval(infractionType[idx].demerits);
+            }
         }
     
         return count;

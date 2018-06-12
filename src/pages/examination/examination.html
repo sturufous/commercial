@@ -87,7 +87,7 @@
                 </ion-item>
                 <ion-item-options side="right">
                     <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.leftTurn)">Delete</button>
-                    <button ion-button>Display</button>
+                    <button ion-button (click)="presentDemerits(item)">Display</button>
                 </ion-item-options>
               </ion-item-sliding>
             </ion-list>

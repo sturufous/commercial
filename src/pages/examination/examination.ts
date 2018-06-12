@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
+import { Geolocation } from '@ionic-native/geolocation';
 
 /**
  * Generated class for the ExaminationPage page.
@@ -32,16 +33,18 @@ export class ExaminationPage {
   myClass: any = 'bad';
 
   alertCtrl: AlertController;
-
   sharedData: ShareProvider;
+  geolocation: Geolocation;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               alertCtrl: AlertController,
-              shareProvider: ShareProvider, 
+              shareProvider: ShareProvider,
+              geolocation: Geolocation 
             ) {
     this.alertCtrl = alertCtrl;
     this.sharedData = shareProvider;
+    this.geolocation = geolocation;
   }
 
   deleteInfraction(infraction, infractions) {
@@ -104,7 +107,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.leftTurn.push(this.getDemeritObject(data));
+              this.sharedData.leftTurn.push(this.getDemeritObject(data, this.sharedData.leftTurn));
               console.log("Left turn = " + JSON.stringify(this.sharedData.leftTurn));
               return true;
             }
@@ -157,7 +160,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.rightTurn.push(this.getDemeritObject(data));
+              this.sharedData.rightTurn.push(this.getDemeritObject(data, this.sharedData.rightTurn));
               console.log("Right turn = " + JSON.stringify(this.sharedData.rightTurn));
               return true;
             }
@@ -252,7 +255,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.roadPosition.push(this.getDemeritObject(data));
+              this.sharedData.roadPosition.push(this.getDemeritObject(data, this.sharedData.roadPosition));
               console.log("Road position = " + JSON.stringify(this.sharedData.roadPosition));
               return true;
             }
@@ -326,7 +329,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.speed.push(this.getDemeritObject(data));
+              this.sharedData.speed.push(this.getDemeritObject(data, this.sharedData.speed));
               console.log("Speed = " + JSON.stringify(this.sharedData.speed));
               return true;
             }
@@ -379,7 +382,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.backing.push(this.getDemeritObject(data));
+              this.sharedData.backing.push(this.getDemeritObject(data, this.sharedData.backing));
               console.log("Backing = " + JSON.stringify(this.sharedData.backing));
               return true;
             }
@@ -432,7 +435,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.shifting.push(this.getDemeritObject(data));
+              this.sharedData.shifting.push(this.getDemeritObject(data, this.sharedData.shifting));
               console.log("Shifting = " + JSON.stringify(this.sharedData.shifting));
               return true;
             }
@@ -485,7 +488,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.rightOfWay.push(this.getDemeritObject(data));
+              this.sharedData.rightOfWay.push(this.getDemeritObject(data, this.sharedData.rightOfWay));
               console.log("Right of way = " + JSON.stringify(this.sharedData.rightOfWay));
               return true;
             }
@@ -531,7 +534,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.uncoupling.push(this.getDemeritObject(data));
+              this.sharedData.uncoupling.push(this.getDemeritObject(data, this.sharedData.uncoupling));
               console.log("Uncoupling = " + JSON.stringify(this.sharedData.uncoupling));
               return true;
             }
@@ -591,7 +594,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.coupling.push(this.getDemeritObject(data));
+              this.sharedData.coupling.push(this.getDemeritObject(data, this.sharedData.coupling));
               console.log("Coupling = " + JSON.stringify(this.sharedData.coupling));
               return true;
             }
@@ -602,17 +605,53 @@ export class ExaminationPage {
     alert.present();
   }
 
-  getDemeritObject(data) {
+    presentDemerits(demeritObject) {
+    let alert = this.alertCtrl.create({
+      title: 'DRIVING INCIDENT',
+      subTitle: demeritObject.value,
+      message: '<p>' + demeritObject.time + '<br>Demerits: ' +
+        demeritObject.demerits + '<br>Latitude: ' +
+        demeritObject.latitude + '<br>Longitude: ' +
+        demeritObject.longitude,
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
+
+  getDemeritObject(data, arr) {
 
     if (data != undefined) {
       let delimLoc = data.indexOf('#');
       let description = data.substring(0, delimLoc);
       let demerits = data.substring(delimLoc+1, data.length);
+      let currTime = new Date();
 
-      return {value: description, time: new Date(), demerits: demerits}
+      this.geolocation.getCurrentPosition().then((resp) => {
+        this.setDemeritObjLocation(currTime, resp, arr);
+        console.log("Lat: " + resp.coords.latitude);
+        console.log("Lon: " + resp.coords.longitude)
+      });
+
+      return {
+        value: description, 
+        time: currTime, 
+        demerits: demerits, 
+        latitude: 0, 
+        longitude: 0
+      }
     } 
 
     return null;
+  }
+
+  setDemeritObjLocation(currTime, location, arr) {
+
+    for (let idx = 0; idx < arr.length; idx++) {
+      if (arr[idx].time == currTime) {
+        arr[idx].latitude = location.coords.latitude;
+        arr[idx].longitude = location.coords.longitude;
+      }
+    }
   }
 
   ionViewDidLoad() {

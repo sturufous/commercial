@@ -13,6 +13,7 @@ import { ShareProvider } from '../providers/share/share';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TextMaskModule } from 'angular2-text-mask';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { TextMaskModule } from 'angular2-text-mask';
   ],
   providers: [
     StatusBar,
+    Geolocation,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ShareProvider
