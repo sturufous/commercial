@@ -14,6 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TextMaskModule } from 'angular2-text-mask';
 import { Geolocation } from '@ionic-native/geolocation';
+import { CommercialDbProvider } from '../providers/commercial-db/commercial-db';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     Geolocation,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ShareProvider
+    ShareProvider,
+    CommercialDbProvider
   ]
 })
 export class AppModule {}

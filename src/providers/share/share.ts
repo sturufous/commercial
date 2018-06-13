@@ -63,5 +63,5 @@ export class ShareProvider {
         } else {
           return 'bad';
         }
-    }    
+    }
 }

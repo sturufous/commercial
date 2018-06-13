@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
 import { Geolocation } from '@ionic-native/geolocation';
+import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
 
 /**
  * Generated class for the ExaminationPage page.
@@ -35,12 +36,13 @@ export class ExaminationPage {
   alertCtrl: AlertController;
   sharedData: ShareProvider;
   geolocation: Geolocation;
+  dbProvider: CommercialDbProvider;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               alertCtrl: AlertController,
               shareProvider: ShareProvider,
-              geolocation: Geolocation 
+              geolocation: Geolocation,
             ) {
     this.alertCtrl = alertCtrl;
     this.sharedData = shareProvider;
@@ -620,7 +622,7 @@ export class ExaminationPage {
 
   getDemeritObject(data, arr) {
 
-    if (data != undefined) {
+    if (data !== undefined) {
       let delimLoc = data.indexOf('#');
       let description = data.substring(0, delimLoc);
       let demerits = data.substring(delimLoc+1, data.length);

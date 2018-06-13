@@ -8,9 +8,8 @@
   <ion-fab bottom right>
     <button ion-fab color="primary"><ion-icon name="md-arrow-dropleft" style="font-size:30pt"></ion-icon></button>
     <ion-fab-list side="left">
-      <button ion-fab (click)="viewPresets()"><ion-icon name="md-list"></ion-icon></button>
-      <button ion-fab (click)="fireNeuron()"><ion-icon name="ios-flash"></ion-icon></button>
-      <button ion-fab (click)="this.neuron.resetVariables()"><ion-icon name="md-refresh"></ion-icon></button>
+      <button ion-fab (click)="newCandidate()"><ion-icon name="md-add"></ion-icon></button>
+      <button ion-fab (click)="resetVariables()"><ion-icon name="md-refresh"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
   <ion-list class="page-header card-corners">
@@ -39,31 +38,21 @@
       <ion-avatar item-start style="margin-top: 0">
         <img src="../assets/imgs/truck1.png">
       </ion-avatar>
-      <h2>Client List</h2>
+      <h2>Candidate List</h2>
     </ion-item>
   </ion-list>
     
   <ion-list>
-    <ion-item>
-      <ion-icon name="md-close-circle"></ion-icon>
-      Stuart Morse, June 18, 2018
-    </ion-item>
-    <ion-item>
-      <ion-icon name="md-help-circle"></ion-icon>
-      Debra Morse, July 08, 2018
-    </ion-item>
-    <ion-item>
-      <ion-icon name="md-checkmark-circle"></ion-icon>
-      Aliyah Morse, May 12, 2018
-    </ion-item>
-    <ion-item>
-      <ion-icon name="md-help-circle"></ion-icon>
-      Kevin Sales, June 18, 2018
-    </ion-item>
-    <ion-item>
-      <ion-icon name="md-checkmark-circle"></ion-icon>
-      Warren Windells, August 13, 2018
-    </ion-item>
+    <ion-item-sliding *ngFor="let item of candidates">
+      <ion-item>
+        <ion-icon name="md-close-circle"></ion-icon>
+        {{ item.name }} 
+      </ion-item>
+      <ion-item-options side="right">
+          <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.leftTurn)">Delete</button>
+          <button ion-button (click)="presentDemerits(item)">Display</button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
     
 </ion-content>
