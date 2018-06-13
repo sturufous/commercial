@@ -29,7 +29,7 @@
 
 <ion-content padding>
   <ion-fab bottom right>
-    <button ion-fab (click)="save()" color="primary"><ion-icon name="disc" style="font-size:30pt"></ion-icon></button>
+    <button ion-fab (click)="save()" color="primary"><ion-icon name="md-bookmark" style="font-size:30pt;color:white"></ion-icon></button>
   </ion-fab>
   <ion-list class="page-header card-corners">
     <ion-item class="item-trns">
@@ -64,7 +64,7 @@
   
     <ion-item-divider color="light"><h2>CLIENT DETAILS</h2></ion-item-divider>
 
-    <form [formGroup]="client">
+    <form [formGroup]="sharedData.client">
       <ion-item>
         <ion-label floating>DL Number:</ion-label>
         <ion-input [textMask]="{mask: masks.dlNumber}" formControlName="dlNumber"></ion-input>
@@ -84,7 +84,7 @@
 
   <ion-list>
     <ion-item-divider color="light"><h2>EXAMINER DETAILS</h2></ion-item-divider>
-     <form [formGroup]="examiner">
+     <form [formGroup]="sharedData.examiner">
         <ion-item>
           <ion-label floating>Appt Time:</ion-label>
           <ion-datetime formControlName="apptTime" displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>

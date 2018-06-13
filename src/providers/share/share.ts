@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /*
   Generated class for the ShareProvider provider.
@@ -21,11 +22,18 @@ export class ShareProvider {
     uncoupling: any = [];
     coupling: any = [];
 
-    licenseClass: any = '1';
+    examLoadedFromDB: any = null;
+    client: FormGroup;
+    examiner: FormGroup;
 
-    client = {
-        'dlNumber': ''
-    }
+    currentExam = {
+        _id: null,
+        _rev: null,
+        client: null,
+        examiner: null
+    };
+
+    licenseClass: any = '1';
 
     getDemeritCount(infractionType) {
 
@@ -62,6 +70,19 @@ export class ShareProvider {
           return 'good';
         } else {
           return 'bad';
+        }
+    }
+
+    initializeExam() {
+
+        if (this.examLoadedFromDB == null) {
+            this.currentExam.client = null;
+            this.currentExam.examiner = null; 
+        } else {
+            this.currentExam.client = this.examLoadedFromDB.client;
+            this.currentExam.examiner = this.examLoadedFromDB.examiner;
+            this.currentExam._id = this.examLoadedFromDB.id;
+            this.currentExam._rev = this.examLoadedFromDB.rev;
         }
     }
 }

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 
@@ -16,8 +15,6 @@ export class CommercialDbProvider {
   data: any;
 
   constructor() {
-    console.log('Hello CommercialDbProvider Provider');
-
     this.db = new PouchDB('commercial-db');
     this.remote = "https://1801a103-f342-4909-8289-42b1f4c948fa-bluemix.cloudant.com/commercial-db";
   
@@ -30,7 +27,7 @@ export class CommercialDbProvider {
     this.db.sync(this.remote, options);
   }
 
-  getCandidates() {
+  getExams() {
  
     if (this.data) {
       return Promise.resolve(this.data);
@@ -91,18 +88,29 @@ export class CommercialDbProvider {
     }
   }
 
-  createCandidate(candidate){
-      this.db.post(candidate);
-  }
-    
-  updateCandidate(candidate){
-      this.db.put(candidate).catch((err) => {
+  createExam(exam) {
+      console.log("In createExam")
+      this.db.post(exam).then((response) => {
+        exam._id = response.id;
+        exam._rev = response.rev;
+        console.log("post response = " + JSON.stringify(response));
+      }).catch((err) => {
         console.log(err);
       });
   }
     
-  deleteTodo(candidate){
-      this.db.remove(candidate).catch((err) => {
+  updateExam(exam) {
+      this.db.put(exam).then((response) => {
+        exam._id = response.id;
+        exam._rev = response.rev;
+        console.log("put response = " + JSON.stringify(response));
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+    
+  deleteExam(exam){
+      this.db.remove(exam).catch((err) => {
         console.log(err);
       });
   }

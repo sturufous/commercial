@@ -12,7 +12,7 @@ import { CommercialDbProvider } from '../../providers/commercial-db/commercial-d
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+//@IonicPage()
 @Component({
   selector: 'page-examination',
   templateUrl: 'examination.html',
