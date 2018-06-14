@@ -167,8 +167,21 @@ ion-icon {
     padding-left: 5px;
 }
 
-.good {
+.demerit-circle {
     background-color: #32db64;
+    color:white;
+    height:30px;
+    width:30px;
+    border-radius:50%;
+    text-align: center;
+    padding-top: 5px;
+    font-weight: bold;
+    float: right;
+    margin: 0;
+}
+
+.good {
+    background-color: #32bd64;
     float: right;
     margin: 0;
 }

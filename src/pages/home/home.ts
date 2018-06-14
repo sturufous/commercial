@@ -35,7 +35,7 @@ export class HomePage {
   newExam() {
     this.sharedData.initializeExam();
     this.dbProvider.createExam(this.sharedData.currentExam);
-    this.navCtrl.setRoot(DetailsPage);
+    this.navCtrl.push(DetailsPage);
   }
 
   deleteExam(exam) {

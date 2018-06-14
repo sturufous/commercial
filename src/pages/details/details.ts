@@ -9,6 +9,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
+import { ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the DetailsPage page.
@@ -68,8 +69,12 @@ export class DetailsPage {
       if (Object.getOwnPropertyNames(navparams.data).length !== 0) {
         console.log("Shouldn't get here")
         this.sharedData.currentExam._id = navparams.data._id;
-        this.sharedData.currentExam._rev = navparams.data._rev;  
-        this.sharedData.examiner.setValue(navparams.data.examiner);
+        this.sharedData.currentExam._rev = navparams.data._rev;
+
+        // Don't load data if the record is blank (just created)
+        if (navparams.data.examiner.apptDate != '') {
+          this.sharedData.examiner.setValue(navparams.data.examiner);
+        }
         this.sharedData.client.setValue(navparams.data.client);
       }
 
@@ -89,17 +94,16 @@ export class DetailsPage {
     this.submitAttempt = true;
     console.log("Entering save");
     if (!this.sharedData.client.valid) {
-      return {
-        "bad client": true
-      }
+      this.sharedData.presentToast("Client data not valid");
+      return {};
     } else if (!this.sharedData.examiner.valid) {
-      return {
-        "bad examiner": true
-      }
+      this.sharedData.presentToast("Examination data not valid");
+      return {};
     }
     
     this.sharedData.currentExam.client = this.sharedData.client.value;
     this.sharedData.currentExam.examiner = this.sharedData.examiner.value;
+    this.sharedData.presentToast("Exam saved successfully");
     console.log(JSON.stringify(this.sharedData.currentExam));
     this.dbProvider.updateExam(this.sharedData.currentExam);
   }

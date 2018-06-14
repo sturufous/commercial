@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastController } from 'ionic-angular';
 
 /*
   Generated class for the ShareProvider provider.
@@ -25,6 +26,7 @@ export class ShareProvider {
     examLoadedFromDB: any = null;
     client: FormGroup;
     examiner: FormGroup;
+    toastControl: ToastController;
 
     currentExam = {
         _id: null,
@@ -34,6 +36,10 @@ export class ShareProvider {
     };
 
     licenseClass: any = '1';
+
+    constructor(toastControl: ToastController) {
+        this.toastControl = toastControl;
+    }
 
     getDemeritCount(infractionType) {
 
@@ -76,8 +82,19 @@ export class ShareProvider {
     initializeExam() {
 
         if (this.examLoadedFromDB == null) {
-            this.currentExam.client = null;
-            this.currentExam.examiner = null; 
+            this.currentExam.client = {
+                dlNumber: '',
+                surname: 'undefined', 
+                givenName: 'undefined'
+            };
+            this.currentExam.examiner = {
+                apptDate: '', 
+                apptTime: '',
+                unit: '',
+                route: '',
+                telephone: '',
+                initials: ''
+            }; 
         } else {
             this.currentExam.client = this.examLoadedFromDB.client;
             this.currentExam.examiner = this.examLoadedFromDB.examiner;
@@ -85,4 +102,13 @@ export class ShareProvider {
             this.currentExam._rev = this.examLoadedFromDB.rev;
         }
     }
+
+    presentToast(message) {
+        const toast = this.toastControl.create({
+          message: message,
+          duration: 3000
+        });
+        toast.present();
+    }
+    
 }
