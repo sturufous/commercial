@@ -42,74 +42,81 @@
 
   <div class="spacer" style="width: 748px; height: 7px;"></div>
 
-  <ion-list>
-    <ion-item-divider color="light"><h2>CLASS OF ROAD TEST</h2></ion-item-divider>
-    <ion-slides #testSlider (ionSlideDidChange)="slideChanged(this)" pager>
-      <ion-slide>
-        <img src="../assets/imgs/class-1-slide.png">
-      </ion-slide>
-      <ion-slide>
-        <img src="../assets/imgs/class-3-slide.png">
-      </ion-slide>
-      <ion-slide>
-          <img src="../assets/imgs/class-2-slide.png">
-      </ion-slide>
-      <ion-slide>
-        <img src="../assets/imgs/class-4U-slide.png">
-      </ion-slide>
-      <ion-slide>
-        <img src="../assets/imgs/class-4-17-slide.png">
-      </ion-slide>
-    </ion-slides>
-  
-    <ion-item-divider color="light"><h2>CLIENT DETAILS</h2></ion-item-divider>
-
-    <form [formGroup]="sharedData.client">
-      <ion-item>
-        <ion-label floating>DL Number:</ion-label>
-        <ion-input [textMask]="{mask: masks.dlNumber}" formControlName="dlNumber"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Surname:</ion-label>
-        <ion-input formControlName="surname" type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label floating>Given Name:</ion-label>
-          <ion-input formControlName="givenName" type="text"></ion-input>
-        </ion-item>
-      </form>
-  </ion-list>
+  <ion-card>
+      <ion-item-divider color="light"><h2>CLASS OF ROAD TEST</h2></ion-item-divider>
+      <ion-slides #testSlider (ionSlideDidChange)="slideChanged(this)" pager>
+        <ion-slide>
+          <img src="../assets/imgs/class-1-slide.png">
+        </ion-slide>
+        <ion-slide>
+          <img src="../assets/imgs/class-3-slide.png">
+        </ion-slide>
+        <ion-slide>
+            <img src="../assets/imgs/class-2-slide.png">
+        </ion-slide>
+        <ion-slide>
+          <img src="../assets/imgs/class-4U-slide.png">
+        </ion-slide>
+        <ion-slide>
+          <img src="../assets/imgs/class-4-17-slide.png">
+        </ion-slide>
+      </ion-slides>
+  </ion-card>
 
   <div class="spacer" style="width: 748px; height: 10px;"></div>
-
-  <ion-list>
-    <ion-item-divider color="light"><h2>EXAMINER DETAILS</h2></ion-item-divider>
-     <form [formGroup]="sharedData.examiner">
+  
+  <ion-card>
+  <ion-item-divider color="light"><h2>CLIENT DETAILS</h2></ion-item-divider>
+    <ion-list>
+      <form [formGroup]="sharedData.client">
         <ion-item>
-          <ion-label floating>Appt Time:</ion-label>
-          <ion-datetime formControlName="apptTime" displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>
+          <ion-label floating>DL Number:</ion-label>
+          <ion-input [textMask]="{mask: masks.dlNumber}" formControlName="dlNumber"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label floating>Unit / ESP School:</ion-label>
-          <ion-input formControlName="unit" type="text"></ion-input>
+          <ion-label floating>Surname:</ion-label>
+          <ion-input formControlName="surname" type="text"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label floating>Route Number:</ion-label>
-          <ion-input formControlName="route" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Appt Date:</ion-label>
-          <ion-datetime formControlName="apptDate" displayFormat="MM/DD/YYYY"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Home Office:</ion-label>
-          <ion-input type="tel" [textMask]="{mask: masks.phoneNumber}" formControlName="telephone"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>DE Initials:</ion-label>
-            <ion-input formControlName="initials" type="text"></ion-input>
+            <ion-label floating>Given Name:</ion-label>
+            <ion-input formControlName="givenName" type="text"></ion-input>
           </ion-item>
         </form>
     </ion-list>
+  </ion-card>
+
+  <div class="spacer" style="width: 748px; height: 10px;"></div>
+
+  <ion-card>
+    <ion-list>
+      <ion-item-divider color="light"><h2>EXAMINER DETAILS</h2></ion-item-divider>
+      <form [formGroup]="sharedData.examiner">
+          <ion-item>
+            <ion-label floating>Appt Time:</ion-label>
+            <ion-datetime formControlName="apptTime" displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Unit / ESP School:</ion-label>
+            <ion-input formControlName="unit" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Route Number:</ion-label>
+            <ion-input formControlName="route" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Appt Date:</ion-label>
+            <ion-datetime formControlName="apptDate" displayFormat="MM/DD/YYYY"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Home Office:</ion-label>
+            <ion-input type="tel" [textMask]="{mask: masks.phoneNumber}" formControlName="telephone"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>DE Initials:</ion-label>
+              <ion-input formControlName="initials" type="text"></ion-input>
+            </ion-item>
+          </form>
+      </ion-list>
+    </ion-card>
   
 </ion-content>

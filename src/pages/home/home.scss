@@ -14,4 +14,13 @@ page-home {
     ion-label {
         color: #555;
     }
+
+    .card-md {
+        margin: 0;
+        width: 100%;
+    }
+
+    .ion-item {
+        border-bottom: 1px solid #555;
+    }
 }

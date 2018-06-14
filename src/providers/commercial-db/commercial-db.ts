@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
+import { ToastController } from 'ionic-angular';
 
 /*
   Generated class for the CommercialDbProvider provider.
@@ -13,11 +14,13 @@ export class CommercialDbProvider {
   db: any;
   remote: any;
   data: any;
+  toastControl: ToastController;
 
-  constructor() {
+  constructor(toastControl: ToastController) {
     this.db = new PouchDB('commercial-db');
     this.remote = "https://1801a103-f342-4909-8289-42b1f4c948fa-bluemix.cloudant.com/commercial-db";
-  
+    this.toastControl = toastControl;
+
     let options = {
       live: true,
       retry: true,
@@ -104,6 +107,7 @@ export class CommercialDbProvider {
         exam._id = response.id;
         exam._rev = response.rev;
         console.log("put response = " + JSON.stringify(response));
+        this.presentToast("User saved successfully");
       }).catch((err) => {
         console.log(err);
       });
@@ -114,4 +118,13 @@ export class CommercialDbProvider {
         console.log(err);
       });
   }
+
+  presentToast(message) {
+    const toast = this.toastControl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
+  }
+
 }

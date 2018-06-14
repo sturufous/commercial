@@ -16,16 +16,20 @@
       <h1>Commercial Vehicle Road Test</h1>
     </ion-item>
   </ion-list>
+
   <div class="spacer" style="width: 748px; height: 7px;"></div>
-  <div>
-    <img src="../assets/imgs/home.png" class="big-image">
-  </div>
-  <ion-list>
-    <ion-item style="border-bottom:1px solid #DDD">
-      <ion-icon style="color:blue" name="md-help-circle"></ion-icon>
-      <span style="color:blue">Click here for help</span>
-    </ion-item>
-  </ion-list>
+
+  <ion-card>
+    <div>
+      <img src="../assets/imgs/home.png" class="big-image">
+    </div>
+    <ion-list>
+      <ion-item style="border-bottom:1px solid #DDD">
+        <ion-icon style="color:blue" name="md-help-circle"></ion-icon>
+        <span style="color:blue">Click here for help</span>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 
   <div class="spacer" style="width: 748px; height: 7px;"></div>
 
@@ -38,16 +42,18 @@
     </ion-item>
   </ion-list>
     
-  <ion-list>
-    <ion-item-sliding *ngFor="let item of exams">
-      <ion-item (click)="openExam(item)">
-        <ion-icon name="md-close-circle"></ion-icon>
-        {{ item.client.givenName }} {{ item.client.surname }}, {{ item.examiner.apptDate }} 
-      </ion-item>
-      <ion-item-options side="right">
-          <button ion-button color="danger" (click)="deleteExam(item)">Delete</button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+  <ion-card>
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of exams">
+        <ion-item (click)="openExam(item)">
+          <ion-icon name="md-close-circle"></ion-icon>
+          {{ item.client.givenName }} {{ item.client.surname }}, {{ item.examiner.apptDate }} 
+        </ion-item>
+        <ion-item-options side="right">
+            <button ion-button color="danger" (click)="deleteExam(item)">Delete</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-card>
     
 </ion-content>

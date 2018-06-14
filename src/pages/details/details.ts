@@ -50,15 +50,11 @@ export class DetailsPage {
 
       console.log("Navparams = " + JSON.stringify(navparams));
 
-      this.sharedData.currentExam._id = navparams.data._id;
-      this.sharedData.currentExam._rev = navparams.data._rev;
-
       this.sharedData.client = formBuilder.group({
         dlNumber: ['DL:1234567'],
         surname: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
         givenName: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
       })
-      this.sharedData.client.setValue(navparams.data.client);
 
       this.sharedData.examiner = formBuilder.group({
         apptTime: ['17:22', Validators.compose([Validators.required])],
@@ -68,7 +64,14 @@ export class DetailsPage {
         telephone: ['(250) 658-8104', Validators.compose([Validators.required])],
         initials: ['SM', Validators.compose([Validators.maxLength(3), Validators.required])]
       });
-      this.sharedData.examiner.setValue(navparams.data.examiner);
+
+      if (Object.getOwnPropertyNames(navparams.data).length !== 0) {
+        console.log("Shouldn't get here")
+        this.sharedData.currentExam._id = navparams.data._id;
+        this.sharedData.currentExam._rev = navparams.data._rev;  
+        this.sharedData.examiner.setValue(navparams.data.examiner);
+        this.sharedData.client.setValue(navparams.data.client);
+      }
 
       this.masks = {
         dlNumber: ['D', 'L', ':', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
