@@ -607,13 +607,21 @@ export class ExaminationPage {
     alert.present();
   }
 
-    presentDemerits(demeritObject) {
+  presentDemerits(demeritObject) {
+    let dt = demeritObject.time.toString();
+    let date: any = '';
+    let idx = dt.indexOf('GMT');
+
+    if (idx != -1) {
+      date = dt.substring(0, idx);
+    }
+
     let alert = this.alertCtrl.create({
       title: 'DRIVING INCIDENT',
       subTitle: demeritObject.value,
-      message: '<p>' + demeritObject.time + '<br>Demerits: ' +
-        demeritObject.demerits + '<br>Latitude: ' +
-        demeritObject.latitude + '<br>Longitude: ' +
+      message: '<p>' + date + '<br><br>Demerits: ' +
+        demeritObject.demerits + ' Points<br><br>Latitude:<br>' +
+        demeritObject.latitude + '<br><br>Longitude:<br>' +
         demeritObject.longitude,
       buttons: ['Dismiss']
     });

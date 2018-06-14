@@ -8,7 +8,7 @@
 
   <ion-navbar>
     <div class="header-title">
-      <ion-title>Examination</ion-title>
+      <ion-title>{{ sharedData.client.get('givenName').value }} {{ sharedData.client.get('surname').value }}</ion-title>
     </div>
     <div style="float: right">
       <button ion-button icon-only clear>
@@ -25,16 +25,14 @@
       </button>
     </div>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <ion-fab bottom right>
-    <button ion-fab (click)="save()" color="primary"><ion-icon name="md-bookmark" color="light" style="font-size:30pt"></ion-icon></button>
+    <button ion-fab (click)="save()" color="primary"><ion-icon name="md-bookmark" color="light" style="font-size:24pt"></ion-icon></button>
   </ion-fab>
   <ion-list class="page-header card-corners">
-    <ion-item class="item-trns">
+    <ion-item class="item-trns" style="border: 0">
       <ion-avatar item-start>
         <img src="../assets/imgs/truck1.png">
       </ion-avatar>
@@ -44,7 +42,9 @@
 
   <div class="spacer" style="width: 748px; height: 7px;"></div>
   
+  <ion-card>
   <ion-list>
+    <ion-item-divider color="light"><h2>INFRACTION SUMMARY</h2></ion-item-divider>
     <ion-item>
       <div>
         <ion-grid>
@@ -487,4 +487,5 @@
       </ion-card>   
     </ion-item>
   </ion-list>
+  </ion-card>
 </ion-content>

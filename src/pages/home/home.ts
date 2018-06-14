@@ -33,9 +33,28 @@ export class HomePage {
   }
 
   newExam() {
-    this.sharedData.initializeExam();
-    this.dbProvider.createExam(this.sharedData.currentExam);
-    this.navCtrl.push(DetailsPage);
+    let examTemplate = {client:null, examiner:null};
+
+    examTemplate.client = {
+        dlNumber: 'DL:1234567',
+        surname: '', 
+        givenName: ''
+    };
+    examTemplate.examiner = {
+        apptDate: new Date(), 
+        apptTime: '12:30',
+        unit: '345',
+        route: '4',
+        telephone: '(250) 661-2008',
+        initials: 'SM'
+    }; 
+
+    this.dbProvider.createExam(examTemplate);
+    this.sharedData.client.setValue(examTemplate.client);
+    this.sharedData.examiner.setValue(examTemplate.examiner);
+    this.sharedData.detailsTabEnabled = true;
+    this.sharedData.examinationTabEnabled = true;
+    this.navCtrl.parent.select(1); // Jump to Details tab
   }
 
   deleteExam(exam) {
@@ -43,7 +62,14 @@ export class HomePage {
   }
 
   openExam(exam) {
-    this.navCtrl.setRoot(DetailsPage, exam);
+    this.sharedData.detailsTabEnabled = true;
+    this.sharedData.examinationTabEnabled = true;
+    console.log("openExam: " + JSON.stringify(exam));
+    this.sharedData.currentExam = exam;
+
+    this.sharedData.client.setValue(exam.client);
+    this.sharedData.examiner.setValue(exam.examiner);
+    this.navCtrl.parent.select(1);
   }
 
   ionViewDidLoad() {

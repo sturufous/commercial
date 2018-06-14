@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
+import { ShareProvider } from '../share/share';
 
 /*
   Generated class for the CommercialDbProvider provider.
@@ -14,9 +15,12 @@ export class CommercialDbProvider {
   remote: any;
   data: any;
 
-  constructor() {
+  sharedData: ShareProvider;
+
+  constructor(shareProvider: ShareProvider) {
     this.db = new PouchDB('commercial-db');
     this.remote = "https://1801a103-f342-4909-8289-42b1f4c948fa-bluemix.cloudant.com/commercial-db";
+    this.sharedData = shareProvider;
 
     let options = {
       live: true,
@@ -88,22 +92,24 @@ export class CommercialDbProvider {
     }
   }
 
-  createExam(exam) {
+  createExam(exam) { 
       console.log("In createExam")
       this.db.post(exam).then((response) => {
-        exam._id = response.id;
-        exam._rev = response.rev;
-        console.log("post response = " + JSON.stringify(response));
+        this.sharedData.currentExam._id = response.id;
+        this.sharedData.currentExam._rev = response.rev;
+        this.sharedData.currentExam.client = response.client;
+        this.sharedData.currentExam.examiner = response.examiner;
+       console.log("post currentExam = " + JSON.stringify(this.sharedData.currentExam));
       }).catch((err) => {
         console.log(err);
       });
   }
     
-  updateExam(exam) {
+  updateExam(exam) { 
       this.db.put(exam).then((response) => {
-        exam._id = response.id;
-        exam._rev = response.rev;
-        console.log("put response = " + JSON.stringify(response));
+        this.sharedData.currentExam._id = response.id;
+        this.sharedData.currentExam._rev = response.rev;
+        console.log("put currentExam = " + JSON.stringify(this.sharedData.currentExam));
       }).catch((err) => {
         console.log(err);
       });

@@ -17,7 +17,7 @@
     </ion-item>
   </ion-list>
 
-  <div class="spacer" style="width: 748px; height: 7px;"></div>
+  <div class="spacer" style="width: 748px; height: 4px;"></div>
 
   <ion-card>
     <div>
@@ -47,7 +47,7 @@
       <ion-item-sliding *ngFor="let item of exams">
         <ion-item (click)="openExam(item)">
           <ion-icon name="md-close-circle"></ion-icon>
-          {{ item.client.givenName }} {{ item.client.surname }}, {{ item.examiner.apptDate }} 
+          {{ item.client.givenName }} {{ item.client.surname }}, {{ item.examiner.apptDate | date: 'mediumTime' }} 
         </ion-item>
         <ion-item-options side="right">
             <button ion-button color="danger" (click)="deleteExam(item)">Delete</button>

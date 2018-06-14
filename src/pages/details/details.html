@@ -8,7 +8,7 @@
 
   <ion-navbar>
     <div class="header-title">
-      <ion-title>Details</ion-title>
+      <ion-title>{{ sharedData.client.get('givenName').value }} {{ sharedData.client.get('surname').value }}</ion-title>
     </div>
     <div style="float: right">
       <button ion-button icon-only clear>
@@ -29,7 +29,7 @@
 
 <ion-content padding>
   <ion-fab bottom right>
-    <button ion-fab (click)="save()" color="primary"><ion-icon name="md-bookmark" style="font-size:30pt;color:white"></ion-icon></button>
+    <button ion-fab (click)="save()" color="primary"><ion-icon name="md-bookmark" style="font-size:24pt;color:white"></ion-icon></button>
   </ion-fab>
   <ion-list class="page-header card-corners">
     <ion-item class="item-trns">

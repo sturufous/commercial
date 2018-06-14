@@ -28,6 +28,10 @@ export class ShareProvider {
     examiner: FormGroup;
     toastControl: ToastController;
 
+    homeTabEnabled: boolean = true;
+    detailsTabEnabled: boolean = false;
+    examinationTabEnabled: boolean = false;
+
     currentExam = {
         _id: null,
         _rev: null,
@@ -37,8 +41,24 @@ export class ShareProvider {
 
     licenseClass: any = '1';
 
-    constructor(toastControl: ToastController) {
+    constructor(toastControl: ToastController,
+                formBuilder: FormBuilder) {
         this.toastControl = toastControl;
+
+        this.client = formBuilder.group({
+            dlNumber: [''],
+            surname: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+            givenName: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
+        })
+    
+        this.examiner = formBuilder.group({
+            apptTime: ['', Validators.compose([Validators.required])],
+            unit: ['', Validators.compose([Validators.maxLength(10), Validators.required])],
+            route: ['', Validators.compose([Validators.maxLength(10), Validators.required])],
+            apptDate: ['', Validators.compose([Validators.required])],
+            telephone: ['', Validators.compose([Validators.required])],
+            initials: ['', Validators.compose([Validators.maxLength(3), Validators.required])]
+        });
     }
 
     getDemeritCount(infractionType) {
@@ -79,34 +99,10 @@ export class ShareProvider {
         }
     }
 
-    initializeExam() {
-
-        if (this.examLoadedFromDB == null) {
-            this.currentExam.client = {
-                dlNumber: '',
-                surname: 'undefined', 
-                givenName: 'undefined'
-            };
-            this.currentExam.examiner = {
-                apptDate: '', 
-                apptTime: '',
-                unit: '',
-                route: '',
-                telephone: '',
-                initials: ''
-            }; 
-        } else {
-            this.currentExam.client = this.examLoadedFromDB.client;
-            this.currentExam.examiner = this.examLoadedFromDB.examiner;
-            this.currentExam._id = this.examLoadedFromDB.id;
-            this.currentExam._rev = this.examLoadedFromDB.rev;
-        }
-    }
-
-    presentToast(message) {
+   presentToast(message) {
         const toast = this.toastControl.create({
           message: message,
-          duration: 3000
+          duration: 1500
         });
         toast.present();
     }
