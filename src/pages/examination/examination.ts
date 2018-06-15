@@ -43,10 +43,12 @@ export class ExaminationPage {
               alertCtrl: AlertController,
               shareProvider: ShareProvider,
               geolocation: Geolocation,
+              dbProvider: CommercialDbProvider
             ) {
     this.alertCtrl = alertCtrl;
     this.sharedData = shareProvider;
     this.geolocation = geolocation;
+    this.dbProvider = dbProvider;
   }
 
   deleteInfraction(infraction, infractions) {
@@ -109,7 +111,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.leftTurn.push(this.getDemeritObject(data, this.sharedData.leftTurn));
+              this.sharedData.leftTurn.infractions.push(this.getDemeritObject(data, this.sharedData.leftTurn));
               console.log("Left turn = " + JSON.stringify(this.sharedData.leftTurn));
               return true;
             }
@@ -162,7 +164,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.rightTurn.push(this.getDemeritObject(data, this.sharedData.rightTurn));
+              this.sharedData.rightTurn.infractions.push(this.getDemeritObject(data, this.sharedData.rightTurn));
               console.log("Right turn = " + JSON.stringify(this.sharedData.rightTurn));
               return true;
             }
@@ -257,7 +259,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.roadPosition.push(this.getDemeritObject(data, this.sharedData.roadPosition));
+              this.sharedData.roadPosition.infractions.push(this.getDemeritObject(data, this.sharedData.roadPosition));
               console.log("Road position = " + JSON.stringify(this.sharedData.roadPosition));
               return true;
             }
@@ -331,7 +333,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.speed.push(this.getDemeritObject(data, this.sharedData.speed));
+              this.sharedData.speed.infractions.push(this.getDemeritObject(data, this.sharedData.speed));
               console.log("Speed = " + JSON.stringify(this.sharedData.speed));
               return true;
             }
@@ -384,7 +386,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.backing.push(this.getDemeritObject(data, this.sharedData.backing));
+              this.sharedData.backing.infractions.push(this.getDemeritObject(data, this.sharedData.backing));
               console.log("Backing = " + JSON.stringify(this.sharedData.backing));
               return true;
             }
@@ -437,7 +439,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.shifting.push(this.getDemeritObject(data, this.sharedData.shifting));
+              this.sharedData.shifting.infractions.push(this.getDemeritObject(data, this.sharedData.shifting));
               console.log("Shifting = " + JSON.stringify(this.sharedData.shifting));
               return true;
             }
@@ -490,7 +492,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.rightOfWay.push(this.getDemeritObject(data, this.sharedData.rightOfWay));
+              this.sharedData.rightOfWay.infractions.push(this.getDemeritObject(data, this.sharedData.rightOfWay));
               console.log("Right of way = " + JSON.stringify(this.sharedData.rightOfWay));
               return true;
             }
@@ -536,7 +538,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.uncoupling.push(this.getDemeritObject(data, this.sharedData.uncoupling));
+              this.sharedData.uncoupling.infractions.push(this.getDemeritObject(data, this.sharedData.uncoupling));
               console.log("Uncoupling = " + JSON.stringify(this.sharedData.uncoupling));
               return true;
             }
@@ -596,7 +598,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.coupling.push(this.getDemeritObject(data, this.sharedData.coupling));
+              this.sharedData.coupling.infractions.push(this.getDemeritObject(data, this.sharedData.coupling));
               console.log("Coupling = " + JSON.stringify(this.sharedData.coupling));
               return true;
             }
@@ -610,19 +612,24 @@ export class ExaminationPage {
   presentDemerits(demeritObject) {
     let dt = demeritObject.time.toString();
     let date: any = ''; 
-    let idx = dt.indexOf('GMT');
+    let time: any = '';
+    let idx = dt.indexOf('T');
 
     if (idx != -1) {
       date = dt.substring(0, idx);
+      time = dt.substring(idx+1, idx+9)
+    } else {
+      date = "undefined";
     }
 
     let alert = this.alertCtrl.create({
       title: 'DRIVING INCIDENT',
       subTitle: demeritObject.value,
-      message: '<table border="1" cellspacing="2"><tr><td colspan="2">' + date + '</td></tr>' +
-        '<tr><td>Demerits</td><td>' + demeritObject.demerits + ' Points</td></tr>' +
-        '<tr><td>Latitude</td><td>' + demeritObject.latitude + '</td></tr>' +
-        '<tr><td>Longitude:</td><td>' + demeritObject.longitude + '</td></tr>',
+      message: '<table><tr><td>Date:&nbsp;</td><td>' + date + '</td></tr>' +
+        '<tr><td>Time:&nbsp;</td><td>' + time + '</td></tr>' +
+        '<tr><td>Demerits:&nbsp;</td><td>' + demeritObject.demerits + ' Points</td></tr>' +
+        '<tr><td>Latitude:&nbsp;</td><td>' + demeritObject.latitude + '</td></tr>' +
+        '<tr><td>Longitude:&nbsp;</td><td>' + demeritObject.longitude + '</td></tr>',
       buttons: ['Dismiss']
     });
     alert.present();
@@ -656,12 +663,19 @@ export class ExaminationPage {
 
   setDemeritObjLocation(currTime, location, arr) {
 
-    for (let idx = 0; idx < arr.length; idx++) {
-      if (arr[idx].time == currTime) {
-        arr[idx].latitude = location.coords.latitude;
-        arr[idx].longitude = location.coords.longitude;
+    console.log("Infraction array = " + arr)
+    for (let idx = 0; idx < arr.infractions.length; idx++) {
+      if (arr.infractions[idx].time == currTime) {
+        arr.infractions[idx].latitude = location.coords.latitude;
+        arr.infractions[idx].longitude = location.coords.longitude;
       }
     }
+  }
+
+  saveCurrentExam() {
+    this.sharedData.prepareCurrentExam();
+    this.dbProvider.updateExam(this.sharedData.currentExam);
+
   }
 
   ionViewDidLoad() {

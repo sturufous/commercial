@@ -35,7 +35,7 @@
 
 <ion-content padding>
   <ion-fab bottom right>
-    <button ion-fab (click)="save()" color="primary"><ion-icon name="md-bookmark" color="light" style="font-size:24pt"></ion-icon></button>
+    <button ion-fab (click)="saveCurrentExam()" color="primary"><ion-icon name="md-bookmark" color="light" style="font-size:24pt"></ion-icon></button>
   </ion-fab>
   <ion-list class="page-header card-corners">
     <ion-item class="item-trns" style="border: 0">
@@ -62,7 +62,7 @@
               LEFT TURN
             </ion-col>
             <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.leftTurn.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ sharedData.getDemeritCount(sharedData.leftTurn) }}</span>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.leftTurn.infractions.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ sharedData.getDemeritCount(sharedData.leftTurn) }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -80,8 +80,8 @@
                   </ion-row>
                 </ion-grid>
               </div>
-              <ion-item-sliding *ngFor="let item of sharedData.leftTurn">
-                <ion-item>
+              <ion-item-sliding *ngFor="let item of sharedData.leftTurn.infractions">
+                <ion-item (click)="presentDemerits(item)">
                   <ion-grid>
                     <ion-row>
                       <ion-col col-5>{{ item.value }}</ion-col>
@@ -91,10 +91,12 @@
                   </ion-grid>
                 </ion-item>
                 <ion-item-options side="right">
-                    <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.leftTurn)">Delete</button>
-                    <button ion-button (click)="presentDemerits(item)">Display</button>
+                    <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.leftTurn.infractions)">Delete</button>
                 </ion-item-options>
               </ion-item-sliding>
+              <ion-item>
+                  <ion-textarea [(ngModel)]="sharedData.leftTurn.notes" placeholder="Enter the comments"></ion-textarea>
+              </ion-item>              
             </ion-list>
           </ion-card-content>
         </ion-card>
@@ -112,7 +114,7 @@
               RIGHT TURN
             </ion-col>
             <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.rightTurn.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ sharedData.getDemeritCount(sharedData.rightTurn) }}</span>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.rightTurn.infractions.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ sharedData.getDemeritCount(sharedData.rightTurn) }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -130,8 +132,8 @@
                 </ion-row>
               </ion-grid>
             </div>
-            <ion-item-sliding *ngFor="let item of sharedData.rightTurn">
-              <ion-item>
+            <ion-item-sliding *ngFor="let item of sharedData.rightTurn.infractions">
+              <ion-item (click)="presentDemerits(item)">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
@@ -141,11 +143,13 @@
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.rightTurn)">Delete</button>
-                  <button ion-button (click)="presentDemerits(item)">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.rightTurn.infractions)">Delete</button>
               </ion-item-options>
             </ion-item-sliding>
-          </ion-list>
+            <ion-item>
+                <ion-textarea [(ngModel)]="sharedData.rightTurn.notes" placeholder="Enter the comments"></ion-textarea>
+            </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-item>
@@ -161,7 +165,7 @@
               ROAD POSITION
             </ion-col>
             <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.roadPosition.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ sharedData.getDemeritCount(sharedData.roadPosition) }}</span>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.roadPosition.infractions.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ sharedData.getDemeritCount(sharedData.roadPosition) }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -179,8 +183,8 @@
                   </ion-row>
                 </ion-grid>
               </div>
-              <ion-item-sliding *ngFor="let item of sharedData.roadPosition">
-              <ion-item>
+              <ion-item-sliding *ngFor="let item of sharedData.roadPosition.infractions">
+              <ion-item (click)="presentDemerits(item)">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
@@ -190,11 +194,13 @@
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.roadPosition)">Delete</button>
-                  <button ion-button (click)="presentDemerits(item)">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.roadPosition.infractions)">Delete</button>
               </ion-item-options>
             </ion-item-sliding>
-          </ion-list>
+            <ion-item>
+                <ion-textarea [(ngModel)]="sharedData.roadPosition.notes" placeholder="Enter the comments"></ion-textarea>
+            </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-item>
@@ -210,7 +216,7 @@
               SPEED
             </ion-col>
             <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.speed.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ sharedData.getDemeritCount(sharedData.speed) }}</span>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.speed.infractions.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ sharedData.getDemeritCount(sharedData.speed) }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -228,8 +234,8 @@
                   </ion-row>
                 </ion-grid>
               </div>
-              <ion-item-sliding *ngFor="let item of sharedData.speed">
-              <ion-item>
+              <ion-item-sliding *ngFor="let item of sharedData.speed.infractions">
+              <ion-item (click)="presentDemerits(item)">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
@@ -239,11 +245,13 @@
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.speed)">Delete</button>
-                  <button ion-button (click)="presentDemerits(item)">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.speed.infractions)">Delete</button>
               </ion-item-options>
             </ion-item-sliding>
-          </ion-list>
+            <ion-item>
+                <ion-textarea [(ngModel)]="sharedData.speed.notes" placeholder="Enter the comments"></ion-textarea>
+            </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>    
     </ion-item>
@@ -259,7 +267,7 @@
               BACKING
             </ion-col>
             <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.backing.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ sharedData.getDemeritCount(sharedData.backing) }}</span>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.backing.infractions.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ sharedData.getDemeritCount(sharedData.backing) }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -277,8 +285,8 @@
                   </ion-row>
                 </ion-grid>
               </div>
-              <ion-item-sliding *ngFor="let item of sharedData.backing">
-              <ion-item>
+              <ion-item-sliding *ngFor="let item of sharedData.backing.infractions">
+              <ion-item (click)="presentDemerits(item)">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
@@ -288,11 +296,13 @@
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.backing)">Delete</button>
-                  <button ion-button (click)="presentDemerits(item)">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.backing.infractions)">Delete</button>
               </ion-item-options>
             </ion-item-sliding>
-          </ion-list>
+            <ion-item>
+              <ion-textarea [(ngModel)]="sharedData.backing.notes" placeholder="Enter the comments"></ion-textarea>
+            </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
@@ -308,7 +318,7 @@
               SHIFTING
             </ion-col>
             <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.shifting.length)" (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ sharedData.getDemeritCount(sharedData.shifting) }}</span>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.shifting.infractions.length)" (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ sharedData.getDemeritCount(sharedData.shifting) }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -326,8 +336,8 @@
                   </ion-row>
                 </ion-grid>
               </div>
-              <ion-item-sliding *ngFor="let item of sharedData.shifting">
-              <ion-item>
+              <ion-item-sliding *ngFor="let item of sharedData.shifting.infractions">
+              <ion-item (click)="presentDemerits(item)">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
@@ -337,11 +347,13 @@
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.shifting)">Delete</button>
-                  <button ion-button (click)="presentDemerits(item)">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.shifting.infractions)">Delete</button>
               </ion-item-options>
             </ion-item-sliding>
-          </ion-list>
+            <ion-item>
+              <ion-textarea [(ngModel)]="sharedData.shifting.notes" placeholder="Enter the comments"></ion-textarea>
+            </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
@@ -357,7 +369,7 @@
               RIGHT OF WAY
             </ion-col>
             <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.rightOfWay.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ sharedData.getDemeritCount(sharedData.rightOfWay) }}</span>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.rightOfWay.infractions.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ sharedData.getDemeritCount(sharedData.rightOfWay) }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -375,8 +387,8 @@
                   </ion-row>
                 </ion-grid>
               </div>
-              <ion-item-sliding *ngFor="let item of sharedData.rightOfWay">
-              <ion-item>
+              <ion-item-sliding *ngFor="let item of sharedData.rightOfWay.infractions">
+              <ion-item (click)="presentDemerits(item)">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
@@ -386,11 +398,13 @@
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.rightOfWay)">Delete</button>
-                  <button ion-button (click)="presentDemerits(item)">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.rightOfWay.infractions)">Delete</button>
               </ion-item-options>
             </ion-item-sliding>
-          </ion-list>
+            <ion-item>
+              <ion-textarea [(ngModel)]="sharedData.rightOfWay.notes" placeholder="Enter the comments"></ion-textarea>
+            </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
@@ -406,7 +420,7 @@
               UNCOUPLING
             </ion-col>
             <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.uncoupling.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ sharedData.getDemeritCount(sharedData.uncoupling) }}</span>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.uncoupling.infractions.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ sharedData.getDemeritCount(sharedData.uncoupling) }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -424,8 +438,8 @@
                   </ion-row>
                 </ion-grid>
               </div>
-              <ion-item-sliding *ngFor="let item of sharedData.uncoupling">
-              <ion-item>
+              <ion-item-sliding *ngFor="let item of sharedData.uncoupling.infractions">
+              <ion-item (click)="presentDemerits(item)">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
@@ -435,11 +449,13 @@
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.uncoupling)">Delete</button>
-                  <button ion-button (click)="presentDemerits(item)">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.uncoupling.infractions)">Delete</button>
               </ion-item-options>
             </ion-item-sliding>
-          </ion-list>
+            <ion-item>
+              <ion-textarea [(ngModel)]="sharedData.uncoupling.notes" placeholder="Enter the comments"></ion-textarea>
+            </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
@@ -455,7 +471,7 @@
               COUPLING
             </ion-col>
             <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.coupling.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ sharedData.getDemeritCount(sharedData.coupling) }}</span>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.coupling.infractions.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ sharedData.getDemeritCount(sharedData.coupling) }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -473,8 +489,8 @@
                   </ion-row>
                 </ion-grid>
               </div>
-              <ion-item-sliding *ngFor="let item of sharedData.coupling">
-              <ion-item>
+              <ion-item-sliding *ngFor="let item of sharedData.coupling.infractions">
+              <ion-item (click)="presentDemerits(item)">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-5>{{ item.value }}</ion-col>
@@ -484,11 +500,13 @@
                 </ion-grid>
               </ion-item>
               <ion-item-options side="right">
-                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.coupling)">Delete</button>
-                  <button ion-button (click)="presentDemerits(item)">Display</button>
+                  <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.coupling.infractions)">Delete</button>
               </ion-item-options>
             </ion-item-sliding>
-          </ion-list>
+            <ion-item>
+              <ion-textarea [(ngModel)]="sharedData.coupling.notes" placeholder="Enter the comments"></ion-textarea>
+            </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>

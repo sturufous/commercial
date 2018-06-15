@@ -4,12 +4,8 @@ import { ShareProvider } from '../../providers/share/share';
 import { ModalController, ViewController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LicenseValidator } from '../../validators/licenseNumber';
-import { TextMaskModule } from 'angular2-text-mask';
 import { ViewChild } from '@angular/core';
-import { Slides } from 'ionic-angular';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
-import { ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the DetailsPage page.
@@ -60,39 +56,15 @@ export class DetailsPage {
     };
   }
 
-  save() {
-
-    this.submitAttempt = true;
-    console.log("Entering save");
-    if (!this.sharedData.client.valid) {
-      this.sharedData.presentToast("Client data not valid");
-      return {};
-    } else if (!this.sharedData.examiner.valid) {
-      this.sharedData.presentToast("Examination data not valid");
-      return {};
-    }
-    
-    this.sharedData.currentExam.licenseClass = this.sharedData.licenseClass;
-    this.sharedData.currentExam.client = this.sharedData.client.value;
-    this.sharedData.currentExam.examiner = this.sharedData.examiner.value;
-    this.sharedData.currentExam.leftTurn = this.sharedData.leftTurn;
-    this.sharedData.currentExam.rightTurn = this.sharedData.rightTurn;
-    this.sharedData.currentExam.roadPosition = this.sharedData.roadPosition;
-    this.sharedData.currentExam.speed = this.sharedData.speed;
-    this.sharedData.currentExam.backing = this.sharedData.backing;
-    this.sharedData.currentExam.shifting = this.sharedData.shifting;
-    this.sharedData.currentExam.rightOfWay = this.sharedData.rightOfWay;
-    this.sharedData.currentExam.uncoupling = this.sharedData.uncoupling;
-    this.sharedData.currentExam.coupling = this.sharedData.coupling;
-    
-    this.sharedData.presentToast("Exam saved successfully");
-    console.log(JSON.stringify(this.sharedData.currentExam));
-    this.dbProvider.updateExam(this.sharedData.currentExam);
-  }
-
   slideChanged() {
     this.sharedData.licenseClass = this.classes[this.slider.getActiveIndex()];
     console.log("License class = " + this.sharedData.licenseClass);
+  }
+
+  saveCurrentExam() {
+    this.sharedData.prepareCurrentExam();
+    this.dbProvider.updateExam(this.sharedData.currentExam);
+
   }
 
   ionViewDidEnter() {

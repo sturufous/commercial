@@ -37,15 +37,15 @@ export class HomePage {
       licenseClass: '', 
       client:null, 
       examiner:null,
-      leftTurn: null,
-      rightTurn: null,
-      roadPosition: null,
-      speed: null,
-      backing: null,
-      shifting: null,
-      rightOfWay: null,
-      uncoupling: null,
-      coupling: null
+      leftTurn: {infractions: [], notes:''},
+      rightTurn: {infractions: [], notes:''},
+      roadPosition: {infractions: [], notes:''},
+      speed: {infractions: [], notes:''},
+      backing: {infractions: [], notes:''},
+      shifting: {infractions: [], notes:''},
+      rightOfWay: {infractions: [], notes:''},
+      uncoupling: {infractions: [], notes:''},
+      coupling: {infractions: [], notes:''}
     };
 
     examTemplate.licenseClass = '1';
@@ -63,7 +63,7 @@ export class HomePage {
         initials: 'SM'
     }; 
 
-    examTemplate.leftTurn = [];
+    /*examTemplate.leftTurn = [];
     examTemplate.rightTurn = [];
     examTemplate.roadPosition = [];
     examTemplate.speed = [];
@@ -71,7 +71,7 @@ export class HomePage {
     examTemplate.shifting = [];
     examTemplate.rightOfWay = [];
     examTemplate.uncoupling = [];
-    examTemplate.coupling = [];
+    examTemplate.coupling = [];*/
 
     this.dbProvider.createExam(examTemplate);
     this.sharedData.client.setValue(examTemplate.client);

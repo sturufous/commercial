@@ -13,15 +13,15 @@ import { ToastController } from 'ionic-angular';
 @Injectable()
 export class ShareProvider {
 
-    leftTurn: any = [];
-    rightTurn: any = [];
-    roadPosition: any = [];
-    speed: any = [];
-    backing: any = [];
-    shifting: any = [];
-    rightOfWay: any = [];
-    uncoupling: any = [];
-    coupling: any = [];
+    leftTurn: any = {infractions: [], notes:''};
+    rightTurn: any = {infractions: [], notes:''};
+    roadPosition: any = {infractions: [], notes:''};
+    speed: any = {infractions: [], notes:''};
+    backing: any = {infractions: [], notes:''};
+    shifting: any = {infractions: [], notes:''};
+    rightOfWay: any = {infractions: [], notes:''};
+    uncoupling: any = {infractions: [], notes:''};
+    coupling: any = {infractions: [], notes:''};
 
     examLoadedFromDB: any = null;
     client: FormGroup;
@@ -39,21 +39,21 @@ export class ShareProvider {
         licenseClass: null,
         client: null,
         examiner: null,
-        leftTurn: [],
-        rightTurn: [],
-        roadPosition: [],
-        speed: [],
-        backing: [],
-        shifting: [],
-        rightOfWay: [],
-        uncoupling: [],
-        coupling: []
+        leftTurn: {infractions: [], notes:''},
+        rightTurn: {infractions: [], notes:''},
+        roadPosition: {infractions: [], notes:''},
+        speed: {infractions: [], notes:''},
+        backing: {infractions: [], notes:''},
+        shifting: {infractions: [], notes:''},
+        rightOfWay: {infractions: [], notes:''},
+        uncoupling: {infractions: [], notes:''},
+        coupling: {infractions: [], notes:''}
     };
 
     licenseClass: any = '1';
 
     constructor(toastControl: ToastController,
-                formBuilder: FormBuilder) {
+        formBuilder: FormBuilder) {
         this.toastControl = toastControl;
 
         this.client = formBuilder.group({
@@ -76,9 +76,9 @@ export class ShareProvider {
 
         let count: number = 0;
     
-        for (let idx=0; idx < infractionType.length; idx++) {
-            if (infractionType[idx] !== null) {
-                count += eval(infractionType[idx].demerits);
+        for (let idx=0; idx < infractionType.infractions.length; idx++) {
+            if (infractionType.infractions[idx] !== null) {
+                count += eval(infractionType.infractions[idx].demerits);
             }
         }
     
@@ -117,5 +117,33 @@ export class ShareProvider {
         });
         toast.present();
     }
+
+    prepareCurrentExam() {
+
+        //this.submitAttempt = true;
+        console.log("Entering save");
+        if (!this.client.valid) {
+          this.presentToast("Client data not valid");
+          return {};
+        } else if (!this.examiner.valid) {
+          this.presentToast("Examination data not valid");
+          return {};
+        }
+        
+        this.currentExam.licenseClass = this.licenseClass;
+        this.currentExam.client = this.client.value;
+        this.currentExam.examiner = this.examiner.value;
+        this.currentExam.leftTurn = this.leftTurn;
+        this.currentExam.rightTurn = this.rightTurn;
+        this.currentExam.roadPosition = this.roadPosition;
+        this.currentExam.speed = this.speed;
+        this.currentExam.backing = this.backing;
+        this.currentExam.shifting = this.shifting;
+        this.currentExam.rightOfWay = this.rightOfWay;
+        this.currentExam.uncoupling = this.uncoupling;
+        this.currentExam.coupling = this.coupling;
+        
+        this.presentToast("Exam saved successfully");
+      }
     
 }
