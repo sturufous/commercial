@@ -609,7 +609,7 @@ export class ExaminationPage {
 
   presentDemerits(demeritObject) {
     let dt = demeritObject.time.toString();
-    let date: any = '';
+    let date: any = ''; 
     let idx = dt.indexOf('GMT');
 
     if (idx != -1) {
@@ -619,10 +619,10 @@ export class ExaminationPage {
     let alert = this.alertCtrl.create({
       title: 'DRIVING INCIDENT',
       subTitle: demeritObject.value,
-      message: '<p>' + date + '<br><br>Demerits: ' +
-        demeritObject.demerits + ' Points<br><br>Latitude:<br>' +
-        demeritObject.latitude + '<br><br>Longitude:<br>' +
-        demeritObject.longitude,
+      message: '<table border="1" cellspacing="2"><tr><td colspan="2">' + date + '</td></tr>' +
+        '<tr><td>Demerits</td><td>' + demeritObject.demerits + ' Points</td></tr>' +
+        '<tr><td>Latitude</td><td>' + demeritObject.latitude + '</td></tr>' +
+        '<tr><td>Longitude:</td><td>' + demeritObject.longitude + '</td></tr>',
       buttons: ['Dismiss']
     });
     alert.present();

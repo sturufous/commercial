@@ -13,6 +13,12 @@
     <div style="float: right">
       <button ion-button icon-only clear>
         <ion-badge item-end secondary>
+          {{ sharedData.examRevision }}
+        </ion-badge>
+        <ion-icon class="header-badge" name="md-reverse-camera"></ion-icon>
+      </button>
+      <button ion-button icon-only clear>
+        <ion-badge item-end secondary>
           {{ sharedData.licenseClass }}
         </ion-badge>
         <ion-icon class="header-badge" name="md-bus"></ion-icon>
@@ -100,7 +106,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-1>
-              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+              <ion-icon name="md-arrow-dropright-circle"></ion-icon>
             </ion-col>
             <ion-col col-10 class="infraction-link" (click)="presentRightTurn()">
               RIGHT TURN
@@ -149,7 +155,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-1>
-              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+              <ion-icon name="md-eye"></ion-icon>
             </ion-col>
             <ion-col col-10 class="infraction-link" (click)="presentRoadPosition()">
               ROAD POSITION
@@ -198,7 +204,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-1>
-              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+              <ion-icon name="ios-speedometer"></ion-icon>
             </ion-col>
             <ion-col col-10 class="infraction-link" (click)="presentSpeed()">
               SPEED
@@ -247,7 +253,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-1>
-              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+              <ion-icon name="md-rewind"></ion-icon>
             </ion-col>
             <ion-col col-10 class="infraction-link" (click)="presentBacking()">
               BACKING
@@ -296,7 +302,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-1>
-              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+              <ion-icon name="ios-cog"></ion-icon>
             </ion-col>
             <ion-col col-10 class="infraction-link" (click)="presentShifting()">
               SHIFTING
@@ -345,7 +351,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-1>
-              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+              <ion-icon name="md-hand"></ion-icon>
             </ion-col>
             <ion-col col-10 class="infraction-link" (click)="presentRightOfWay()">
               RIGHT OF WAY
@@ -394,7 +400,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-1>
-              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+              <ion-icon name="md-unlock"></ion-icon>
             </ion-col>
             <ion-col col-10 class="infraction-link" (click)="presentUncoupling()">
               UNCOUPLING
@@ -443,7 +449,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-1>
-              <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
+              <ion-icon name="md-lock"></ion-icon>
             </ion-col>
             <ion-col col-10 class="infraction-link" (click)="presentCoupling()">
               COUPLING

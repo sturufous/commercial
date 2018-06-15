@@ -58,10 +58,8 @@ export class DetailsPage {
         cardExpiry: [/[0-1]/, /\d/, '/', /[1-2]/, /\d/],
         orderCode: [/[a-zA-z]/, ':', /\d/, /\d/, /\d/, /\d/]
     };
-
-    this.sharedData.licenseClass = '1';
   }
-  
+
   save() {
 
     this.submitAttempt = true;
@@ -74,8 +72,19 @@ export class DetailsPage {
       return {};
     }
     
+    this.sharedData.currentExam.licenseClass = this.sharedData.licenseClass;
     this.sharedData.currentExam.client = this.sharedData.client.value;
     this.sharedData.currentExam.examiner = this.sharedData.examiner.value;
+    this.sharedData.currentExam.leftTurn = this.sharedData.leftTurn;
+    this.sharedData.currentExam.rightTurn = this.sharedData.rightTurn;
+    this.sharedData.currentExam.roadPosition = this.sharedData.roadPosition;
+    this.sharedData.currentExam.speed = this.sharedData.speed;
+    this.sharedData.currentExam.backing = this.sharedData.backing;
+    this.sharedData.currentExam.shifting = this.sharedData.shifting;
+    this.sharedData.currentExam.rightOfWay = this.sharedData.rightOfWay;
+    this.sharedData.currentExam.uncoupling = this.sharedData.uncoupling;
+    this.sharedData.currentExam.coupling = this.sharedData.coupling;
+    
     this.sharedData.presentToast("Exam saved successfully");
     console.log(JSON.stringify(this.sharedData.currentExam));
     this.dbProvider.updateExam(this.sharedData.currentExam);
@@ -86,7 +95,14 @@ export class DetailsPage {
     console.log("License class = " + this.sharedData.licenseClass);
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
+    // Set offset of licensClass slider
+    let idx=0;
+    //console.log("ngAfterViewInit new: " + JSON.stringify(this.slider));
+    while (this.sharedData.licenseClass != this.classes[idx]) {
+      idx++;
+    }
+    this.slider.slideTo(idx);
     console.log('ionViewDidLoad DetailsPage');
   }
 

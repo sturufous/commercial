@@ -95,10 +95,14 @@ export class CommercialDbProvider {
   createExam(exam) { 
       console.log("In createExam")
       this.db.post(exam).then((response) => {
+        let idx = response.rev.indexOf('-');
+        let revision = response.rev.substring(0, idx);
+
         this.sharedData.currentExam._id = response.id;
         this.sharedData.currentExam._rev = response.rev;
         this.sharedData.currentExam.client = response.client;
         this.sharedData.currentExam.examiner = response.examiner;
+        this.sharedData.examRevision = revision;
        console.log("post currentExam = " + JSON.stringify(this.sharedData.currentExam));
       }).catch((err) => {
         console.log(err);
@@ -107,8 +111,12 @@ export class CommercialDbProvider {
     
   updateExam(exam) { 
       this.db.put(exam).then((response) => {
+        let idx = response.rev.indexOf('-');
+        let revision = response.rev.substring(0, idx);
+
         this.sharedData.currentExam._id = response.id;
         this.sharedData.currentExam._rev = response.rev;
+        this.sharedData.examRevision = revision;
         console.log("put currentExam = " + JSON.stringify(this.sharedData.currentExam));
       }).catch((err) => {
         console.log(err);

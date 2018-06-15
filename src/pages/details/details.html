@@ -11,9 +11,15 @@
       <ion-title>{{ sharedData.client.get('givenName').value }} {{ sharedData.client.get('surname').value }}</ion-title>
     </div>
     <div style="float: right">
-      <button ion-button icon-only clear>
-        <ion-badge item-end secondary>
-          {{ sharedData.licenseClass }}
+        <button ion-button icon-only clear>
+          <ion-badge item-end secondary>
+            {{ sharedData.examRevision }}
+          </ion-badge>
+          <ion-icon class="header-badge" name="md-reverse-camera"></ion-icon>
+        </button>
+        <button ion-button icon-only clear>
+          <ion-badge item-end secondary>
+            {{ sharedData.licenseClass }}
         </ion-badge>
         <ion-icon class="header-badge" name="md-bus"></ion-icon>
       </button>

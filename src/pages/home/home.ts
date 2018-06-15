@@ -33,8 +33,22 @@ export class HomePage {
   }
 
   newExam() {
-    let examTemplate = {client:null, examiner:null};
+    let examTemplate = {
+      licenseClass: '', 
+      client:null, 
+      examiner:null,
+      leftTurn: null,
+      rightTurn: null,
+      roadPosition: null,
+      speed: null,
+      backing: null,
+      shifting: null,
+      rightOfWay: null,
+      uncoupling: null,
+      coupling: null
+    };
 
+    examTemplate.licenseClass = '1';
     examTemplate.client = {
         dlNumber: 'DL:1234567',
         surname: '', 
@@ -49,12 +63,23 @@ export class HomePage {
         initials: 'SM'
     }; 
 
+    examTemplate.leftTurn = [];
+    examTemplate.rightTurn = [];
+    examTemplate.roadPosition = [];
+    examTemplate.speed = [];
+    examTemplate.backing = [];
+    examTemplate.shifting = [];
+    examTemplate.rightOfWay = [];
+    examTemplate.uncoupling = [];
+    examTemplate.coupling = [];
+
     this.dbProvider.createExam(examTemplate);
     this.sharedData.client.setValue(examTemplate.client);
     this.sharedData.examiner.setValue(examTemplate.examiner);
     this.sharedData.detailsTabEnabled = true;
     this.sharedData.examinationTabEnabled = true;
     this.navCtrl.parent.select(1); // Jump to Details tab
+    this.sharedData.presentToast("New Record Created");
   }
 
   deleteExam(exam) {
@@ -62,10 +87,26 @@ export class HomePage {
   }
 
   openExam(exam) {
+    let idx = exam._rev.indexOf('-');
+    let revision = exam._rev.substring(0, idx);
+
     this.sharedData.detailsTabEnabled = true;
     this.sharedData.examinationTabEnabled = true;
     console.log("openExam: " + JSON.stringify(exam));
     this.sharedData.currentExam = exam;
+    this.sharedData.examRevision = revision;
+
+    this.sharedData.leftTurn = exam.leftTurn;
+    this.sharedData.rightTurn = exam.rightTurn;
+    this.sharedData.roadPosition = exam.roadPosition;
+    this.sharedData.speed = exam.speed;
+    this.sharedData.backing = exam.backing;
+    this.sharedData.shifting = exam.shifting;
+    this.sharedData.rightOfWay = exam.rightOfWay;
+    this.sharedData.uncoupling = exam.uncoupling;
+    this.sharedData.coupling = exam.coupling;
+
+    this.sharedData.licenseClass = exam.licenseClass; 
 
     this.sharedData.client.setValue(exam.client);
     this.sharedData.examiner.setValue(exam.examiner);

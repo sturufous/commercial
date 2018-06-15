@@ -31,12 +31,23 @@ export class ShareProvider {
     homeTabEnabled: boolean = true;
     detailsTabEnabled: boolean = false;
     examinationTabEnabled: boolean = false;
+    examRevision: any = 0;
 
     currentExam = {
         _id: null,
         _rev: null,
+        licenseClass: null,
         client: null,
-        examiner: null
+        examiner: null,
+        leftTurn: [],
+        rightTurn: [],
+        roadPosition: [],
+        speed: [],
+        backing: [],
+        shifting: [],
+        rightOfWay: [],
+        uncoupling: [],
+        coupling: []
     };
 
     licenseClass: any = '1';
