@@ -613,11 +613,11 @@ export class ExaminationPage {
     let dt = demeritObject.time.toString();
     let date: any = ''; 
     let time: any = '';
-    let idx = dt.indexOf('T');
+    let idx = dt.indexOf('GMT');
 
     if (idx != -1) {
-      date = dt.substring(0, idx);
-      time = dt.substring(idx+1, idx+9)
+      date = dt.substring(0, idx - 9);
+      time = dt.substring(idx-9, idx)
     } else {
       date = "undefined";
     }

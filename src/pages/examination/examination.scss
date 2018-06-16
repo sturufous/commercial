@@ -1,12 +1,17 @@
 page-examination {
 
+    ion-datetime {
+        padding-left: 10px;
+        color: #6c6c6c;
+    }
+
+    ion-label, ion-item, ion-input, ion-textarea, ion-select {
+        color: #6c6c6c;
+    }
+    
     ion-icon {
         font-size: 24pt;
         color: #4c4c4c;
-    }
-
-    ion-item {
-        color: #6c6c6c;
     }
 
     .button {

@@ -46,7 +46,19 @@
     </ion-item>
   </ion-list>
 
-  <div class="spacer" style="width: 748px; height: 7px;"></div>
+  <ion-card>
+     <ion-list>
+      <ion-item style="border-bottom:1px solid #DDD;padding-left:10px">
+        Please fill out all mandatory fields
+      </ion-item>
+      <ion-item>
+        <ion-icon  style="color:red" name="ios-bulb"></ion-icon>
+          <span style="color:red">This is your message of the day.</span>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <div class="spacer" style="width: 748px; height: 15px;"></div>
   
   <ion-card>
   <ion-list>
@@ -512,4 +524,35 @@
     </ion-item>
   </ion-list>
   </ion-card>
+
+<div class="spacer" style="width: 748px; height: 15px;"></div>
+
+ <ion-card>
+    <ion-item-divider color="light"><h2>EXAM RESULTS</h2></ion-item-divider>
+      <ion-list>
+        <form [formGroup]="sharedData.results">
+          <ion-item>
+            <ion-label floating>Qualified:</ion-label>
+            <ion-select formControlName="qualified" type="text">
+              <ion-option value="Yes">Yes</ion-option>
+              <ion-option value="No">No</ion-option>
+              <ion-option value="Discontinued">Discontinued</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Dangerous Action:</ion-label>
+            <ion-input formControlName="dangerousAction" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Traffic Violation:</ion-label>
+            <ion-input formControlName="trafficViolation" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Other (specify):</ion-label>
+            <ion-input formControlName="other" type="text"></ion-input>
+          </ion-item>
+        </form>
+      </ion-list>
+  </ion-card>
+    
 </ion-content>

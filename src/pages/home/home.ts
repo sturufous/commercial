@@ -45,7 +45,8 @@ export class HomePage {
       shifting: {infractions: [], notes:''},
       rightOfWay: {infractions: [], notes:''},
       uncoupling: {infractions: [], notes:''},
-      coupling: {infractions: [], notes:''}
+      coupling: {infractions: [], notes:''},
+      results: {dangerousAction: '', trafficViolation: '', other: '', qualified: ''}
     };
 
     examTemplate.licenseClass = '1';
@@ -62,20 +63,18 @@ export class HomePage {
         telephone: '(250) 661-2008',
         initials: 'SM'
     }; 
-
-    /*examTemplate.leftTurn = [];
-    examTemplate.rightTurn = [];
-    examTemplate.roadPosition = [];
-    examTemplate.speed = [];
-    examTemplate.backing = [];
-    examTemplate.shifting = [];
-    examTemplate.rightOfWay = [];
-    examTemplate.uncoupling = [];
-    examTemplate.coupling = [];*/
+    examTemplate.results = {
+      dangerousAction: '',
+      trafficViolation: '',
+      other: '',
+      qualified: ''
+    }
 
     this.dbProvider.createExam(examTemplate);
     this.sharedData.client.setValue(examTemplate.client);
     this.sharedData.examiner.setValue(examTemplate.examiner);
+    this.sharedData.results.setValue(examTemplate.results);
+
     this.sharedData.detailsTabEnabled = true;
     this.sharedData.examinationTabEnabled = true;
     this.navCtrl.parent.select(1); // Jump to Details tab
@@ -110,6 +109,7 @@ export class HomePage {
 
     this.sharedData.client.setValue(exam.client);
     this.sharedData.examiner.setValue(exam.examiner);
+    this.sharedData.results.setValue(exam.results);
     this.navCtrl.parent.select(1);
   }
 

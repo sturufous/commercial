@@ -26,6 +26,7 @@ export class ShareProvider {
     examLoadedFromDB: any = null;
     client: FormGroup;
     examiner: FormGroup;
+    results: FormGroup;
     toastControl: ToastController;
 
     homeTabEnabled: boolean = true;
@@ -47,7 +48,8 @@ export class ShareProvider {
         shifting: {infractions: [], notes:''},
         rightOfWay: {infractions: [], notes:''},
         uncoupling: {infractions: [], notes:''},
-        coupling: {infractions: [], notes:''}
+        coupling: {infractions: [], notes:''},
+        results: null
     };
 
     licenseClass: any = '1';
@@ -70,7 +72,14 @@ export class ShareProvider {
             telephone: ['', Validators.compose([Validators.required])],
             initials: ['', Validators.compose([Validators.maxLength(3), Validators.required])]
         });
-    }
+
+        this.results = formBuilder.group({
+            qualified: ['', Validators.compose([Validators.required])],
+            dangerousAction: ['', Validators.compose([Validators.maxLength(100)])],
+            trafficViolation: ['', Validators.compose([Validators.maxLength(100)])],
+            other: ['', Validators.compose([Validators.maxLength(100)])],
+        });
+   }
 
     getDemeritCount(infractionType) {
 
@@ -142,6 +151,7 @@ export class ShareProvider {
         this.currentExam.rightOfWay = this.rightOfWay;
         this.currentExam.uncoupling = this.uncoupling;
         this.currentExam.coupling = this.coupling;
+        this.currentExam.results = this.results.value;
         
         this.presentToast("Exam saved successfully");
       }
