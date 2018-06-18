@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import { ShareProvider } from '../share/share';
+import { NavController } from 'ionic-angular';
 
 /*
   Generated class for the CommercialDbProvider provider.
@@ -16,8 +17,10 @@ export class CommercialDbProvider {
   data: any;
 
   sharedData: ShareProvider;
+  navCtrl: NavController;
 
-  constructor(shareProvider: ShareProvider) {
+  constructor(
+    shareProvider: ShareProvider) {
     this.db = new PouchDB('commercial-db');
     this.remote = "https://1801a103-f342-4909-8289-42b1f4c948fa-bluemix.cloudant.com/commercial-db";
     this.sharedData = shareProvider;
@@ -53,9 +56,9 @@ export class CommercialDbProvider {
           this.handleChange(change);
         });
    
-      }).catch((error) => {
-        console.log(error);
-      });
+      })
+      .catch (e => this.sharedData.presentBasicAlert("Error", e));
+
     });
   }
 
@@ -97,16 +100,33 @@ export class CommercialDbProvider {
       this.db.post(exam).then((response) => {
         let idx = response.rev.indexOf('-');
         let revision = response.rev.substring(0, idx);
+        console.log("New Record = " + JSON.stringify(response));
+        console.log("New Exam = " + JSON.stringify(exam));
 
         this.sharedData.currentExam._id = response.id;
         this.sharedData.currentExam._rev = response.rev;
-        this.sharedData.currentExam.client = response.client;
-        this.sharedData.currentExam.examiner = response.examiner;
+        this.sharedData.currentExam.client = exam.client;
+        this.sharedData.currentExam.examiner = exam.examiner;
+        this.sharedData.leftTurn = exam.leftTurn;
+        this.sharedData.rightTurn = exam.rightTurn;
+        this.sharedData.roadPosition = exam.roadPosition;
+        this.sharedData.speed = exam.speed;
+        this.sharedData.backing = exam.backing;
+        this.sharedData.shifting = exam.shifting;
+        this.sharedData.rightOfWay = exam.rightOfWay;
+        this.sharedData.uncoupling = exam.uncoupling;
+        this.sharedData.coupling = exam.coupling;
         this.sharedData.examRevision = revision;
-       console.log("post currentExam = " + JSON.stringify(this.sharedData.currentExam));
-      }).catch((err) => {
-        console.log(err);
-      });
+
+        this.sharedData.client.setValue(exam.client);
+        this.sharedData.examiner.setValue(exam.examiner);
+        this.sharedData.results.setValue(exam.results);
+        this.sharedData.detailsTabEnabled = true;
+        this.sharedData.examinationTabEnabled = true;
+        this.sharedData.presentToast("New Record Created");
+        this.navCtrl.parent.select(1); // Jump to Details tab     
+      })
+      .catch (e => this.sharedData.presentBasicAlert("Error", e));
   }
     
   updateExam(exam) { 
@@ -117,10 +137,8 @@ export class CommercialDbProvider {
         this.sharedData.currentExam._id = response.id;
         this.sharedData.currentExam._rev = response.rev;
         this.sharedData.examRevision = revision;
-        console.log("put currentExam = " + JSON.stringify(this.sharedData.currentExam));
-      }).catch((err) => {
-        console.log(err);
-      });
+      })
+      .catch (e => this.sharedData.presentBasicAlert("Error", e));
   }
     
   deleteExam(exam){

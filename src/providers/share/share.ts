@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 /*
   Generated class for the ShareProvider provider.
@@ -28,6 +29,7 @@ export class ShareProvider {
     examiner: FormGroup;
     results: FormGroup;
     toastControl: ToastController;
+    alertCtrl: AlertController;
 
     homeTabEnabled: boolean = true;
     detailsTabEnabled: boolean = false;
@@ -55,8 +57,10 @@ export class ShareProvider {
     licenseClass: any = '1';
 
     constructor(toastControl: ToastController,
-        formBuilder: FormBuilder) {
+        formBuilder: FormBuilder,
+        alertControl: AlertController) {
         this.toastControl = toastControl;
+        this.alertCtrl = alertControl;
 
         this.client = formBuilder.group({
             dlNumber: [''],
@@ -74,7 +78,7 @@ export class ShareProvider {
         });
 
         this.results = formBuilder.group({
-            qualified: ['', Validators.compose([Validators.required])],
+            qualified: ['Discontinued', Validators.compose([Validators.required])],
             dangerousAction: ['', Validators.compose([Validators.maxLength(100)])],
             trafficViolation: ['', Validators.compose([Validators.maxLength(100)])],
             other: ['', Validators.compose([Validators.maxLength(100)])],
@@ -122,7 +126,7 @@ export class ShareProvider {
    presentToast(message) {
         const toast = this.toastControl.create({
           message: message,
-          duration: 1500
+          duration: 2000
         });
         toast.present();
     }
@@ -154,6 +158,15 @@ export class ShareProvider {
         this.currentExam.results = this.results.value;
         
         this.presentToast("Exam saved successfully");
+      }
+
+      presentBasicAlert(aType, message) {
+        let alert = this.alertCtrl.create({
+            title: aType,
+            subTitle: message,
+            buttons: ['Dismiss']
+        });
+        alert.present();
       }
     
 }

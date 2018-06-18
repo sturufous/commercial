@@ -35,8 +35,8 @@ export class HomePage {
   newExam() {
     let examTemplate = {
       licenseClass: '', 
-      client:null, 
-      examiner:null,
+      client: null, 
+      examiner: null,
       leftTurn: {infractions: [], notes:''},
       rightTurn: {infractions: [], notes:''},
       roadPosition: {infractions: [], notes:''},
@@ -67,18 +67,24 @@ export class HomePage {
       dangerousAction: '',
       trafficViolation: '',
       other: '',
-      qualified: ''
+      qualified: 'Discontinued'
     }
 
+    this.dbProvider.navCtrl = this.navCtrl;
     this.dbProvider.createExam(examTemplate);
-    this.sharedData.client.setValue(examTemplate.client);
-    this.sharedData.examiner.setValue(examTemplate.examiner);
-    this.sharedData.results.setValue(examTemplate.results);
 
-    this.sharedData.detailsTabEnabled = true;
-    this.sharedData.examinationTabEnabled = true;
-    this.navCtrl.parent.select(1); // Jump to Details tab
-    this.sharedData.presentToast("New Record Created");
+    /*this.sharedData.leftTurn = examTemplate.leftTurn;
+    this.sharedData.rightTurn = examTemplate.rightTurn;
+    this.sharedData.roadPosition = examTemplate.roadPosition;
+    this.sharedData.speed = examTemplate.speed;
+    this.sharedData.backing = examTemplate.backing;
+    this.sharedData.shifting = examTemplate.shifting;
+    this.sharedData.rightOfWay = examTemplate.rightOfWay;
+    this.sharedData.uncoupling = examTemplate.uncoupling;
+    this.sharedData.coupling = examTemplate.coupling;*/
+
+    //this.navCtrl.parent.select(1); // Jump to Details tab
+
   }
 
   deleteExam(exam) {
@@ -95,6 +101,12 @@ export class HomePage {
     this.sharedData.currentExam = exam;
     this.sharedData.examRevision = revision;
 
+    this.sharedData.licenseClass = exam.licenseClass; 
+
+    this.sharedData.client.setValue(exam.client);
+    this.sharedData.examiner.setValue(exam.examiner);
+    this.sharedData.results.setValue(exam.results);
+
     this.sharedData.leftTurn = exam.leftTurn;
     this.sharedData.rightTurn = exam.rightTurn;
     this.sharedData.roadPosition = exam.roadPosition;
@@ -105,11 +117,6 @@ export class HomePage {
     this.sharedData.uncoupling = exam.uncoupling;
     this.sharedData.coupling = exam.coupling;
 
-    this.sharedData.licenseClass = exam.licenseClass; 
-
-    this.sharedData.client.setValue(exam.client);
-    this.sharedData.examiner.setValue(exam.examiner);
-    this.sharedData.results.setValue(exam.results);
     this.navCtrl.parent.select(1);
   }
 

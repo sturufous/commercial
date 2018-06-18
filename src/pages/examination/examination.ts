@@ -647,8 +647,10 @@ export class ExaminationPage {
         this.setDemeritObjLocation(currTime, resp, arr);
         console.log("Lat: " + resp.coords.latitude);
         console.log("Lon: " + resp.coords.longitude)
-      });
+      })
+      .catch (e => this.sharedData.presentBasicAlert("Error", e));
 
+      // Return demerit object, geolocation will catch up later
       return {
         value: description, 
         time: currTime, 

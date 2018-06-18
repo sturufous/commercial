@@ -15,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TextMaskModule } from 'angular2-text-mask';
 import { Geolocation } from '@ionic-native/geolocation';
 import { CommercialDbProvider } from '../providers/commercial-db/commercial-db';
+import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CommercialDbProvider } from '../providers/commercial-db/commercial-db';
     ExaminationPage,
     DetailsPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    CanvasDrawComponent
   ],
   imports: [
     BrowserModule,

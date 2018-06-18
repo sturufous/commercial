@@ -40,24 +40,24 @@
   <ion-list class="page-header card-corners">
     <ion-item class="item-trns" style="border: 0">
       <ion-avatar item-start>
-        <img src="../assets/imgs/truck1.png">
+        <img src="assets/imgs/truck1.png">
       </ion-avatar>
       <h1>Examination</h1>
     </ion-item>
   </ion-list>
 
   <ion-card>
-     <ion-list>
-      <ion-item style="border-bottom:1px solid #DDD;padding-left:10px">
+    <ion-list>
+      <ion-item class="small-message" style="border-bottom:1px solid #DDD;padding-left:10px">
         Please fill out all mandatory fields
       </ion-item>
       <ion-item>
-        <ion-icon  style="color:red" name="ios-bulb"></ion-icon>
-          <span style="color:red">This is your message of the day.</span>
+        <ion-icon style="color:red" name="ios-bulb"></ion-icon>
+        <span class="small-message" style="color:red">This is your message of the day.</span>
       </ion-item>
     </ion-list>
   </ion-card>
-
+  
   <div class="spacer" style="width: 748px; height: 15px;"></div>
   
   <ion-card>
@@ -534,7 +534,7 @@
           <ion-item>
             <ion-label floating>Qualified:</ion-label>
             <ion-select formControlName="qualified" type="text">
-              <ion-option value="Yes">Yes</ion-option>
+              <ion-option value="Yes" selected="true">Yes</ion-option>
               <ion-option value="No">No</ion-option>
               <ion-option value="Discontinued">Discontinued</ion-option>
             </ion-select>
