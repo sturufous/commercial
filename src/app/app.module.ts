@@ -16,6 +16,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { Geolocation } from '@ionic-native/geolocation';
 import { CommercialDbProvider } from '../providers/commercial-db/commercial-db';
 import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
+import { IntersectionsPage } from '../pages/intersections/intersections';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
     DetailsPage,
     HomePage,
     TabsPage,
-    CanvasDrawComponent
+    CanvasDrawComponent,
+    IntersectionsPage
   ],
   imports: [
     BrowserModule,
