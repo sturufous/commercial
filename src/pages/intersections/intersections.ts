@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
 
 /**
  * Generated class for the IntersectionsPage page.
@@ -15,7 +16,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class IntersectionsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  canvasComp: CanvasDrawComponent;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams
+    ) {
   }
 
   ionViewDidLoad() {

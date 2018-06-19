@@ -40,7 +40,9 @@ import { IntersectionsPage } from '../pages/intersections/intersections';
     ExaminationPage,
     DetailsPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    CanvasDrawComponent,
+    IntersectionsPage
   ],
   providers: [
     StatusBar,

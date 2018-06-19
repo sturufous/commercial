@@ -1,4 +1,4 @@
-import { Component, ViewChild, Renderer } from '@angular/core';
+import { Component, ElementRef, ViewChild, Renderer, Input } from '@angular/core';
 import { Platform } from 'ionic-angular';
  
 @Component({
@@ -7,8 +7,12 @@ import { Platform } from 'ionic-angular';
 })
 export class CanvasDrawComponent {
  
-    @ViewChild('myCanvas') canvas: any;
+    @ViewChild('myCanvas') canvas: ElementRef;
+    @Input('background-img') bgImage;
  
+    private _CANVAS: any;
+    private _CONTEXT: any;
+
     canvasElement: any;
     lastX: number;
     lastY: number;
@@ -23,10 +27,21 @@ export class CanvasDrawComponent {
     ngAfterViewInit(){
  
         this.canvasElement = this.canvas.nativeElement;
- 
+        console.log("Background Image = " + this.bgImage);
         this.renderer.setElementAttribute(this.canvasElement, 'width', this.platform.width() + '');
         this.renderer.setElementAttribute(this.canvasElement, 'height', this.platform.height() + '');
- 
+        let background = new Image();
+        background.src = this.bgImage;
+
+        console.log("element width = " + this.canvasElement.width + ", height = " + this.canvasElement.height)
+
+        background.onload = (() => {
+            let hRatio = this.canvasElement.width / background.width;
+            let vRatio = this.canvasElement.height / background.height;
+            let ratio  = Math.min ( hRatio, vRatio );
+            this._CONTEXT = this.canvasElement.getContext("2d");
+            this._CONTEXT.drawImage(background, 0,0, background.width, background.height, 0,0,background.width*ratio, background.height*ratio)
+        });
     }
  
     handleStart(ev){
