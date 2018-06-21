@@ -5,10 +5,44 @@
   Ionic pages and navigation.
 -->
 
-
-<ion-content no-bounce>
-  <canvas-draw background-img="assets/imgs/test-image.png"></canvas-draw>
-
-  <canvas-draw background-img="assets/imgs/test-image2.png"></canvas-draw>
+<ion-header>
+  <ion-navbar>
+    <div class="header-title">
+      <ion-title>Intersections</ion-title>
+    </div>
+    <div style="float:right">
+      <button ion-button icon-only clear (click)="presentPopover($event)"><ion-icon name="more"></ion-icon></button>
+    </div>
+    </ion-navbar>
+</ion-header>
+     
+<ion-content>
+  <ion-card>
+    <ion-slides #intersectionSlider pager>
+        <ion-slide>
+            <canvas-draw background-img="assets/imgs/intersection1.png"></canvas-draw>
+        </ion-slide>
+        <ion-slide>
+            <canvas-draw background-img="assets/imgs/intersection2.png"></canvas-draw>
+        </ion-slide>
+        <ion-slide>
+            <canvas-draw background-img="assets/imgs/intersection3.png"></canvas-draw>
+        </ion-slide>
+        <ion-slide>
+            <canvas-draw background-img="assets/imgs/intersection4.png"></canvas-draw>
+        </ion-slide>
+        <ion-slide>
+            <canvas-draw background-img="assets/imgs/intersection5.png"></canvas-draw>
+        </ion-slide>
+        <ion-slide>
+            <canvas-draw background-img="assets/imgs/intersection6.png"></canvas-draw>
+        </ion-slide>
+      </ion-slides>
+      <ion-item style="text-align: center">
+        <button ion-button [hidden]="sharedData.drawingToggle===false" (click)="lockSlider(true)">Draw</button>
+        <button ion-button [hidden]="sharedData.drawingToggle===true" (click)="lockSlider(false)">Scroll</button>
+        <button ion-button (click)="clearCanvas()">Clear</button>
+      </ion-item>
+    </ion-card>
 </ion-content>  
 
