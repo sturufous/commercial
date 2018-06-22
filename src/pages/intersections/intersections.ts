@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { Component, ViewChild, ViewChildren } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides, Slide } from 'ionic-angular';
 import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
 import { PopoverController } from 'ionic-angular';
 import { GraphicToolsPage } from '../../pages/graphic-tools/graphic-tools';
 import { ShareProvider } from '../../providers/share/share';
+import { QueryList } from '@angular/core';
 
 /**
  * Generated class for the IntersectionsPage page.
@@ -21,6 +22,7 @@ import { ShareProvider } from '../../providers/share/share';
 export class IntersectionsPage {
 
   @ViewChild('intersectionSlider') slider: Slides;
+  @ViewChildren(Slide) sliderKids: QueryList<Slide>;
   canvasComp: CanvasDrawComponent;
 
   constructor(
@@ -32,9 +34,14 @@ export class IntersectionsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad IntersectionsPage');
     this.slider.lockSwipeToNext(false);
     this.sharedData.drawingToggle = true;
+  }
+
+  ionViewDidEnter() {
+    debugger;
+    let stuart = this.sliderKids.toArray();
+    console.log("Stuart = " + stuart[0]._slides.autoHeight);
   }
 
   lockSlider(lock) {

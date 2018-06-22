@@ -74,10 +74,17 @@ export class ExaminationPage {
       title: 'LEFT TURN',
       inputs: [
         {
+          name: 'steering',
+          type: 'radio',
+          label: 'Steering',
+          value: 'Steering#5',
+          checked: false
+        },
+        {
           name: 'improper-turn',
           type: 'radio',
           label: 'Improper Turn - cut/wide/setup',
-          value: 'Improper Turn#5',
+          value: 'Improper Turn#10',
           checked: false
         },
         {
@@ -126,6 +133,13 @@ export class ExaminationPage {
     let alert = this.alertCtrl.create({
       title: 'RIGHT TURN',
       inputs: [
+        {
+          name: 'steering',
+          type: 'radio',
+          label: 'Steering',
+          value: 'Steering#5',
+          checked: false
+        },
         {
           name: 'improper-turn',
           type: 'radio',
