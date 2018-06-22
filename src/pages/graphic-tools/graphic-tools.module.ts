@@ -7,10 +7,7 @@ import { GraphicToolsPage } from './graphic-tools';
     GraphicToolsPage,
   ],
   imports: [
-    IonicPageModule.forChild(GraphicToolsPage),
-  ],
-  exports: [
-    GraphicToolsPage
+    IonicPageModule.forChild(GraphicToolsPage)
   ]
 })
-export class GraphicToolsPageModule {}
+export class GraphicToolsModule {}

@@ -124,6 +124,7 @@ export class HomePage {
     this.dbProvider.getExams().then((data) => {
       this.exams = data;
       console.log("Data = " + JSON.stringify(data));
-    });
+    })
+    .catch((e) => console.log("Unable to get exams from PouchDB"));
   }
 }

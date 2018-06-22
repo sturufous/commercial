@@ -8,6 +8,6 @@ import { IntersectionsPage } from './intersections';
   ],
   imports: [
     IonicPageModule.forChild(IntersectionsPage),
-  ],
+  ]
 })
 export class IntersectionsPageModule {}

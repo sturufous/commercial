@@ -17,7 +17,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { CommercialDbProvider } from '../providers/commercial-db/commercial-db';
 import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
 import { IntersectionsPage } from '../pages/intersections/intersections';
-import { GraphicToolsPageModule } from '../pages/graphic-tools/graphic-tools';
+import { GraphicToolsPage } from '../pages/graphic-tools/graphic-tools';
 
 @NgModule({
   declarations: [
@@ -28,13 +28,13 @@ import { GraphicToolsPageModule } from '../pages/graphic-tools/graphic-tools';
     TabsPage,
     CanvasDrawComponent,
     IntersectionsPage,
+    GraphicToolsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    TextMaskModule,
-    GraphicToolsPageModule
+    TextMaskModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -45,6 +45,7 @@ import { GraphicToolsPageModule } from '../pages/graphic-tools/graphic-tools';
     TabsPage,
     CanvasDrawComponent,
     IntersectionsPage,
+    GraphicToolsPage
   ],
   providers: [
     StatusBar,
