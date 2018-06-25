@@ -73,7 +73,7 @@ export class CanvasDrawComponent {
             this.background.width*this.ratio, 
             this.background.height*this.ratio)
     }
- 
+
     handleStart(ev){
  
         if (!this.sharedData.drawingToggle) {
@@ -85,18 +85,19 @@ export class CanvasDrawComponent {
     handleMove(ev){
  
         if (!this.sharedData.drawingToggle) {
-            let ctx = this.canvasElement.getContext('2d');
+            //let ctx = this.canvasElement.getContext('2d');
             let currentX = ev.touches[0].pageX-10;
             let currentY = ev.touches[0].pageY-65; // Remove height of toolbar
     
-            ctx.beginPath();
-            ctx.lineJoin = "round";
-            ctx.moveTo(this.lastX, this.lastY);
-            ctx.lineTo(currentX, currentY);
-            ctx.closePath();
-            ctx.strokeStyle = this.colourValues[this.sharedData.currentColour];
-            ctx.lineWidth = this.sharedData.brushSize;
-            ctx.stroke();      
+            this._CONTEXT.beginPath();
+            this._CONTEXT.lineJoin = "round";
+            this._CONTEXT.moveTo(this.lastX, this.lastY);
+            this._CONTEXT.lineTo(currentX, currentY);
+            this._CONTEXT.closePath();
+            this._CONTEXT.strokeStyle = this.colourValues[this.sharedData.currentColour];
+            this._CONTEXT.lineWidth = this.sharedData.brushSize;
+            this._CONTEXT.stroke();  
+            console.log("Just saved");
     
             this.lastX = currentX;
             this.lastY = currentY;

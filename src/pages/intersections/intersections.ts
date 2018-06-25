@@ -23,7 +23,9 @@ export class IntersectionsPage {
 
   @ViewChild('intersectionSlider') slider: Slides;
   @ViewChildren(Slide) sliderKids: QueryList<Slide>;
+  @ViewChildren(CanvasDrawComponent) canvasDrawerers: QueryList<CanvasDrawComponent>;
   canvasComp: CanvasDrawComponent;
+  drawerers: CanvasDrawComponent[];
 
   constructor(
     public navCtrl: NavController, 
@@ -39,9 +41,7 @@ export class IntersectionsPage {
   }
 
   ionViewDidEnter() {
-    debugger;
-    let stuart = this.sliderKids.toArray();
-    console.log("Stuart = " + stuart[0]._slides.autoHeight);
+    this.drawerers = this.canvasDrawerers.toArray();
   }
 
   lockSlider(lock) {
@@ -59,9 +59,16 @@ export class IntersectionsPage {
   }
 
   clearCanvas() {
-    let idx = this.slider.getActiveIndex();
-    console.log("Active Index = " + idx);
-    //this.canvasComp.redrawBgImage();
+    let currentSlide = this.slider.getActiveIndex();
+    let currentDrawerer = this.drawerers[currentSlide];
+    
+    currentDrawerer.redrawBgImage();
+  }
+
+  undo() {
+    let currentSlide = this.slider.getActiveIndex();
+    let currentDrawerer = this.drawerers[currentSlide];
+    currentDrawerer.undo();
   }
 
   presentPopover(myEvent) { 
