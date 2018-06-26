@@ -110,7 +110,7 @@ export class CanvasDrawComponent {
             } else {
                 this._CONTEXT.lineWidth = this.sharedData.brushSize;
             }
-            
+
             this._CONTEXT.stroke();  
     
             this.lastX = currentX;

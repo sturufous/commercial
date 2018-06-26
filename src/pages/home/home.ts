@@ -117,7 +117,18 @@ export class HomePage {
     this.sharedData.uncoupling = exam.uncoupling;
     this.sharedData.coupling = exam.coupling;
 
+    this.readAttachments(exam);
+
     this.navCtrl.parent.select(1);
+  }
+
+  readAttachments(exam) {
+    if (typeof exam._attachments.signature !== 'undefined') {
+      console.log("Signature = " + JSON.stringify(exam._attachments.signature));
+      this.dbProvider.db.getAttachment('signature').then((blob) => {
+        console.log("Blob = " + blob);
+      });
+    }
   }
 
   ionViewDidLoad() {

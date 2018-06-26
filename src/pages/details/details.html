@@ -127,18 +127,19 @@
           </ion-item>
           <ion-item>
             <ion-label floating>Home Office:</ion-label>
-            <ion-input type="tel" [textMask]="{mask: masks.phoneNumber}" formControlName="telephone"></ion-input>
+            <ion-input type="number" max="99999" formControlName="telephone"></ion-input>
           </ion-item>
           <ion-item>
               <ion-label floating>DE Initials:</ion-label>
               <ion-input formControlName="initials" type="text"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>DE Signature</ion-label>
-            </ion-item>
-          </form>
+          </ion-item>
+          <ion-item>
+              <ion-label style="padding-left: 10px">DE Signature</ion-label>
+              <button ion-button (click)="clearCanvas()" item-right>Clear</button>
+          </ion-item>
+      </form>
           <canvas-draw background-img="assets/imgs/signature-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
-      </ion-list>
+       </ion-list>
     </ion-card>
   
 </ion-content>

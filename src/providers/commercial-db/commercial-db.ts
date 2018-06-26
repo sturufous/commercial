@@ -105,6 +105,7 @@ export class CommercialDbProvider {
 
         this.sharedData.currentExam._id = response.id;
         this.sharedData.currentExam._rev = response.rev;
+        this.sharedData.currentExam._attachments = {signature: null};
         this.sharedData.currentExam.client = exam.client;
         this.sharedData.currentExam.examiner = exam.examiner;
         this.sharedData.leftTurn = exam.leftTurn;
@@ -130,6 +131,7 @@ export class CommercialDbProvider {
   }
     
   updateExam(exam) { 
+    console.log("Attachments = " + this.sharedData.attachments);
       this.db.put(exam).then((response) => {
         let idx = response.rev.indexOf('-');
         let revision = response.rev.substring(0, idx);

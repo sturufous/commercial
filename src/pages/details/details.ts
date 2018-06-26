@@ -23,6 +23,8 @@ import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
 export class DetailsPage {
 
   @ViewChild('testSlider') slider;
+  @ViewChild(CanvasDrawComponent) signaturePad;
+
   dbProvider: CommercialDbProvider;
   sharedData: ShareProvider = null;
   modalController: ModalController = null;
@@ -64,8 +66,15 @@ export class DetailsPage {
 
   saveCurrentExam() {
     this.sharedData.prepareCurrentExam();
-    this.dbProvider.updateExam(this.sharedData.currentExam);
+    this.signaturePad.canvas.nativeElement.toBlob((blob) => {
+      console.log("Blob = " + JSON.stringify(blob));
+      this.sharedData.currentExam._attachments.signature = {type: 'image/png', data: blob};
+      this.dbProvider.updateExam(this.sharedData.currentExam);
+    });
+  }
 
+  clearCanvas() {    
+    this.signaturePad.redrawBgImage();
   }
 
   ionViewDidEnter() {

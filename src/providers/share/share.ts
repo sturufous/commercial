@@ -35,6 +35,7 @@ export class ShareProvider {
     detailsTabEnabled: boolean = false;
     examinationTabEnabled: boolean = false;
     examRevision: any = 0;
+    attachments: any = [];
 
     drawingToggle: any = false;
 
@@ -44,6 +45,9 @@ export class ShareProvider {
     currentExam = {
         _id: null,
         _rev: null,
+        _attachments: {
+            signature: null
+        },
         licenseClass: null,
         client: null,
         examiner: null,
@@ -128,7 +132,7 @@ export class ShareProvider {
         }
     }
 
-   presentToast(message) {
+    presentToast(message) {
         const toast = this.toastControl.create({
           message: message,
           duration: 2000
