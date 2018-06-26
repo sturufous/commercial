@@ -65,12 +65,6 @@ export class IntersectionsPage {
     currentDrawerer.redrawBgImage();
   }
 
-  undo() {
-    let currentSlide = this.slider.getActiveIndex();
-    let currentDrawerer = this.drawerers[currentSlide];
-    currentDrawerer.undo();
-  }
-
   presentPopover(myEvent) { 
     let popover = this.popoverCtrl.create(GraphicToolsPage); 
     popover.present({ ev: myEvent }); 

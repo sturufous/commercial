@@ -6,6 +6,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
+import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
 
 /**
  * Generated class for the DetailsPage page.

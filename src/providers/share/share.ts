@@ -36,7 +36,7 @@ export class ShareProvider {
     examinationTabEnabled: boolean = false;
     examRevision: any = 0;
 
-    drawingToggle: any = true;
+    drawingToggle: any = false;
 
     currentColour: string = 'primary';
     brushSize: number = 10;
