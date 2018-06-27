@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import { ShareProvider } from '../share/share';
 import { NavController } from 'ionic-angular';
+import { EmailValidator } from '@angular/forms';
 
 /*
   Generated class for the CommercialDbProvider provider.
@@ -96,7 +97,7 @@ export class CommercialDbProvider {
   }
 
   createExam(exam) { 
-      console.log("In createExam")
+      console.log("In createExam: " + JSON.stringify(exam));
       this.db.post(exam).then((response) => {
         let idx = response.rev.indexOf('-');
         let revision = response.rev.substring(0, idx);
@@ -105,7 +106,6 @@ export class CommercialDbProvider {
 
         this.sharedData.currentExam._id = response.id;
         this.sharedData.currentExam._rev = response.rev;
-        this.sharedData.currentExam._attachments = {signature: null};
         this.sharedData.currentExam.client = exam.client;
         this.sharedData.currentExam.examiner = exam.examiner;
         this.sharedData.leftTurn = exam.leftTurn;
@@ -131,16 +131,36 @@ export class CommercialDbProvider {
   }
     
   updateExam(exam) { 
-    console.log("Attachments = " + this.sharedData.attachments);
-      this.db.put(exam).then((response) => {
-        let idx = response.rev.indexOf('-');
-        let revision = response.rev.substring(0, idx);
+    console.log("Current Exam = " + JSON.stringify(this.sharedData.currentExam));
 
-        this.sharedData.currentExam._id = response.id;
-        this.sharedData.currentExam._rev = response.rev;
-        this.sharedData.examRevision = revision;
-      })
-      .catch (e => this.sharedData.presentBasicAlert("Error", e));
+    this.db.put(exam).then((response) => {
+      let idx = response.rev.indexOf('-');
+      let revision = response.rev.substring(0, idx);
+
+      this.sharedData.currentExam._id = response.id;
+      this.sharedData.currentExam._rev = response.rev;
+      this.sharedData.examRevision = revision;
+    })
+    .catch (e => this.sharedData.presentBasicAlert("Error", e));
+  }
+
+  putAttachment(name, data) {
+    this.db.putAttachment(
+      this.sharedData.currentExam._id, 
+      name,
+      this.sharedData.currentExam._rev,
+      data,
+      'image/png',
+    )
+    .then((response) => {
+      let idx = response.rev.indexOf('-');
+      let revision = response.rev.substring(0, idx);
+
+      this.sharedData.currentExam._id = response.id;
+      this.sharedData.currentExam._rev = response.rev;
+      this.sharedData.examRevision = revision;
+    })
+    .catch(e => this.sharedData.presentBasicAlert("Error", e))
   }
     
   deleteExam(exam){

@@ -66,15 +66,19 @@ export class DetailsPage {
 
   saveCurrentExam() {
     this.sharedData.prepareCurrentExam();
-    this.signaturePad.canvas.nativeElement.toBlob((blob) => {
-      console.log("Blob = " + JSON.stringify(blob));
-      this.sharedData.currentExam._attachments.signature = {type: 'image/png', data: blob};
-      this.dbProvider.updateExam(this.sharedData.currentExam);
-    });
+    this.dbProvider.updateExam(this.sharedData.currentExam);
+    if (this.signaturePad.dirty) {
+      this.signaturePad.canvas.nativeElement.toBlob((blob) => {
+        console.log("Blob = " + JSON.stringify(blob));
+        this.dbProvider.putAttachment(
+          'signature.png', 
+           blob);
+      })
+    };
   }
 
-  clearCanvas() {    
-    this.signaturePad.redrawBgImage();
+  redrawBackground(url) {    
+    this.signaturePad.drawBackground(url);
   }
 
   ionViewDidEnter() {
@@ -85,7 +89,21 @@ export class DetailsPage {
       idx++;
     }
     this.slider.slideTo(idx);
+    this.readAttachments();
+
     console.log('ionViewDidLoad DetailsPage');
   }
 
-}
+  readAttachments() {
+      this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'signature.png')
+      .then((blob) => {
+        let url = URL.createObjectURL(blob);
+        this.signaturePad.drawBackground(url);
+      })
+      .catch (e => {
+          // Easiest way to test for non-existent attachment (not most efficient though)
+          console.log("Can't find attachment: " + e);
+          this.signaturePad.drawBackground(null);
+        }) 
+      }
+  }

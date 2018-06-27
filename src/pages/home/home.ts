@@ -46,7 +46,7 @@ export class HomePage {
       rightOfWay: {infractions: [], notes:''},
       uncoupling: {infractions: [], notes:''},
       coupling: {infractions: [], notes:''},
-      results: {dangerousAction: '', trafficViolation: '', other: '', qualified: ''}
+      results: {dangerousAction: '', trafficViolation: '', other: '', qualified: ''},
     };
 
     examTemplate.licenseClass = '1';
@@ -60,7 +60,7 @@ export class HomePage {
         apptTime: '12:30',
         unit: '345',
         route: '4',
-        telephone: '(250) 661-2008',
+        office: '12345',
         initials: 'SM'
     }; 
     examTemplate.results = {
@@ -72,19 +72,6 @@ export class HomePage {
 
     this.dbProvider.navCtrl = this.navCtrl;
     this.dbProvider.createExam(examTemplate);
-
-    /*this.sharedData.leftTurn = examTemplate.leftTurn;
-    this.sharedData.rightTurn = examTemplate.rightTurn;
-    this.sharedData.roadPosition = examTemplate.roadPosition;
-    this.sharedData.speed = examTemplate.speed;
-    this.sharedData.backing = examTemplate.backing;
-    this.sharedData.shifting = examTemplate.shifting;
-    this.sharedData.rightOfWay = examTemplate.rightOfWay;
-    this.sharedData.uncoupling = examTemplate.uncoupling;
-    this.sharedData.coupling = examTemplate.coupling;*/
-
-    //this.navCtrl.parent.select(1); // Jump to Details tab
-
   }
 
   deleteExam(exam) {
@@ -117,19 +104,11 @@ export class HomePage {
     this.sharedData.uncoupling = exam.uncoupling;
     this.sharedData.coupling = exam.coupling;
 
-    this.readAttachments(exam);
+    // Attachements will be loaded by their respective pages
 
     this.navCtrl.parent.select(1);
   }
 
-  readAttachments(exam) {
-    if (typeof exam._attachments.signature !== 'undefined') {
-      console.log("Signature = " + JSON.stringify(exam._attachments.signature));
-      this.dbProvider.db.getAttachment('signature').then((blob) => {
-        console.log("Blob = " + blob);
-      });
-    }
-  }
 
   ionViewDidLoad() {
     this.dbProvider.getExams().then((data) => {

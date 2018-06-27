@@ -62,7 +62,7 @@ export class IntersectionsPage {
     let currentSlide = this.slider.getActiveIndex();
     let currentDrawerer = this.drawerers[currentSlide];
     
-    currentDrawerer.redrawBgImage();
+    currentDrawerer.drawBackground(null);
   }
 
   presentPopover(myEvent) { 

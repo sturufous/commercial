@@ -127,7 +127,7 @@
           </ion-item>
           <ion-item>
             <ion-label floating>Home Office:</ion-label>
-            <ion-input type="number" max="99999" formControlName="telephone"></ion-input>
+            <ion-input type="number" maxlength="5" formControlName="office"></ion-input>
           </ion-item>
           <ion-item>
               <ion-label floating>DE Initials:</ion-label>
@@ -135,7 +135,7 @@
           </ion-item>
           <ion-item>
               <ion-label style="padding-left: 10px">DE Signature</ion-label>
-              <button ion-button (click)="clearCanvas()" item-right>Clear</button>
+              <button ion-button (click)="redrawBackground(null)" item-right>Clear</button>
           </ion-item>
       </form>
           <canvas-draw background-img="assets/imgs/signature-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>

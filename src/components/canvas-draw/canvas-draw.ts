@@ -20,6 +20,7 @@ export class CanvasDrawComponent {
     lastY: number;
     background: any;
     ratio: number;
+    dirty: boolean = false;
 
     colourValues = {
         primary: '#488aff',
@@ -35,46 +36,42 @@ export class CanvasDrawComponent {
     }
  
     ngAfterViewInit(){
- 
+        this.drawBackground(this.bgImage);
+    }
+
+    drawBackground(bgImage) {
+
+        if (bgImage === null) {
+            bgImage = this.bgImage;
+        }
+
         this.canvasElement = this.canvas.nativeElement;
         this.renderer.setElementAttribute(this.canvasElement, 'width', this.platform.width() + '');
         this.renderer.setElementAttribute(this.canvasElement, 'height',  this.platform.height() + '');
-        this.background = new Image();
-        this.background.src = this.bgImage;
+        let background = new Image();
+        background.src = bgImage;
 
-        this.background.onload = (() => {
-            let hRatio = this.canvasElement.width / this.background.width;
-            let vRatio = this.canvasElement.height / this.background.height;
+        background.onload = (() => {
+            let hRatio = this.canvasElement.width / background.width;
+            let vRatio = this.canvasElement.height / background.height;
             this.ratio  = Math.min ( hRatio, vRatio );
             console.log("Canvas width = " + this.canvasElement.width + " Canvas height = " + this.canvasElement.height + " Ratio = " + this.ratio);
             console.log("OffsetLeft = " + this.canvasElement.offsetLeft + ", OffsetTop = " + this.canvasElement.offsetTop)
 
             this.renderer.setElementAttribute(this.canvasElement, 'width', this.platform.width() + '');
-            this.renderer.setElementAttribute(this.canvasElement, 'height', this.background.height*this.ratio + '');    
+            this.renderer.setElementAttribute(this.canvasElement, 'height', background.height*this.ratio + '');    
 
             this._CONTEXT = this.canvasElement.getContext("2d");
-            this._CONTEXT.drawImage(this.background, 
+            this._CONTEXT.drawImage(background, 
                 0, 
                 0, 
-                this.background.width, 
-                this.background.height, 
+                background.width, 
+                background.height, 
                 0, 
                 0, 
-                this.background.width*this.ratio, 
-                this.background.height*this.ratio)
+                background.width*this.ratio, 
+                background.height*this.ratio)
         });
-    }
-
-    redrawBgImage() {
-        this._CONTEXT.drawImage(this.background, 
-            0, 
-            0, 
-            this.background.width, 
-            this.background.height, 
-            0, 
-            0, 
-            this.background.width*this.ratio, 
-            this.background.height*this.ratio)
     }
 
     handleStart(ev){
@@ -89,6 +86,8 @@ export class CanvasDrawComponent {
     handleMove(ev){
  
         if (!this.sharedData.drawingToggle) {
+            ev.preventDefault();
+            this.dirty = true;
             var rect = ev.target.getBoundingClientRect();
             let currentX = ev.touches[0].clientX-rect.x;
             let currentY = ev.touches[0].clientY-rect.y; 

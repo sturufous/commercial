@@ -691,7 +691,6 @@ export class ExaminationPage {
   saveCurrentExam() {
     this.sharedData.prepareCurrentExam();
     this.dbProvider.updateExam(this.sharedData.currentExam);
-
   }
 
   ionViewDidLoad() {

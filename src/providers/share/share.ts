@@ -36,6 +36,7 @@ export class ShareProvider {
     examinationTabEnabled: boolean = false;
     examRevision: any = 0;
     attachments: any = [];
+    signatureImg: any;
 
     drawingToggle: any = false;
 
@@ -45,9 +46,6 @@ export class ShareProvider {
     currentExam = {
         _id: null,
         _rev: null,
-        _attachments: {
-            signature: null
-        },
         licenseClass: null,
         client: null,
         examiner: null,
@@ -82,7 +80,7 @@ export class ShareProvider {
             unit: ['', Validators.compose([Validators.maxLength(10), Validators.required])],
             route: ['', Validators.compose([Validators.maxLength(10), Validators.required])],
             apptDate: ['', Validators.compose([Validators.required])],
-            telephone: ['', Validators.compose([Validators.required])],
+            office: ['', Validators.compose([Validators.required])],
             initials: ['', Validators.compose([Validators.maxLength(3), Validators.required])]
         });
 
