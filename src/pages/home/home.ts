@@ -4,7 +4,6 @@ import { ShareProvider } from '../../providers/share/share';
 import { ModalController, ViewController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
-import { DetailsPage } from '../../pages/details/details';
 
 @Component({
   selector: 'page-home',
@@ -84,7 +83,7 @@ export class HomePage {
 
     this.sharedData.detailsTabEnabled = true;
     this.sharedData.examinationTabEnabled = true;
-    console.log("openExam: " + JSON.stringify(exam));
+
     this.sharedData.currentExam = exam;
     this.sharedData.examRevision = revision;
 
@@ -113,7 +112,6 @@ export class HomePage {
   ionViewDidLoad() {
     this.dbProvider.getExams().then((data) => {
       this.exams = data;
-      console.log("Data = " + JSON.stringify(data));
     })
     .catch((e) => console.log("Unable to get exams from PouchDB"));
   }

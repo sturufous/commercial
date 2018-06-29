@@ -218,4 +218,25 @@ ion-title {
     font-size: 10pt;
 }
 
+.sheet {
+    border-bottom: 1px solid #CCC !important;
+    font-size: 13pt !important;
+}
+
+.sheet-last {
+    font-size: 13pt !important;
+}
+
+.action-sheet-group {
+    padding-top: 0 !important;
+}
+
+#acst-hdr-0, #acst-hdr-1, #acst-hdr-2, #acst-hdr-3, #acst-hdr-4, #acst-hdr-5, #acst-hdr-6, #acst-hdr-7, #acst-hdr-8 {
+    -webkit-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+    background-color: #1b8dd6;
+    font-size: 16pt !important;
+    color: white !important;
+    font-family: 'righteous';
+}
 

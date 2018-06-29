@@ -50,7 +50,6 @@ export class IntersectionsPage {
   }
 
   nextSlide() {
-    console.log("in nextSlide()");
     this.slider.slideNext();
   }
 

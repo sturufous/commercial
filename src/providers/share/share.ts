@@ -140,14 +140,12 @@ export class ShareProvider {
 
     prepareCurrentExam() {
 
-        //this.submitAttempt = true;
-        console.log("Entering save");
         if (!this.client.valid) {
           this.presentToast("Client data not valid");
-          return {};
+          return { valid: false };
         } else if (!this.examiner.valid) {
           this.presentToast("Examination data not valid");
-          return {};
+          return { valid: false };
         }
         
         this.currentExam.licenseClass = this.licenseClass;
@@ -163,11 +161,10 @@ export class ShareProvider {
         this.currentExam.uncoupling = this.uncoupling;
         this.currentExam.coupling = this.coupling;
         this.currentExam.results = this.results.value;
-        
-        this.presentToast("Exam saved successfully");
-      }
+        return { valid: true };
+    }
 
-      presentBasicAlert(aType, message) {
+    presentBasicAlert(aType, message) {
         let alert = this.alertCtrl.create({
             title: aType,
             subTitle: message,

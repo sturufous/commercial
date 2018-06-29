@@ -48,8 +48,6 @@ export class DetailsPage {
       this.http = http;
       this.dbProvider = dbProvider;
 
-      console.log("Navparams = " + JSON.stringify(navparams));
-
       this.masks = {
         dlNumber: ['D', 'L', ':', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
         phoneNumber: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
@@ -61,20 +59,20 @@ export class DetailsPage {
 
   slideChanged() {
     this.sharedData.licenseClass = this.classes[this.slider.getActiveIndex()];
-    console.log("License class = " + this.sharedData.licenseClass);
   }
 
   saveCurrentExam() {
-    this.sharedData.prepareCurrentExam();
-    this.dbProvider.updateExam(this.sharedData.currentExam);
-    if (this.signaturePad.dirty) {
-      this.signaturePad.canvas.nativeElement.toBlob((blob) => {
-        console.log("Blob = " + JSON.stringify(blob));
-        this.dbProvider.putAttachment(
-          'signature.png', 
-           blob);
-      })
-    };
+    if (this.sharedData.prepareCurrentExam().valid) {
+      this.dbProvider.updateExam(this.sharedData.currentExam);
+      if (this.signaturePad.dirty) {
+        this.signaturePad.canvas.nativeElement.toBlob((blob) => {
+          this.dbProvider.putAttachment(
+            'signature.png', 
+            blob);
+          this.signaturePad.dirty = false;
+        });
+      };
+    }
   }
 
   redrawBackground(url) {    
@@ -84,7 +82,7 @@ export class DetailsPage {
   ionViewDidEnter() {
     // Set offset of licensClass slider
     let idx=0;
-    //console.log("ngAfterViewInit new: " + JSON.stringify(this.slider));
+
     while (this.sharedData.licenseClass != this.classes[idx]) {
       idx++;
     }
@@ -95,11 +93,12 @@ export class DetailsPage {
   }
 
   readAttachments() {
+      console.log("Signature being read for id: " + this.sharedData.currentExam._id);
       this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'signature.png')
       .then((blob) => {
         let url = URL.createObjectURL(blob);
         this.signaturePad.drawBackground(url);
-      })
+     })
       .catch (e => {
           // Easiest way to test for non-existent attachment (not most efficient though)
           console.log("Can't find attachment: " + e);

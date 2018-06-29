@@ -38,6 +38,5 @@ constructor(public navCtrl: NavController,
 
   changeColour(colour){
     this.sharedData.currentColour = colour;
-    console.log("Current colour = " + this.sharedData.currentColour)
   }
 }

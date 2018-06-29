@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChildren } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
 import { Geolocation } from '@ionic-native/geolocation';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
+import { ActionSheetController } from 'ionic-angular';
+import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
 
 /**
  * Generated class for the ExaminationPage page.
@@ -19,6 +21,19 @@ import { CommercialDbProvider } from '../../providers/commercial-db/commercial-d
 })
 export class ExaminationPage {
 
+  @ViewChildren(CanvasDrawComponent) canvases;
+
+  subscription;
+  position: any = {
+    latitude: 'unavailable',
+    longitude: 'unavailable',
+    accuracy: 'unavailable',
+    altitude: 'unavailable',
+    altitudeAccuracy: 'unavailable',
+    speed: 'unavailable',
+    heading: 'unavailable'
+  }
+
   hideDemerits: any = {
     leftTurn: true,
     rightTurn: true,
@@ -32,6 +47,7 @@ export class ExaminationPage {
   }
 
   myClass: any = 'bad';
+  showLocation: boolean = false;
 
   alertCtrl: AlertController;
   sharedData: ShareProvider;
@@ -40,6 +56,7 @@ export class ExaminationPage {
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
+              public actionSheet: ActionSheetController,
               alertCtrl: AlertController,
               shareProvider: ShareProvider,
               geolocation: Geolocation,
@@ -643,7 +660,9 @@ export class ExaminationPage {
         '<tr><td>Time:&nbsp;</td><td>' + time + '</td></tr>' +
         '<tr><td>Demerits:&nbsp;</td><td>' + demeritObject.demerits + ' Points</td></tr>' +
         '<tr><td>Latitude:&nbsp;</td><td>' + demeritObject.latitude + '</td></tr>' +
-        '<tr><td>Longitude:&nbsp;</td><td>' + demeritObject.longitude + '</td></tr>',
+        '<tr><td>Longitude:&nbsp;</td><td>' + demeritObject.longitude + '</td></tr>' +
+        '<tr><td>Altitude:&nbsp;</td><td>' + demeritObject.altitude + '</td></tr>' +
+        '<tr><td>Speed:&nbsp;</td><td>' + demeritObject.speed + '</td></tr>',
       buttons: ['Dismiss']
     });
     alert.present();
@@ -656,7 +675,6 @@ export class ExaminationPage {
       let description = data.substring(0, delimLoc);
       let demerits = data.substring(delimLoc+1, data.length);
       let currTime = new Date();
-
       this.geolocation.getCurrentPosition().then((resp) => {
         this.setDemeritObjLocation(currTime, resp, arr);
         console.log("Lat: " + resp.coords.latitude);
@@ -670,7 +688,9 @@ export class ExaminationPage {
         time: currTime, 
         demerits: demerits, 
         latitude: 0, 
-        longitude: 0
+        longitude: 0,
+        altitude: 0,
+        speed: 0
       }
     } 
 
@@ -684,17 +704,124 @@ export class ExaminationPage {
       if (arr.infractions[idx].time == currTime) {
         arr.infractions[idx].latitude = location.coords.latitude;
         arr.infractions[idx].longitude = location.coords.longitude;
+        arr.infractions[idx].altitude = location.coords.altitude;
+        arr.infractions[idx].speed = location.coords.speed;
       }
     }
   }
 
   saveCurrentExam() {
-    this.sharedData.prepareCurrentExam();
-    this.dbProvider.updateExam(this.sharedData.currentExam);
+    if (this.sharedData.prepareCurrentExam().valid) {
+      this.dbProvider.updateExam(this.sharedData.currentExam);
+      let canvasList = this.canvases.toArray();
+      for (let idx=0; idx < canvasList.length; idx++) {
+        if (canvasList[idx].dirty) {
+          canvasList[idx].canvas.nativeElement.toBlob((blob) => {
+            console.log("Comments = " + JSON.stringify(blob));
+            this.dbProvider.putAttachment(
+              'comments-' + idx + '.png', 
+              blob);
+            canvasList[idx].dirty = false;
+          });
+        };
+      }
+    }
+  }
+
+  ionViewDidEnter() {
+    this.readAttachments();
+  }
+
+  readAttachments() {
+    let canvasList = this.canvases.toArray();
+    console.log("canvasList.length = " + canvasList.length)
+    for (let idx=0; idx < canvasList.length; idx++) {
+      this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'comments-' + idx + '.png')
+      .then((blob) => {
+        let url = URL.createObjectURL(blob);
+        canvasList[idx].drawBackground(url);
+      })
+      .catch (e => {
+          // Easiest way to test for non-existent attachment (not most efficient though)
+          console.log("Can't find attachment: " + e);
+          canvasList[idx].drawBackground(null);
+        }) 
+      }
   }
 
   ionViewDidLoad() {
+    this.subscription = this.geolocation.watchPosition()
+      .subscribe(position => {
+        console.log(position.coords.longitude + ' ' + position.coords.latitude);
+        this.position.latitude = position.coords.latitude != null ? position.coords.latitude : 'unavailable';
+        this.position.longitude = position.coords.longitude != null ? position.coords.longitude : 'unavailable';
+        this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : 'unavailable';
+        this.position.altitude = position.coords.altitude != null ? position.coords.altitude : 'unavailable';
+        this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : 'unavailable';
+        this.position.speed = position.coords.speed != null ? position.coords.speed : 'unavailable';
+        this.position.heading = position.coords.heading != null ? position.coords.heading : 'unavailable';
+      });
     console.log('ionViewDidLoad ExaminationPage');
   }
 
+  showGpsData() {
+    console.log("In showGpsData()")
+    const gpsView = this.actionSheet.create({
+      title: 'Location Snapshot',
+      cssClass: 'action-sheet-title',
+      buttons: [
+        {
+          text: 'Latitude: ' + this.position.latitude,
+          icon: 'md-arrow-dropdown-circle',
+          cssClass: 'sheet',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },{
+          text: 'Longitude: ' + this.position.longitude,
+          icon: 'md-arrow-dropleft-circle',
+          cssClass: 'sheet',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },{
+          text: 'Accuracy: ' + this.position.accuracy + ' Metres',
+          icon: 'md-analytics',
+          cssClass: 'sheet',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },{
+          text: 'Altitude: ' + this.position.altitude,
+          icon: 'md-image',
+          cssClass: 'sheet',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },{
+          text: 'Altitude Accuracy: ' + this.position.altitudeAccuracy,
+          icon: 'ios-analytics',
+          cssClass: 'sheet',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },{
+          text: 'Speed: ' + this.position.speed,
+          icon: 'ios-speedometer',
+          cssClass: 'sheet',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },{
+          text: 'Heading: ' + this.position.heading,
+          icon: 'md-compass',
+          cssClass: 'sheet-last',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        }
+      ]
+    });
+    gpsView.present();
+  }
 }

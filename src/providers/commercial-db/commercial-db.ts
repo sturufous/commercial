@@ -97,15 +97,14 @@ export class CommercialDbProvider {
   }
 
   createExam(exam) { 
-      console.log("In createExam: " + JSON.stringify(exam));
       this.db.post(exam).then((response) => {
         let idx = response.rev.indexOf('-');
         let revision = response.rev.substring(0, idx);
-        console.log("New Record = " + JSON.stringify(response));
-        console.log("New Exam = " + JSON.stringify(exam));
-
+        
         this.sharedData.currentExam._id = response.id;
         this.sharedData.currentExam._rev = response.rev;
+        this.sharedData.examRevision = revision;
+
         this.sharedData.currentExam.client = exam.client;
         this.sharedData.currentExam.examiner = exam.examiner;
         this.sharedData.leftTurn = exam.leftTurn;
@@ -131,7 +130,6 @@ export class CommercialDbProvider {
   }
     
   updateExam(exam) { 
-    console.log("Current Exam = " + JSON.stringify(this.sharedData.currentExam));
 
     this.db.put(exam).then((response) => {
       let idx = response.rev.indexOf('-');
@@ -140,11 +138,13 @@ export class CommercialDbProvider {
       this.sharedData.currentExam._id = response.id;
       this.sharedData.currentExam._rev = response.rev;
       this.sharedData.examRevision = revision;
+      this.sharedData.presentToast("Exam updated successfully")
     })
     .catch (e => this.sharedData.presentBasicAlert("Error", e));
   }
 
   putAttachment(name, data) {
+    console.log("Attachment being saved for id: " + this.sharedData.currentExam._id + ", rev:" + this.sharedData.currentExam._rev);
     this.db.putAttachment(
       this.sharedData.currentExam._id, 
       name,

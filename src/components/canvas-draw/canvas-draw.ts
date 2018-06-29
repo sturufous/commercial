@@ -32,7 +32,6 @@ export class CanvasDrawComponent {
     constructor(public platform: Platform, 
         public renderer: Renderer,
         public sharedData: ShareProvider) {
-        console.log('Hello CanvasDraw Component');
     }
  
     ngAfterViewInit(){
@@ -55,8 +54,6 @@ export class CanvasDrawComponent {
             let hRatio = this.canvasElement.width / background.width;
             let vRatio = this.canvasElement.height / background.height;
             this.ratio  = Math.min ( hRatio, vRatio );
-            console.log("Canvas width = " + this.canvasElement.width + " Canvas height = " + this.canvasElement.height + " Ratio = " + this.ratio);
-            console.log("OffsetLeft = " + this.canvasElement.offsetLeft + ", OffsetTop = " + this.canvasElement.offsetTop)
 
             this.renderer.setElementAttribute(this.canvasElement, 'width', this.platform.width() + '');
             this.renderer.setElementAttribute(this.canvasElement, 'height', background.height*this.ratio + '');    

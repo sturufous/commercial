@@ -11,6 +11,9 @@
       <ion-title>{{ sharedData.client.get('givenName').value }} {{ sharedData.client.get('surname').value }}</ion-title>
     </div>
     <div style="float: right">
+      <button ion-button (click)="showGpsData()" icon-only clear>
+        <ion-icon class="header-badge" name="md-compass"></ion-icon>
+      </button>
       <button ion-button icon-only clear>
         <ion-badge item-end secondary>
           {{ sharedData.examRevision }}
@@ -48,8 +51,26 @@
 
   <ion-card>
     <ion-list>
-      <ion-item class="small-message" style="border-bottom:1px solid #DDD;padding-left:10px">
-        Please fill out all mandatory fields
+        <ion-item-divider color="light"><h2>LIVE LOCATION FEED</h2></ion-item-divider>
+        <ion-item class="small-message" style="border-bottom:1px solid #DDD;padding-left:10px">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Lat: {{ position.latitude }}
+            </ion-col>
+            <ion-col>
+              Lon: {{ position.longitude }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Alt: {{ position.altitude }}
+            </ion-col>
+            <ion-col>
+              Speed: {{ position.speed }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
       <ion-item>
         <ion-icon style="color:red" name="ios-bulb"></ion-icon>
@@ -107,7 +128,8 @@
                 </ion-item-options>
               </ion-item-sliding>
               <ion-item>
-                  <ion-textarea [(ngModel)]="sharedData.leftTurn.notes" placeholder="Enter the comments"></ion-textarea>
+                Comments:
+                <canvas-draw background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
               </ion-item>              
             </ion-list>
           </ion-card-content>
@@ -159,9 +181,10 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-                <ion-textarea [(ngModel)]="sharedData.rightTurn.notes" placeholder="Enter the comments"></ion-textarea>
+                Comments:
+                <canvas-draw background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
             </ion-item>              
-        </ion-list>
+          </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-item>
@@ -210,9 +233,10 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-                <ion-textarea [(ngModel)]="sharedData.roadPosition.notes" placeholder="Enter the comments"></ion-textarea>
+                Comments:
+                <canvas-draw background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
             </ion-item>              
-        </ion-list>
+          </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-item>
@@ -261,9 +285,10 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-                <ion-textarea [(ngModel)]="sharedData.speed.notes" placeholder="Enter the comments"></ion-textarea>
+                Comments:
+                <canvas-draw background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
             </ion-item>              
-        </ion-list>
+          </ion-list>
         </ion-card-content>
       </ion-card>    
     </ion-item>
@@ -312,9 +337,10 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-              <ion-textarea [(ngModel)]="sharedData.backing.notes" placeholder="Enter the comments"></ion-textarea>
+              Comments:
+              <canvas-draw background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
             </ion-item>              
-        </ion-list>
+         </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
@@ -363,9 +389,10 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-              <ion-textarea [(ngModel)]="sharedData.shifting.notes" placeholder="Enter the comments"></ion-textarea>
+              Comments:
+              <canvas-draw background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
             </ion-item>              
-        </ion-list>
+          </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
@@ -414,9 +441,10 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-              <ion-textarea [(ngModel)]="sharedData.rightOfWay.notes" placeholder="Enter the comments"></ion-textarea>
+              Comments:
+              <canvas-draw background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
             </ion-item>              
-        </ion-list>
+          </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
@@ -465,9 +493,10 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-              <ion-textarea [(ngModel)]="sharedData.uncoupling.notes" placeholder="Enter the comments"></ion-textarea>
+              Comments:
+              <canvas-draw background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
             </ion-item>              
-        </ion-list>
+          </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
@@ -516,9 +545,10 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-              <ion-textarea [(ngModel)]="sharedData.coupling.notes" placeholder="Enter the comments"></ion-textarea>
+              Comments:
+              <canvas-draw background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
             </ion-item>              
-        </ion-list>
+          </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
