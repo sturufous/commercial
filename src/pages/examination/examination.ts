@@ -25,13 +25,13 @@ export class ExaminationPage {
 
   subscription;
   position: any = {
-    latitude: 'unavailable',
-    longitude: 'unavailable',
-    accuracy: 'unavailable',
-    altitude: 'unavailable',
-    altitudeAccuracy: 'unavailable',
-    speed: 'unavailable',
-    heading: 'unavailable'
+    latitude: 'unavail',
+    longitude: 'unavail',
+    accuracy: 'unavail',
+    altitude: 'unavail',
+    altitudeAccuracy: 'unavail',
+    speed: 'unavail',
+    heading: 'unavail'
   }
 
   hideDemerits: any = {
@@ -712,23 +712,20 @@ export class ExaminationPage {
 
   saveCurrentExam() {
     if (this.sharedData.prepareCurrentExam().valid) {
-      this.dbProvider.updateExam(this.sharedData.currentExam);
-      let canvasList = this.canvases.toArray();
-      for (let idx=0; idx < canvasList.length; idx++) {
-        if (canvasList[idx].dirty) {
-          canvasList[idx].canvas.nativeElement.toBlob((blob) => {
-            console.log("Comments = " + JSON.stringify(blob));
-            this.dbProvider.putAttachment(
-              'comments-' + idx + '.png', 
-              blob);
-            canvasList[idx].dirty = false;
-          });
-        };
-      }
+      this.dbProvider.updateExam();
     }
   }
 
   ionViewDidEnter() {
+    this.sharedData.examinationCanvases = this.canvases;
+
+    // Initialize all canvas elements to blank backgrounds
+    let canvasList = this.sharedData.examinationCanvases.toArray();
+    
+    for (let canvasIdx=0; canvasIdx < canvasList.length; canvasIdx++) {
+      canvasList[canvasIdx].drawBackground();
+    }
+    
     this.readAttachments();
   }
 
@@ -736,7 +733,7 @@ export class ExaminationPage {
     let canvasList = this.canvases.toArray();
     console.log("canvasList.length = " + canvasList.length)
     for (let idx=0; idx < canvasList.length; idx++) {
-      this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'comments-' + idx + '.png')
+      this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, this.sharedData.attachmentNames[idx])
       .then((blob) => {
         let url = URL.createObjectURL(blob);
         canvasList[idx].drawBackground(url);
@@ -753,15 +750,23 @@ export class ExaminationPage {
     this.subscription = this.geolocation.watchPosition()
       .subscribe(position => {
         console.log(position.coords.longitude + ' ' + position.coords.latitude);
-        this.position.latitude = position.coords.latitude != null ? position.coords.latitude : 'unavailable';
-        this.position.longitude = position.coords.longitude != null ? position.coords.longitude : 'unavailable';
-        this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : 'unavailable';
-        this.position.altitude = position.coords.altitude != null ? position.coords.altitude : 'unavailable';
-        this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : 'unavailable';
-        this.position.speed = position.coords.speed != null ? position.coords.speed : 'unavailable';
-        this.position.heading = position.coords.heading != null ? position.coords.heading : 'unavailable';
+        this.position.latitude = position.coords.latitude != null ? position.coords.latitude : 'unavail';
+        this.position.longitude = position.coords.longitude != null ? position.coords.longitude : 'unavail';
+        this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : 'unavail';
+        this.position.altitude = position.coords.altitude != null ? position.coords.altitude : 'unavail';
+        this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : 'unavail';
+        this.position.speed = position.coords.speed != null ? position.coords.speed : 'unavail';
+        this.position.heading = position.coords.heading != null ? position.coords.heading : 'unavail';
+
+        this.position.latitude = this.position.latitude.toString().substr(0, 10);
+        this.position.longitude = this.position.longitude.toString().substr(0, 10);
       });
     console.log('ionViewDidLoad ExaminationPage');
+  }
+
+  clearComment(index) {
+    let commentArray = this.canvases.toArray(); 
+    commentArray[index].drawBackground(null);
   }
 
   showGpsData() {

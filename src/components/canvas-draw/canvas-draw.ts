@@ -12,6 +12,7 @@ export class CanvasDrawComponent {
     @Input('background-img') bgImage;
     @Input('pen-size') penSize = null;
     @Input('pen-colour') penColour = null;
+    @Input('name') name = null;
  
     private _CONTEXT: any;
 
@@ -36,6 +37,10 @@ export class CanvasDrawComponent {
  
     ngAfterViewInit(){
         this.drawBackground(this.bgImage);
+    }
+
+    getName() {
+        return this.name
     }
 
     drawBackground(bgImage) {

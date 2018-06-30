@@ -78,6 +78,7 @@ export class HomePage {
   }
 
   openExam(exam) {
+    this.sharedData.currentExam._attachments = exam._attachments;
     let idx = exam._rev.indexOf('-');
     let revision = exam._rev.substring(0, idx);
 

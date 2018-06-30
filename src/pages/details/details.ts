@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChildren } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
 import { ModalController, ViewController } from 'ionic-angular';
@@ -23,7 +23,7 @@ import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
 export class DetailsPage {
 
   @ViewChild('testSlider') slider;
-  @ViewChild(CanvasDrawComponent) signaturePad;
+  @ViewChildren(CanvasDrawComponent) signaturePad;
 
   dbProvider: CommercialDbProvider;
   sharedData: ShareProvider = null;
@@ -47,6 +47,7 @@ export class DetailsPage {
       this.modalController = modalController;
       this.http = http;
       this.dbProvider = dbProvider;
+      this.sharedData.detailsCanvas = this.signaturePad;
 
       this.masks = {
         dlNumber: ['D', 'L', ':', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
@@ -63,20 +64,13 @@ export class DetailsPage {
 
   saveCurrentExam() {
     if (this.sharedData.prepareCurrentExam().valid) {
-      this.dbProvider.updateExam(this.sharedData.currentExam);
-      if (this.signaturePad.dirty) {
-        this.signaturePad.canvas.nativeElement.toBlob((blob) => {
-          this.dbProvider.putAttachment(
-            'signature.png', 
-            blob);
-          this.signaturePad.dirty = false;
-        });
-      };
+      this.dbProvider.updateExam();
     }
   }
 
-  redrawBackground(url) {    
-    this.signaturePad.drawBackground(url);
+  redrawBackground(url) {   
+    let signatureArray = this.signaturePad.toArray(); 
+    signatureArray[0].drawBackground(url);
   }
 
   ionViewDidEnter() {
@@ -87,22 +81,32 @@ export class DetailsPage {
       idx++;
     }
     this.slider.slideTo(idx);
+    this.sharedData.detailsCanvas = this.signaturePad;
+
+    // Initialize all canvas elements to blank backgrounds
+    let canvasList = this.sharedData.detailsCanvas.toArray();
+    
+    for (let canvasIdx=0; canvasIdx < canvasList.length; canvasIdx++) {
+      canvasList[canvasIdx].drawBackground();
+    }
+        
     this.readAttachments();
 
     console.log('ionViewDidLoad DetailsPage');
   }
 
   readAttachments() {
+      let canvasArray = this.signaturePad.toArray();
       console.log("Signature being read for id: " + this.sharedData.currentExam._id);
       this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'signature.png')
       .then((blob) => {
         let url = URL.createObjectURL(blob);
-        this.signaturePad.drawBackground(url);
+        canvasArray[0].drawBackground(url);
      })
       .catch (e => {
           // Easiest way to test for non-existent attachment (not most efficient though)
           console.log("Can't find attachment: " + e);
-          this.signaturePad.drawBackground(null);
+          canvasArray[0].drawBackground(null);
         }) 
       }
   }

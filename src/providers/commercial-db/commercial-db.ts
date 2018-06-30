@@ -19,6 +19,7 @@ export class CommercialDbProvider {
 
   sharedData: ShareProvider;
   navCtrl: NavController;
+  canvasIndex: any = 0;
 
   constructor(
     shareProvider: ShareProvider) {
@@ -129,39 +130,76 @@ export class CommercialDbProvider {
       .catch (e => this.sharedData.presentBasicAlert("Error", e));
   }
     
-  updateExam(exam) { 
+  updateExam() { 
 
-    this.db.put(exam).then((response) => {
+    this.db.put(this.sharedData.currentExam).then((response) => {
       let idx = response.rev.indexOf('-');
       let revision = response.rev.substring(0, idx);
+      let canvasArray = [];
+      let signatureArray;
+
+      console.log("in updateExam: " + JSON.stringify(this.sharedData.currentExam));
 
       this.sharedData.currentExam._id = response.id;
       this.sharedData.currentExam._rev = response.rev;
       this.sharedData.examRevision = revision;
       this.sharedData.presentToast("Exam updated successfully")
+
+      // Canvases will be undefined until page is loaded. There will, however,
+      // always be a signature canvas as the details page is always loaded when
+      // updateExam() is called. Still check though:
+      
+      if (typeof this.sharedData.detailsCanvas != 'undefined') {
+        signatureArray = this.sharedData.detailsCanvas.toArray();
+      }
+
+      let canvasList = this.sharedData.examinationCanvases;
+      if (typeof canvasList != 'undefined') {
+        canvasArray = canvasList.toArray();
+      }
+
+      if (typeof signatureArray != 'undefined') {
+        canvasArray.push(signatureArray[0]);
+      }
+
+      this.canvasIndex = 0;
+      this.saveCanvasAttachments(canvasArray);
     })
     .catch (e => this.sharedData.presentBasicAlert("Error", e));
   }
 
-  putAttachment(name, data) {
-    console.log("Attachment being saved for id: " + this.sharedData.currentExam._id + ", rev:" + this.sharedData.currentExam._rev);
-    this.db.putAttachment(
-      this.sharedData.currentExam._id, 
-      name,
-      this.sharedData.currentExam._rev,
-      data,
-      'image/png',
-    )
-    .then((response) => {
-      let idx = response.rev.indexOf('-');
-      let revision = response.rev.substring(0, idx);
-
-      this.sharedData.currentExam._id = response.id;
-      this.sharedData.currentExam._rev = response.rev;
-      this.sharedData.examRevision = revision;
-    })
-    .catch(e => this.sharedData.presentBasicAlert("Error", e))
+  saveCanvasAttachments(canvasList) {
+    let currentCanvas = canvasList[this.canvasIndex];
+    if (this.canvasIndex < canvasList.length) {
+      if (canvasList[this.canvasIndex].dirty) {
+        canvasList[this.canvasIndex].dirty = false; // This should be done later        
+        canvasList[this.canvasIndex].canvas.nativeElement.toBlob((blob) => {
+          this.db.putAttachment(
+            this.sharedData.currentExam._id, 
+            canvasList[this.canvasIndex].getName(),
+            this.sharedData.currentExam._rev,
+            blob,
+            'image/png',
+          )
+          .then((response) => {
+            console.log("In handler for put attachment")
+            let dashPos = response.rev.indexOf('-');
+            let revision = response.rev.substring(0, dashPos);
+debugger;
+            this.sharedData.currentExam._id = response.id;
+            this.sharedData.currentExam._rev = response.rev;
+            this.sharedData.examRevision = revision;
+            this.canvasIndex++;
+            this.saveCanvasAttachments(canvasList);
+          })
+        }
+      )
+    } else {
+      this.canvasIndex++;
+      this.saveCanvasAttachments(canvasList);
+    }
   }
+}
     
   deleteExam(exam){
       this.db.remove(exam).catch((err) => {

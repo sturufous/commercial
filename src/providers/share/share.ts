@@ -38,6 +38,21 @@ export class ShareProvider {
     attachments: any = [];
     signatureImg: any;
 
+    detailsCanvas;
+    examinationCanvases;
+    attachmentNames = [
+        'left-turn-comments.png',
+        'right-turn-comments.png',
+        'road-position-comments.png',
+        'speed-comments.png',
+        'backing-comments.png',
+        'shifting-comments.png',
+        'right-of-way-comments.png',
+        'uncoupling-comments.png',
+        'coupling-comments.png',
+        'signature.png'
+    ];
+
     drawingToggle: any = false;
 
     currentColour: string = 'primary';
@@ -58,7 +73,8 @@ export class ShareProvider {
         rightOfWay: {infractions: [], notes:''},
         uncoupling: {infractions: [], notes:''},
         coupling: {infractions: [], notes:''},
-        results: null
+        results: null,
+        _attachments: {}
     };
 
     licenseClass: any = '1';
