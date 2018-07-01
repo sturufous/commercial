@@ -192,13 +192,14 @@ export class ShareProvider {
     }
 
     loadAttachments(dbProvider) {
+        debugger;
         if (this.detailsPage !== null) {
             this.readDetailsAttachments(dbProvider);
-        } else {
-            if (this.examinationPage !== null) {
+        };
+        
+        if (this.examinationPage !== null) {
                 this.readExamAttachments(dbProvider);
-            }
-        }
+        };
     }
 
     readDetailsAttachments(dbProvider) {
@@ -217,19 +218,20 @@ export class ShareProvider {
     }
   
     readExamAttachments(dbProvider) {
-    for (let idx=0; idx < this.examinationPage.commentArray.length; idx++) {
-      dbProvider.db.getAttachment(this.currentExam._id, this.attachmentNames[idx])
-      .then((blob) => {
-        let url = URL.createObjectURL(blob);
-        this.examinationPage.commentArray[idx].drawBackground(url);
-        this.examinationPage.commentArray[idx].wasLoaded = true;
-      })
-      .catch (e => {
-          // Easiest way to test for non-existent attachment (not most efficient though)
-          console.log("Can't find attachment: " + e);
-          this.examinationPage.commentArray[idx].drawBackground(null);
-        }) 
-      }
-  }
+        let commentArray = this.examinationPage.canvases.toArray();
+        for (let idx=0; idx < commentArray.length; idx++) {
+        dbProvider.db.getAttachment(this.currentExam._id, this.attachmentNames[idx])
+        .then((blob) => {
+            let url = URL.createObjectURL(blob);
+            commentArray[idx].drawBackground(url);
+            commentArray[idx].wasLoaded = true;
+        })
+        .catch (e => {
+            // Easiest way to test for non-existent attachment (not most efficient though)
+            console.log("Can't find attachment: " + e);
+            commentArray[idx].drawBackground(null);
+            }) 
+        }
+    }
   
 }
