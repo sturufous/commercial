@@ -46,6 +46,7 @@ export class HomePage {
       uncoupling: {infractions: [], notes:''},
       coupling: {infractions: [], notes:''},
       results: {dangerousAction: '', trafficViolation: '', other: '', qualified: ''},
+      _attachments: {}
     };
 
     examTemplate.licenseClass = '1';
@@ -68,6 +69,7 @@ export class HomePage {
       other: '',
       qualified: 'Discontinued'
     }
+    examTemplate._attachments = {};
 
     this.dbProvider.navCtrl = this.navCtrl;
     this.dbProvider.createExam(examTemplate);
@@ -103,6 +105,7 @@ export class HomePage {
     this.sharedData.rightOfWay = exam.rightOfWay;
     this.sharedData.uncoupling = exam.uncoupling;
     this.sharedData.coupling = exam.coupling;
+    this.sharedData.loadAttachments(this.dbProvider);
 
     // Attachements will be loaded by their respective pages
 

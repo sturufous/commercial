@@ -48,6 +48,7 @@ export class ExaminationPage {
 
   myClass: any = 'bad';
   showLocation: boolean = false;
+  commentArray: any = [];
 
   alertCtrl: AlertController;
   sharedData: ShareProvider;
@@ -716,37 +717,27 @@ export class ExaminationPage {
     }
   }
 
-  ionViewDidEnter() {
-    this.sharedData.examinationCanvases = this.canvases;
+  // TODO: Clean up comment array use, should there be a copy here and in sharedData?
+  // Also, does the array have to be instantiated each time we run this?
+  showAttachmentIcon(index) {
+    if (typeof this.commentArray[index] != 'undefined') {
+      return this.commentArray[index].wasLoaded;
+    };
 
-    // Initialize all canvas elements to blank backgrounds
-    let canvasList = this.sharedData.examinationCanvases.toArray();
-    
-    for (let canvasIdx=0; canvasIdx < canvasList.length; canvasIdx++) {
-      canvasList[canvasIdx].drawBackground();
-    }
-    
-    this.readAttachments();
-  }
-
-  readAttachments() {
-    let canvasList = this.canvases.toArray();
-    console.log("canvasList.length = " + canvasList.length)
-    for (let idx=0; idx < canvasList.length; idx++) {
-      this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, this.sharedData.attachmentNames[idx])
-      .then((blob) => {
-        let url = URL.createObjectURL(blob);
-        canvasList[idx].drawBackground(url);
-      })
-      .catch (e => {
-          // Easiest way to test for non-existent attachment (not most efficient though)
-          console.log("Can't find attachment: " + e);
-          canvasList[idx].drawBackground(null);
-        }) 
-      }
+    return true;
   }
 
   ionViewDidLoad() {
+    this.sharedData.examinationCanvases = this.canvases;
+    this.commentArray = this.sharedData.examinationCanvases.toArray();
+
+    // Initialize all canvas elements to blank backgrounds    
+    for (let canvasIdx=0; canvasIdx < this.commentArray.length; canvasIdx++) {
+      this.commentArray[canvasIdx].drawBackground();
+    }
+    
+    this.sharedData.examinationPage = this;
+    this.sharedData.readExamAttachments(this.dbProvider);
     this.subscription = this.geolocation.watchPosition()
       .subscribe(position => {
         console.log(position.coords.longitude + ' ' + position.coords.latitude);
@@ -761,12 +752,12 @@ export class ExaminationPage {
         this.position.latitude = this.position.latitude.toString().substr(0, 10);
         this.position.longitude = this.position.longitude.toString().substr(0, 10);
       });
+    //this.commentArray = this.canvases.toArray();
     console.log('ionViewDidLoad ExaminationPage');
   }
 
   clearComment(index) {
-    let commentArray = this.canvases.toArray(); 
-    commentArray[index].drawBackground(null);
+    this.commentArray[index].drawBackground(null);
   }
 
   showGpsData() {

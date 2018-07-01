@@ -78,6 +78,8 @@ export class ShareProvider {
     };
 
     licenseClass: any = '1';
+    detailsPage: any = null;
+    examinationPage: any = null;
 
     constructor(toastControl: ToastController,
         formBuilder: FormBuilder,
@@ -187,6 +189,47 @@ export class ShareProvider {
             buttons: ['Dismiss']
         });
         alert.present();
+    }
+
+    loadAttachments(dbProvider) {
+        if (this.detailsPage !== null) {
+            this.readDetailsAttachments(dbProvider);
+        } else {
+            if (this.examinationPage !== null) {
+                this.readExamAttachments(dbProvider);
+            }
+        }
+    }
+
+    readDetailsAttachments(dbProvider) {
+        let canvasArray = this.detailsPage.signaturePad.toArray();
+        console.log("Signature being read for id: " + this.currentExam._id);
+        dbProvider.db.getAttachment(this.currentExam._id, 'signature.png')
+        .then((blob) => {
+          let url = URL.createObjectURL(blob);
+          canvasArray[0].drawBackground(url);
+       })
+        .catch (e => {
+            // Easiest way to test for non-existent attachment (not most efficient though)
+            console.log("Can't find attachment: " + e);
+            canvasArray[0].drawBackground(null);
+          }) 
+    }
+  
+    readExamAttachments(dbProvider) {
+    for (let idx=0; idx < this.examinationPage.commentArray.length; idx++) {
+      dbProvider.db.getAttachment(this.currentExam._id, this.attachmentNames[idx])
+      .then((blob) => {
+        let url = URL.createObjectURL(blob);
+        this.examinationPage.commentArray[idx].drawBackground(url);
+        this.examinationPage.commentArray[idx].wasLoaded = true;
+      })
+      .catch (e => {
+          // Easiest way to test for non-existent attachment (not most efficient though)
+          console.log("Can't find attachment: " + e);
+          this.examinationPage.commentArray[idx].drawBackground(null);
+        }) 
       }
-    
+  }
+  
 }

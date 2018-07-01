@@ -97,11 +97,16 @@
             <ion-col col-1>
               <ion-icon name="md-arrow-dropleft-circle"></ion-icon>
             </ion-col>
-            <ion-col col-10 class="infraction-link" (click)="presentLeftTurn()">
+            <ion-col col-8 class="infraction-link" (click)="presentLeftTurn()">
               LEFT TURN
             </ion-col>
-            <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.leftTurn.infractions.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">{{ sharedData.getDemeritCount(sharedData.leftTurn) }}</span>
+            <ion-col col-3>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.leftTurn.infractions.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">
+                {{ sharedData.getDemeritCount(sharedData.leftTurn) }}
+              </span>
+              <span [hidden]="!showAttachmentIcon(0)" class="attachment-flag">
+                <ion-icon style="font-size: 14pt" name="md-attach"></ion-icon>
+              </span>
             </ion-col>
           </ion-row>
         </ion-grid>

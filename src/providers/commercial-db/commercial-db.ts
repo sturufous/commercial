@@ -185,7 +185,7 @@ export class CommercialDbProvider {
             console.log("In handler for put attachment")
             let dashPos = response.rev.indexOf('-');
             let revision = response.rev.substring(0, dashPos);
-debugger;
+
             this.sharedData.currentExam._id = response.id;
             this.sharedData.currentExam._rev = response.rev;
             this.sharedData.examRevision = revision;

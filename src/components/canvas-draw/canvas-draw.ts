@@ -22,6 +22,7 @@ export class CanvasDrawComponent {
     background: any;
     ratio: number;
     dirty: boolean = false;
+    wasLoaded: boolean = false;
 
     colourValues = {
         primary: '#488aff',

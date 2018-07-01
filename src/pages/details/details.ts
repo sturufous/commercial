@@ -80,6 +80,7 @@ export class DetailsPage {
     while (this.sharedData.licenseClass != this.classes[idx]) {
       idx++;
     }
+  
     this.slider.slideTo(idx);
     this.sharedData.detailsCanvas = this.signaturePad;
 
@@ -89,24 +90,9 @@ export class DetailsPage {
     for (let canvasIdx=0; canvasIdx < canvasList.length; canvasIdx++) {
       canvasList[canvasIdx].drawBackground();
     }
-        
-    this.readAttachments();
-
+      
+    this.sharedData.detailsPage = this;
+    this.sharedData.readDetailsAttachments(this.dbProvider);
     console.log('ionViewDidLoad DetailsPage');
   }
-
-  readAttachments() {
-      let canvasArray = this.signaturePad.toArray();
-      console.log("Signature being read for id: " + this.sharedData.currentExam._id);
-      this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'signature.png')
-      .then((blob) => {
-        let url = URL.createObjectURL(blob);
-        canvasArray[0].drawBackground(url);
-     })
-      .catch (e => {
-          // Easiest way to test for non-existent attachment (not most efficient though)
-          console.log("Can't find attachment: " + e);
-          canvasArray[0].drawBackground(null);
-        }) 
-      }
-  }
+}
