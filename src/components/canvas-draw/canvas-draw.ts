@@ -81,42 +81,53 @@ export class CanvasDrawComponent {
  
         if (!this.sharedData.drawingToggle) {
             var rect = ev.target.getBoundingClientRect();
+
             this.lastX = ev.touches[0].clientX-rect.x;
             this.lastY = ev.touches[0].clientY-rect.y;
+
+            // Draw a dot for periods, dotted i chars etc
+            this.drawPath(ev, this.lastX+1, this.lastY+1, this.penSize);
         }
     }
 
     handleMove(ev){
  
         if (!this.sharedData.drawingToggle) {
+            var rect = ev.target.getBoundingClientRect();    
             ev.preventDefault();
-            this.dirty = true;
-            var rect = ev.target.getBoundingClientRect();
+
             let currentX = ev.touches[0].clientX-rect.x;
             let currentY = ev.touches[0].clientY-rect.y; 
-    
-            this._CONTEXT.beginPath();
-            this._CONTEXT.lineJoin = "round";
-            this._CONTEXT.moveTo(this.lastX, this.lastY);
-            this._CONTEXT.lineTo(currentX, currentY);
-            this._CONTEXT.closePath();
 
-            if (this.penColour !== null) {
-                this._CONTEXT.strokeStyle = this.colourValues[this.penColour];
-            } else {
-                this._CONTEXT.strokeStyle = this.colourValues[this.sharedData.currentColour];
-            }
-
-            if (this.penSize !== null) {
-                this._CONTEXT.lineWidth = this.penSize;
-            } else {
-                this._CONTEXT.lineWidth = this.sharedData.brushSize;
-            }
-
-            this._CONTEXT.stroke();  
+            this.drawPath(ev, currentX, currentY, this.penSize);
     
             this.lastX = currentX;
             this.lastY = currentY;
         }
+    }
+
+    drawPath(ev, currentX, currentY, penSize) {
+        this.dirty = true;
+        var rect = ev.target.getBoundingClientRect();
+
+        this._CONTEXT.beginPath();
+        this._CONTEXT.lineJoin = "round";
+        this._CONTEXT.moveTo(this.lastX, this.lastY);
+        this._CONTEXT.lineTo(currentX, currentY);
+        this._CONTEXT.closePath();
+
+        if (this.penColour !== null) {
+            this._CONTEXT.strokeStyle = this.colourValues[this.penColour];
+        } else {
+            this._CONTEXT.strokeStyle = this.colourValues[this.sharedData.currentColour];
+        }
+
+        if (this.penSize !== null) {
+            this._CONTEXT.lineWidth = penSize;
+        } else {
+            this._CONTEXT.lineWidth = this.sharedData.brushSize;
+        }
+
+        this._CONTEXT.stroke();  
     }
 }
