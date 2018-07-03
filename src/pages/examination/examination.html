@@ -101,7 +101,7 @@
               LEFT TURN
             </ion-col>
             <ion-col col-3>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.leftTurn.infractions.length)" (click)="hideDemerits.leftTurn=!hideDemerits.leftTurn">
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.leftTurn.infractions.length)" (click)="sharedData.hideDemerits.leftTurn=!sharedData.hideDemerits.leftTurn">
                 {{ sharedData.getDemeritCount(sharedData.leftTurn) }}
               </span>
               <span [hidden]="!showAttachmentIcon(0)" class="attachment-flag">
@@ -112,7 +112,7 @@
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="hideDemerits.leftTurn || sharedData.leftTurn.length == 0">
+      <ion-card [hidden]="sharedData.hideDemerits.leftTurn || sharedData.leftTurn.length == 0">
           <ion-card-content>
             <ion-list>
               <div class="card-header">
@@ -135,18 +135,30 @@
                   </ion-grid>
                 </ion-item>
                 <ion-item-options side="right">
-                    <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.leftTurn.infractions)">Delete</button>
+                    <button ion-button color="danger" (click)="deleteInfraction(item, sharedData.leftTurn.infractions)">
+                      <ion-icon class="slider-icon" name="md-trash"></ion-icon> Delete
+                    </button>
                 </ion-item-options>
               </ion-item-sliding>
               <ion-item>
                 <div class="comment-control">Comments:
-                <button ion-button (click)="clearComment(0)" style="float:right">Clear</button>
+                  <div style="float: right">
+                    <button ion-button icon-only clear class="comment-button" (click)="clearComment(0)">
+                      <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                    </button>
+                    <button ion-button icon-only clear class="comment-button" (click)="reloadComment(0)">
+                        <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                    </button>
+                    <button ion-button icon-only clear class="comment-button" (click)="deleteComment(0)">
+                        <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                    </button>
+                  </div>
                 </div>
-                <canvas-draw name="left-turn-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
-              </ion-item>              
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
+              <canvas-draw name="left-turn-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+            </ion-item>              
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
     </ion-item>
 
     <ion-item>
@@ -156,17 +168,22 @@
             <ion-col col-1>
               <ion-icon name="md-arrow-dropright-circle"></ion-icon>
             </ion-col>
-            <ion-col col-10 class="infraction-link" (click)="presentRightTurn()">
+            <ion-col col-8 class="infraction-link" (click)="presentRightTurn()">
               RIGHT TURN
             </ion-col>
-            <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.rightTurn.infractions.length)" (click)="hideDemerits.rightTurn=!hideDemerits.rightTurn">{{ sharedData.getDemeritCount(sharedData.rightTurn) }}</span>
-            </ion-col>
+            <ion-col col-3>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.rightTurn.infractions.length)" (click)="sharedData.hideDemerits.rightTurn=!sharedData.hideDemerits.rightTurn">
+                {{ sharedData.getDemeritCount(sharedData.rightTurn) }}
+              </span>
+              <span [hidden]="!showAttachmentIcon(1)" class="attachment-flag">
+                  <ion-icon style="font-size: 14pt" name="md-attach"></ion-icon>
+                </span>
+              </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="hideDemerits.rightTurn || sharedData.rightTurn.length == 0">
+      <ion-card [hidden]="sharedData.hideDemerits.rightTurn || sharedData.rightTurn.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -194,9 +211,19 @@
             </ion-item-sliding>
             <ion-item>
                 <div class="comment-control">Comments:
-                  <button ion-button (click)="clearComment(1)" style="float:right">Clear</button>
+                  <div style="float: right">
+                    <button ion-button icon-only clear class="comment-button" (click)="clearComment(1)">
+                      <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                    </button>
+                    <button ion-button icon-only clear class="comment-button" (click)="reloadComment(1)">
+                        <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                    </button>
+                    <button ion-button icon-only clear class="comment-button" (click)="deleteComment(1)">
+                        <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                    </button>
+                  </div>
                 </div>
-                <canvas-draw name="right-turn-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
+                <canvas-draw name="right-turn-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -210,17 +237,22 @@
             <ion-col col-1>
               <ion-icon name="md-eye"></ion-icon>
             </ion-col>
-            <ion-col col-10 class="infraction-link" (click)="presentRoadPosition()">
+            <ion-col col-8 class="infraction-link" (click)="presentRoadPosition()">
               ROAD POSITION
             </ion-col>
-            <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.roadPosition.infractions.length)" (click)="hideDemerits.roadPosition=!hideDemerits.roadPosition">{{ sharedData.getDemeritCount(sharedData.roadPosition) }}</span>
-            </ion-col>
+            <ion-col col-3>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.roadPosition.infractions.length)" (click)="sharedData.hideDemerits.roadPosition=!sharedData.hideDemerits.roadPosition">
+                {{ sharedData.getDemeritCount(sharedData.roadPosition) }}
+              </span>
+              <span [hidden]="!showAttachmentIcon(2)" class="attachment-flag">
+                  <ion-icon style="font-size: 14pt" name="md-attach"></ion-icon>
+                </span>
+              </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="hideDemerits.roadPosition || sharedData.roadPosition.length == 0">
+      <ion-card [hidden]="sharedData.hideDemerits.roadPosition || sharedData.roadPosition.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -248,9 +280,19 @@
             </ion-item-sliding>
             <ion-item>
                 <div class="comment-control">Comments:
-                  <button ion-button (click)="clearComment(2)" style="float:right">Clear</button>
+                  <div style="float: right">
+                    <button ion-button icon-only clear class="comment-button" (click)="clearComment(2)">
+                      <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                    </button>
+                    <button ion-button icon-only clear class="comment-button" (click)="reloadComment(2)">
+                        <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                    </button>
+                    <button ion-button icon-only clear class="comment-button" (click)="deleteComment(2)">
+                        <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                    </button>
+                  </div>
                 </div>
-                <canvas-draw name="road-position-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
+                <canvas-draw name="road-position-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -264,17 +306,22 @@
             <ion-col col-1>
               <ion-icon name="ios-speedometer"></ion-icon>
             </ion-col>
-            <ion-col col-10 class="infraction-link" (click)="presentSpeed()">
+            <ion-col col-8 class="infraction-link" (click)="presentSpeed()">
               SPEED
             </ion-col>
-            <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.speed.infractions.length)" (click)="hideDemerits.speed=!hideDemerits.speed">{{ sharedData.getDemeritCount(sharedData.speed) }}</span>
-            </ion-col>
+            <ion-col col-3>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.speed.infractions.length)" (click)="sharedData.hideDemerits.speed=!sharedData.hideDemerits.speed">
+                {{ sharedData.getDemeritCount(sharedData.speed) }}
+              </span>
+              <span [hidden]="!showAttachmentIcon(3)" class="attachment-flag">
+                  <ion-icon style="font-size: 14pt" name="md-attach"></ion-icon>
+                </span>
+              </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="hideDemerits.speed || sharedData.speed.length == 0">
+      <ion-card [hidden]="sharedData.hideDemerits.speed || sharedData.speed.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -302,9 +349,19 @@
             </ion-item-sliding>
             <ion-item>
               <div class="comment-control">Comments:
-                <button ion-button (click)="clearComment(3)" style="float:right">Clear</button>
-              </div>
-              <canvas-draw name="speed-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
+                <div style="float: right">
+                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(3)">
+                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(3)">
+                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(3)">
+                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                </div>
+            </div>
+              <canvas-draw name="speed-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -318,17 +375,22 @@
             <ion-col col-1>
               <ion-icon name="md-rewind"></ion-icon>
             </ion-col>
-            <ion-col col-10 class="infraction-link" (click)="presentBacking()">
+            <ion-col col-8 class="infraction-link" (click)="presentBacking()">
               BACKING
             </ion-col>
-            <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.backing.infractions.length)" (click)="hideDemerits.backing=!hideDemerits.backing">{{ sharedData.getDemeritCount(sharedData.backing) }}</span>
-            </ion-col>
+            <ion-col col-3>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.backing.infractions.length)" (click)="sharedData.hideDemerits.backing=!sharedData.hideDemerits.backing">
+                {{ sharedData.getDemeritCount(sharedData.backing) }}
+              </span>
+              <span [hidden]="!showAttachmentIcon(4)" class="attachment-flag">
+                  <ion-icon style="font-size: 14pt" name="md-attach"></ion-icon>
+                </span>
+              </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="hideDemerits.backing || sharedData.backing.length == 0">
+      <ion-card [hidden]="sharedData.hideDemerits.backing || sharedData.backing.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -356,9 +418,19 @@
             </ion-item-sliding>
             <ion-item>
               <div class="comment-control">Comments:
-                <button ion-button (click)="clearComment(4)" style="float:right">Clear</button>
-              </div>
-              <canvas-draw name="backing-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
+                <div style="float: right">
+                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(4)">
+                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(4)">
+                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(4)">
+                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                </div>
+            </div>
+              <canvas-draw name="backing-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
             </ion-item>              
          </ion-list>
         </ion-card-content>
@@ -372,17 +444,22 @@
             <ion-col col-1>
               <ion-icon name="ios-cog"></ion-icon>
             </ion-col>
-            <ion-col col-10 class="infraction-link" (click)="presentShifting()">
+            <ion-col col-8 class="infraction-link" (click)="presentShifting()">
               SHIFTING
             </ion-col>
-            <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.shifting.infractions.length)" (click)="hideDemerits.shifting=!hideDemerits.shifting">{{ sharedData.getDemeritCount(sharedData.shifting) }}</span>
-            </ion-col>
+            <ion-col col-3>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.shifting.infractions.length)" (click)="sharedData.hideDemerits.shifting=!sharedData.hideDemerits.shifting">
+                {{ sharedData.getDemeritCount(sharedData.shifting) }}
+              </span>
+              <span [hidden]="!showAttachmentIcon(5)" class="attachment-flag">
+                  <ion-icon style="font-size: 14pt" name="md-attach"></ion-icon>
+                </span>
+              </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="hideDemerits.shifting || sharedData.shifting.length == 0">
+      <ion-card [hidden]="sharedData.hideDemerits.shifting || sharedData.shifting.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -410,9 +487,19 @@
             </ion-item-sliding>
             <ion-item>
               <div class="comment-control">Comments:
-                <button ion-button (click)="clearComment(5)" style="float:right">Clear</button>
+                <div style="float: right">
+                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(5)">
+                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(5)">
+                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(5)">
+                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                </div>
               </div>
-              <canvas-draw name="shifting-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
+              <canvas-draw name="shifting-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -426,17 +513,22 @@
             <ion-col col-1>
               <ion-icon name="md-hand"></ion-icon>
             </ion-col>
-            <ion-col col-10 class="infraction-link" (click)="presentRightOfWay()">
+            <ion-col col-8 class="infraction-link" (click)="presentRightOfWay()">
               RIGHT OF WAY
             </ion-col>
-            <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.rightOfWay.infractions.length)" (click)="hideDemerits.rightOfWay=!hideDemerits.rightOfWay">{{ sharedData.getDemeritCount(sharedData.rightOfWay) }}</span>
-            </ion-col>
+            <ion-col col-3>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.rightOfWay.infractions.length)" (click)="sharedData.hideDemerits.rightOfWay=!sharedData.hideDemerits.rightOfWay">
+                {{ sharedData.getDemeritCount(sharedData.rightOfWay) }}
+              </span>
+              <span [hidden]="!showAttachmentIcon(6)" class="attachment-flag">
+                  <ion-icon style="font-size: 14pt" name="md-attach"></ion-icon>
+                </span>
+              </ion-col>
           </ion-row>
         </ion-grid>
       </div>
   
-      <ion-card [hidden]="hideDemerits.rightOfWay || sharedData.rightOfWay.length == 0">
+      <ion-card [hidden]="sharedData.hideDemerits.rightOfWay || sharedData.rightOfWay.length == 0">
         <ion-card-content>
           <ion-list>
               <div class="card-header">
@@ -464,9 +556,19 @@
             </ion-item-sliding>
             <ion-item>
               <div class="comment-control">Comments:
-                <button ion-button (click)="clearComment(6)" style="float:right">Clear</button>
+                <div style="float: right">
+                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(6)">
+                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(6)">
+                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(6)">
+                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                </div>
               </div>
-              <canvas-draw name="right-of-way-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
+              <canvas-draw name="right-of-way-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -480,17 +582,22 @@
             <ion-col col-1>
               <ion-icon name="md-unlock"></ion-icon>
             </ion-col>
-            <ion-col col-10 class="infraction-link" (click)="presentUncoupling()">
+            <ion-col col-8 class="infraction-link" (click)="presentUncoupling()">
               UNCOUPLING
             </ion-col>
-            <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.uncoupling.infractions.length)" (click)="hideDemerits.uncoupling=!hideDemerits.uncoupling">{{ sharedData.getDemeritCount(sharedData.uncoupling) }}</span>
-            </ion-col>
+            <ion-col col-3>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.uncoupling.infractions.length)" (click)="sharedData.hideDemerits.uncoupling=!sharedData.hideDemerits.uncoupling">
+                {{ sharedData.getDemeritCount(sharedData.uncoupling) }}
+              </span>
+              <span [hidden]="!showAttachmentIcon(7)" class="attachment-flag">
+                  <ion-icon style="font-size: 14pt" name="md-attach"></ion-icon>
+                </span>
+              </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="hideDemerits.uncoupling || sharedData.uncoupling.length == 0">
+      <ion-card [hidden]="sharedData.hideDemerits.uncoupling || sharedData.uncoupling.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -518,9 +625,19 @@
             </ion-item-sliding>
             <ion-item>
               <div class="comment-control">Comments:
-                <button ion-button (click)="clearComment(7)" style="float:right">Clear</button>
+                <div style="float: right">
+                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(7)">
+                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(7)">
+                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(7)">
+                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                </div>
               </div>
-              <canvas-draw name="uncoupling-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
+              <canvas-draw name="uncoupling-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -534,17 +651,22 @@
             <ion-col col-1>
               <ion-icon name="md-lock"></ion-icon>
             </ion-col>
-            <ion-col col-10 class="infraction-link" (click)="presentCoupling()">
+            <ion-col col-8 class="infraction-link" (click)="presentCoupling()">
               COUPLING
             </ion-col>
-            <ion-col col-1>
-              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.coupling.infractions.length)" (click)="hideDemerits.coupling=!hideDemerits.coupling">{{ sharedData.getDemeritCount(sharedData.coupling) }}</span>
-            </ion-col>
+            <ion-col col-3>
+              <span class="demerit-circle" [ngClass]="sharedData.badgeColor(sharedData.coupling.infractions.length)" (click)="sharedData.hideDemerits.coupling=!sharedData.hideDemerits.coupling">
+                {{ sharedData.getDemeritCount(sharedData.coupling) }}
+              </span>
+              <span [hidden]="!showAttachmentIcon(8)" class="attachment-flag">
+                  <ion-icon style="font-size: 14pt" name="md-attach"></ion-icon>
+                </span>
+              </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="hideDemerits.coupling || sharedData.coupling.length == 0">
+      <ion-card [hidden]="sharedData.hideDemerits.coupling || sharedData.coupling.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -572,9 +694,19 @@
             </ion-item-sliding>
             <ion-item>
               <div class="comment-control">Comments:
-                <button ion-button (click)="clearComment(8)" style="float:right">Clear</button>
-              </div>
-              <canvas-draw name="coupling-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="2"></canvas-draw>
+                <div style="float: right">
+                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(8)">
+                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(8)">
+                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                  </button>
+                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(8)">
+                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                </div>
+                </div>
+              <canvas-draw name="coupling-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -615,7 +747,7 @@
 
   <div class="spacer" style="width: 748px; height: 15px;"></div>
 
-  <ion-list class="sub-header card-corners-down">
+  <ion-list class="sub-header">
     <ion-item class="item-trns" style="border: 0">
       <h2 style="color: white;text-align: center">Copyright OptimediaSolutions 2018</h2>
     </ion-item>

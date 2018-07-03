@@ -53,6 +53,18 @@ export class ShareProvider {
         'signature.png'
     ];
 
+    hideDemerits = {
+        leftTurn: true,
+        rightTurn: true,
+        roadPosition: true,
+        speed: true,
+        backing: true,
+        shifting: true,
+        rightOfWay: true,
+        uncoupling: true,
+        coupling: true
+    }
+
     drawingToggle: any = false;
 
     currentColour: string = 'primary';
@@ -192,11 +204,10 @@ export class ShareProvider {
     }
 
     loadAttachments(dbProvider) {
-        debugger;
         if (this.detailsPage !== null) {
             this.readDetailsAttachments(dbProvider);
         };
-        
+
         if (this.examinationPage !== null) {
                 this.readExamAttachments(dbProvider);
         };
@@ -230,8 +241,39 @@ export class ShareProvider {
             // Easiest way to test for non-existent attachment (not most efficient though)
             console.log("Can't find attachment: " + e);
             commentArray[idx].drawBackground(null);
+            commentArray[idx].wasLoaded = false;
             }) 
         }
     }
-  
+
+    readSingleCommentAttachment(dbProvider, index) {
+        let commentArray = this.examinationPage.canvases.toArray();
+        dbProvider.db.getAttachment(this.currentExam._id, commentArray[index].name)
+        .then((blob) => {
+            let url = URL.createObjectURL(blob);
+            commentArray[index].drawBackground(url);
+            commentArray[index].wasLoaded = true;
+        })
+        .catch ((err) => {
+            this.presentBasicAlert("Error", "Unable to read comment " + commentArray[index].name + ", " + err)
+        });
+    }
+
+    deleteSingleCommentAttachment(dbProvider, index) {
+        let commentArray = this.examinationPage.canvases.toArray();
+        dbProvider.db.removeAttachment(this.currentExam._id, commentArray[index].name, this.currentExam._rev) 
+        .then((response) => {
+            commentArray[index].wasLoaded = false;
+            let dashPos = response.rev.indexOf('-');
+            let revision = response.rev.substring(0, dashPos);
+
+            this.currentExam._id = response.id;
+            this.currentExam._rev = response.rev;
+            this.examRevision = revision;
+            this.presentToast("Deleted comment: " + commentArray[index].name)
+        })
+        .catch ((err) => {
+            this.presentBasicAlert("Error", "Unable to delete comment " + commentArray[index].name + ", " + err)
+        });
+    }
 }

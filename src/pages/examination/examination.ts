@@ -34,18 +34,6 @@ export class ExaminationPage {
     heading: 'unavail'
   }
 
-  hideDemerits: any = {
-    leftTurn: true,
-    rightTurn: true,
-    roadPosition: true,
-    speed: true,
-    backing: true,
-    shifting: true,
-    rightOfWay: true,
-    uncoupling: true,
-    coupling: true
-  }
-
   myClass: any = 'bad';
   showLocation: boolean = false;
   commentArray: any = [];
@@ -758,6 +746,15 @@ export class ExaminationPage {
 
   clearComment(index) {
     this.commentArray[index].drawBackground(null);
+    this.commentArray[index].dirty = true;
+  }
+
+  reloadComment(index) {
+    this.sharedData.readSingleCommentAttachment(this.dbProvider, index);
+  }
+
+  deleteComment(index) {
+    this.sharedData.deleteSingleCommentAttachment(this.dbProvider, index);
   }
 
   showGpsData() {

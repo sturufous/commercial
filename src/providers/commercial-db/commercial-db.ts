@@ -133,6 +133,7 @@ export class CommercialDbProvider {
   updateExam() { 
 
     this.db.put(this.sharedData.currentExam).then((response) => {
+      
       let idx = response.rev.indexOf('-');
       let revision = response.rev.substring(0, idx);
       let canvasArray = [];
@@ -172,7 +173,8 @@ export class CommercialDbProvider {
     let currentCanvas = canvasList[this.canvasIndex];
     if (this.canvasIndex < canvasList.length) {
       if (canvasList[this.canvasIndex].dirty) {
-        canvasList[this.canvasIndex].dirty = false; // This should be done later        
+        canvasList[this.canvasIndex].dirty = false; // This should be done later  
+        canvasList[this.canvasIndex].wasLoaded = true;      
         canvasList[this.canvasIndex].canvas.nativeElement.toBlob((blob) => {
           this.db.putAttachment(
             this.sharedData.currentExam._id, 

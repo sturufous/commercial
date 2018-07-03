@@ -107,6 +107,12 @@ export class HomePage {
     this.sharedData.coupling = exam.coupling;
     this.sharedData.loadAttachments(this.dbProvider);
 
+    // Set all demerit lists (including comments) to invisible
+    let keys = Object.keys(this.sharedData.hideDemerits);
+    for(let idx=0; idx < keys.length; idx++) {
+      this.sharedData.hideDemerits[keys[idx]] = true;
+    }
+
     // Attachements will be loaded by their respective pages
 
     this.navCtrl.parent.select(1);
