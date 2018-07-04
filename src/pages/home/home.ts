@@ -71,6 +71,18 @@ export class HomePage {
     }
     examTemplate._attachments = {};
 
+    // If examinationPage has been loaded, clear all comment canvases and ensure old
+    // canvas contents will not be saved against the new record
+    if (this.sharedData.examinationPage != null ){
+      let canvasList = this.sharedData.examinationCanvases.toArray();
+      for (let canvasIdx=0; canvasIdx < canvasList.length; canvasIdx++) {
+        canvasList[canvasIdx].drawBackground(null);
+        canvasList[canvasIdx].wasLoaded = false;
+        canvasList[canvasIdx].dirty = false;
+      }
+  
+    }
+
     this.dbProvider.navCtrl = this.navCtrl;
     this.dbProvider.createExam(examTemplate);
   }

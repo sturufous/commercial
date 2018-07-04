@@ -40,18 +40,6 @@ export class ShareProvider {
 
     detailsCanvas;
     examinationCanvases;
-    attachmentNames = [
-        'left-turn-comments.png',
-        'right-turn-comments.png',
-        'road-position-comments.png',
-        'speed-comments.png',
-        'backing-comments.png',
-        'shifting-comments.png',
-        'right-of-way-comments.png',
-        'uncoupling-comments.png',
-        'coupling-comments.png',
-        'signature.png'
-    ];
 
     hideDemerits = {
         leftTurn: true,
@@ -231,7 +219,7 @@ export class ShareProvider {
     readExamAttachments(dbProvider) {
         let commentArray = this.examinationPage.canvases.toArray();
         for (let idx=0; idx < commentArray.length; idx++) {
-        dbProvider.db.getAttachment(this.currentExam._id, this.attachmentNames[idx])
+        dbProvider.db.getAttachment(this.currentExam._id, commentArray[idx].name)
         .then((blob) => {
             let url = URL.createObjectURL(blob);
             commentArray[idx].drawBackground(url);

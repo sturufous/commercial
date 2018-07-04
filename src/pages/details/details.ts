@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
 import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
-
+import { FileOpener } from '@ionic-native/file-opener';
 /**
  * Generated class for the DetailsPage page.
  *
@@ -42,12 +42,13 @@ export class DetailsPage {
     dbProvider: CommercialDbProvider,
     http: Http,
     navparams: NavParams,
+    public fileOpener: FileOpener,
     public formBuilder: FormBuilder) {
       this.sharedData = shareProvider;
       this.modalController = modalController;
       this.http = http;
       this.dbProvider = dbProvider;
-      this.sharedData.detailsCanvas = this.signaturePad;
+      //this.sharedData.detailsCanvas = this.signaturePad;
 
       this.masks = {
         dlNumber: ['D', 'L', ':', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
@@ -72,6 +73,23 @@ export class DetailsPage {
     let signatureArray = this.signaturePad.toArray(); 
     signatureArray[0].drawBackground(url);
   }
+
+  /* openFile(object) {
+    debugger;
+    let canvasArray = this.signaturePad.toArray();
+    this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'signature.png')
+    .then((blob) => {
+      let url = URL.createObjectURL(blob);
+      //this.fileOpener.open(url, 'image/png')
+      //.then(() => console.log('File is opened'))
+      //.catch(e => console.log('Error openening file', e));
+   })
+    .catch (e => {
+        // Easiest way to test for non-existent attachment (not most efficient though)
+        console.log("Can't find attachment: " + e);
+        canvasArray[0].drawBackground(null);
+      }) 
+  } */
 
   ionViewDidEnter() {
     // Set offset of licensClass slider

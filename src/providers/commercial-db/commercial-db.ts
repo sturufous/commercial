@@ -108,6 +108,7 @@ export class CommercialDbProvider {
 
         this.sharedData.currentExam.client = exam.client;
         this.sharedData.currentExam.examiner = exam.examiner;
+        this.sharedData.currentExam._attachments = exam._attachments;
         this.sharedData.leftTurn = exam.leftTurn;
         this.sharedData.rightTurn = exam.rightTurn;
         this.sharedData.roadPosition = exam.roadPosition;
@@ -170,11 +171,11 @@ export class CommercialDbProvider {
   }
 
   saveCanvasAttachments(canvasList) {
-    let currentCanvas = canvasList[this.canvasIndex];
+    //let currentCanvas = canvasList[this.canvasIndex];
     if (this.canvasIndex < canvasList.length) {
       if (canvasList[this.canvasIndex].dirty) {
         canvasList[this.canvasIndex].dirty = false; // This should be done later  
-        canvasList[this.canvasIndex].wasLoaded = true;      
+        //canvasList[this.canvasIndex].wasLoaded = false; //   
         canvasList[this.canvasIndex].canvas.nativeElement.toBlob((blob) => {
           this.db.putAttachment(
             this.sharedData.currentExam._id, 

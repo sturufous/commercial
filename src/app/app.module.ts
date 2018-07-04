@@ -18,6 +18,7 @@ import { CommercialDbProvider } from '../providers/commercial-db/commercial-db';
 import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
 import { IntersectionsPage } from '../pages/intersections/intersections';
 import { GraphicToolsPage } from '../pages/graphic-tools/graphic-tools';
+import { FileOpener } from '@ionic-native/file-opener';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { GraphicToolsPage } from '../pages/graphic-tools/graphic-tools';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ShareProvider,
-    CommercialDbProvider
+    CommercialDbProvider,
+    FileOpener
   ]
 })
 export class AppModule {}
