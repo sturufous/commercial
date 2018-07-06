@@ -74,22 +74,21 @@ export class DetailsPage {
     signatureArray[0].drawBackground(url);
   }
 
-  /* openFile(object) {
-    debugger;
+  openFile(object) {
     let canvasArray = this.signaturePad.toArray();
-    this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'signature.png')
+    this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'TESTING.pdf')
     .then((blob) => {
       let url = URL.createObjectURL(blob);
-      //this.fileOpener.open(url, 'image/png')
-      //.then(() => console.log('File is opened'))
-      //.catch(e => console.log('Error openening file', e));
+      this.fileOpener.open(url, 'application/pdf')
+      .then(() => console.log('File is opened'))
+      .catch(e => console.log('Error openening file', e));
    })
     .catch (e => {
         // Easiest way to test for non-existent attachment (not most efficient though)
         console.log("Can't find attachment: " + e);
         canvasArray[0].drawBackground(null);
       }) 
-  } */
+  } 
 
   ionViewDidEnter() {
     // Set offset of licensClass slider

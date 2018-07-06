@@ -11,7 +11,7 @@
       <ion-title>{{ sharedData.client.get('givenName').value }} {{ sharedData.client.get('surname').value }}</ion-title>
     </div>
     <div style="float: right">
-      <button ion-button (click)="showGpsData()" icon-only clear>
+      <button [hidden]="true" ion-button (click)="showGpsData()" icon-only clear>
         <ion-icon class="header-badge" name="md-compass"></ion-icon>
       </button>
       <button ion-button icon-only clear>
@@ -38,7 +38,7 @@
 
 <ion-content padding>
   <ion-fab bottom right>
-    <button ion-fab (click)="saveCurrentExam()" color="primary"><ion-icon name="md-bookmark" color="light" style="font-size:24pt"></ion-icon></button>
+    <button ion-fab (click)="saveCurrentExam()" color="primary"><ion-icon name="md-bookmark" color="light" style="font-size:22pt"></ion-icon></button>
   </ion-fab>
   <ion-list class="page-header card-corners">
     <ion-item class="item-trns" style="border: 0">
@@ -55,14 +55,11 @@
         <ion-item style="border-bottom:1px solid #DDD">
           <ion-grid>
             <ion-row>
-              <ion-col col-2>
-                <img style="padding-right: 5px" src="assets/imgs/globe.png">
+              <ion-col col-3>
+                <img style="padding-left:5px;width:60px;height:55px" src="assets/imgs/globe.png">
               </ion-col>
-              <ion-col col-10>
+              <ion-col col-9>
                 <ion-grid>
-                  <ion-row>
-                    <ion-col col-12></ion-col>
-                  </ion-row>
                   <ion-row>
                     <ion-col col-6>
                       <span style="padding-bottom: 10px">Lat: {{ position.latitude }}</span><br>
@@ -77,6 +74,10 @@
               </ion-col>
             </ion-row>
           </ion-grid>
+      </ion-item>
+      <ion-item>
+          <textarea style="width:100%; height:300px" [(ngModel)]="gpsView">
+          </textarea>
       </ion-item>
       <ion-item>
         <ion-icon style="color:red" name="ios-bulb"></ion-icon>
@@ -112,15 +113,15 @@
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="sharedData.hideDemerits.leftTurn || sharedData.leftTurn.length == 0">
+      <ion-card class="top-margin" [hidden]="sharedData.hideDemerits.leftTurn || sharedData.leftTurn.length == 0">
           <ion-card-content>
             <ion-list>
-              <div class="card-header">
+              <div class="card-header top-padding">
                 <ion-grid>
                   <ion-row style="color:black">
                     <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
                     <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
-                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerit</ion-col>
                   </ion-row>
                 </ion-grid>
               </div>
@@ -143,18 +144,25 @@
               <ion-item>
                 <div class="comment-control">Comments:
                   <div style="float: right">
-                    <button ion-button icon-only clear class="comment-button" (click)="clearComment(0)">
+                     <button [hidden]="typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                      <ion-icon class="panel-button" name="md-brush"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="clearComment(0)">
                       <ion-icon class="panel-button" name="md-backspace"></ion-icon>
                     </button>
-                    <button ion-button icon-only clear class="comment-button" (click)="reloadComment(0)">
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="reloadComment(0)">
                         <ion-icon class="panel-button" name="md-refresh"></ion-icon>
                     </button>
-                    <button ion-button icon-only clear class="comment-button" (click)="deleteComment(0)">
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="deleteComment(0)">
                         <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                      <ion-icon class="panel-button" name="md-keypad"></ion-icon>
                     </button>
                   </div>
                 </div>
-              <canvas-draw name="left-turn-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+              <canvas-draw [hidden]="!typedComments" name="left-turn-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+              <textarea [hidden]="typedComments" class="comments-textarea"></textarea>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -191,7 +199,7 @@
                 <ion-row style="color:black">
                   <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
                   <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
-                  <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                  <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerit</ion-col>
                 </ion-row>
               </ion-grid>
             </div>
@@ -262,7 +270,7 @@
                   <ion-row style="color:black">
                     <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
                     <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
-                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerit</ion-col>
                   </ion-row>
                 </ion-grid>
               </div>
@@ -333,7 +341,7 @@
                   <ion-row style="color:black">
                     <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
                     <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
-                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerit</ion-col>
                   </ion-row>
                 </ion-grid>
               </div>
@@ -404,7 +412,7 @@
                   <ion-row style="color:black">
                     <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
                     <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
-                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerit</ion-col>
                   </ion-row>
                 </ion-grid>
               </div>
@@ -475,7 +483,7 @@
                   <ion-row style="color:black">
                     <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
                     <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
-                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerit</ion-col>
                   </ion-row>
                 </ion-grid>
               </div>
@@ -546,7 +554,7 @@
                   <ion-row style="color:black">
                     <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
                     <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
-                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerit</ion-col>
                   </ion-row>
                 </ion-grid>
               </div>
@@ -617,7 +625,7 @@
                   <ion-row style="color:black">
                     <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
                     <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
-                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerit</ion-col>
                   </ion-row>
                 </ion-grid>
               </div>
@@ -688,7 +696,7 @@
                   <ion-row style="color:black">
                     <ion-col col-5><ion-icon name="md-list" class="icon-light"></ion-icon>Item</ion-col>
                     <ion-col col-4><ion-icon name="md-time" class="icon-light"></ion-icon>Time</ion-col>
-                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerits</ion-col>
+                    <ion-col col-3><ion-icon name="md-sad" class="icon-light"></ion-icon>Demerit</ion-col>
                   </ion-row>
                 </ion-grid>
               </div>
@@ -763,10 +771,10 @@
 
   <div class="spacer" style="width: 748px; height: 15px;"></div>
 
-  <ion-list class="sub-header">
+  <ion-card class="sub-header">
     <ion-item class="item-trns" style="border: 0">
       <h2 style="color: white;text-align: center">Copyright OptimediaSolutions 2018</h2>
     </ion-item>
-  </ion-list>  
+  </ion-card>  
     
 </ion-content>

@@ -25,23 +25,27 @@ export class ExaminationPage {
 
   subscription;
   position: any = {
-    latitude: 'unavail',
-    longitude: 'unavail',
-    accuracy: 'unavail',
-    altitude: 'unavail',
-    altitudeAccuracy: 'unavail',
-    speed: 'unavail',
-    heading: 'unavail'
+    latitude: '...',
+    longitude: '...',
+    accuracy: '...',
+    altitude: '...',
+    altitudeAccuracy: '...',
+    speed: '...',
+    heading: '...'
   }
 
   myClass: any = 'bad';
   showLocation: boolean = false;
   commentArray: any = [];
+  typedComments = false;
 
   alertCtrl: AlertController;
   sharedData: ShareProvider;
   geolocation: Geolocation;
   dbProvider: CommercialDbProvider;
+
+  gpsData: any = [];
+  gpsView: any = 'Blank';
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -729,16 +733,20 @@ export class ExaminationPage {
     this.subscription = this.geolocation.watchPosition()
       .subscribe(position => {
         console.log(position.coords.longitude + ' ' + position.coords.latitude);
-        this.position.latitude = position.coords.latitude != null ? position.coords.latitude : 'unavail';
-        this.position.longitude = position.coords.longitude != null ? position.coords.longitude : 'unavail';
-        this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : 'unavail';
-        this.position.altitude = position.coords.altitude != null ? position.coords.altitude : 'unavail';
-        this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : 'unavail';
-        this.position.speed = position.coords.speed != null ? position.coords.speed : 'unavail';
-        this.position.heading = position.coords.heading != null ? position.coords.heading : 'unavail';
+        this.position.latitude = position.coords.latitude != null ? position.coords.latitude : '...';
+        this.position.longitude = position.coords.longitude != null ? position.coords.longitude : '...';
+        this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : '...';
+        this.position.altitude = position.coords.altitude != null ? position.coords.altitude : '...';
+        this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : '...';
+        this.position.speed = position.coords.speed != null ? position.coords.speed : '...';
+        this.position.heading = position.coords.heading != null ? position.coords.heading : '...';
 
-        this.position.latitude = this.position.latitude.toString().substr(0, 10);
-        this.position.longitude = this.position.longitude.toString().substr(0, 10);
+        this.position.latitude = this.position.latitude.toString().substr(0, 9);
+        this.position.longitude = this.position.longitude.toString().substr(0, 9);
+        this.position.altitude = this.position.altitude.toString().substr(0, 9);
+
+        this.gpsData.push({ lat: position.coords.latitude, lon: position.coords.longitude});
+        this.gpsView = JSON.stringify(this.gpsData);
       });
     //this.commentArray = this.canvases.toArray();
     console.log('ionViewDidLoad ExaminationPage');
@@ -749,12 +757,22 @@ export class ExaminationPage {
     this.commentArray[index].dirty = true;
   }
 
+  toggleComments() {
+    this.typedComments = !this.typedComments;
+    return this.typedComments;
+  }
+
   reloadComment(index) {
     this.sharedData.readSingleCommentAttachment(this.dbProvider, index);
   }
 
   deleteComment(index) {
     this.sharedData.deleteSingleCommentAttachment(this.dbProvider, index);
+    this.commentArray[index].drawBackground(null);
+  }
+
+  showGpsStream() {
+    JSON.stringify(this.gpsData);
   }
 
   showGpsData() {

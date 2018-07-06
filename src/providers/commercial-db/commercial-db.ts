@@ -175,6 +175,7 @@ export class CommercialDbProvider {
     if (this.canvasIndex < canvasList.length) {
       if (canvasList[this.canvasIndex].dirty) {
         canvasList[this.canvasIndex].dirty = false; // This should be done later  
+        canvasList[this.canvasIndex].wasLoaded = true;
         //canvasList[this.canvasIndex].wasLoaded = false; //   
         canvasList[this.canvasIndex].canvas.nativeElement.toBlob((blob) => {
           this.db.putAttachment(
