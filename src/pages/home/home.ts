@@ -46,7 +46,8 @@ export class HomePage {
       uncoupling: {infractions: [], notes:''},
       coupling: {infractions: [], notes:''},
       results: {dangerousAction: '', trafficViolation: '', other: '', qualified: ''},
-      _attachments: {}
+      _attachments: {},
+      comments: ['','','','','','','','','']
     };
 
     examTemplate.licenseClass = '1';
@@ -118,6 +119,7 @@ export class HomePage {
     this.sharedData.uncoupling = exam.uncoupling;
     this.sharedData.coupling = exam.coupling;
     this.sharedData.loadAttachments(this.dbProvider);
+    this.sharedData.comments = exam.comments;
 
     // Set all demerit lists (including comments) to invisible
     let keys = Object.keys(this.sharedData.hideDemerits);
@@ -131,7 +133,7 @@ export class HomePage {
   }
 
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.dbProvider.getExams().then((data) => {
       this.exams = data;
     })

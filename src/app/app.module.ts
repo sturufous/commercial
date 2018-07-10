@@ -19,6 +19,7 @@ import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
 import { IntersectionsPage } from '../pages/intersections/intersections';
 import { GraphicToolsPage } from '../pages/graphic-tools/graphic-tools';
 import { FileOpener } from '@ionic-native/file-opener';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { FileOpener } from '@ionic-native/file-opener';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ShareProvider,
     CommercialDbProvider,
-    FileOpener
+    FileOpener,
+    InAppBrowser
   ]
 })
 export class AppModule {}

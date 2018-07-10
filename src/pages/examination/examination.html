@@ -162,7 +162,7 @@
                   </div>
                 </div>
               <canvas-draw [hidden]="!typedComments" name="left-turn-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
-              <textarea [hidden]="typedComments" class="comments-textarea"></textarea>
+              <textarea [hidden]="typedComments" [(ngModel)]="sharedData.comments[0]" class="comments-textarea"></textarea>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -191,7 +191,7 @@
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="sharedData.hideDemerits.rightTurn || sharedData.rightTurn.length == 0">
+      <ion-card class="top-margin" [hidden]="sharedData.hideDemerits.rightTurn || sharedData.rightTurn.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -220,22 +220,29 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-                <div class="comment-control">Comments:
-                  <div style="float: right">
-                    <button ion-button icon-only clear class="comment-button" (click)="clearComment(1)">
-                      <ion-icon class="panel-button" name="md-backspace"></ion-icon>
-                    </button>
-                    <button ion-button icon-only clear class="comment-button" (click)="reloadComment(1)">
-                        <ion-icon class="panel-button" name="md-refresh"></ion-icon>
-                    </button>
-                    <button ion-button icon-only clear class="comment-button" (click)="deleteComment(1)">
-                        <ion-icon class="panel-button" name="md-trash"></ion-icon>
-                    </button>
-                  </div>
+              <div class="comment-control">Comments:
+                <div style="float: right">
+                   <button [hidden]="typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-brush"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="clearComment(1)">
+                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="reloadComment(1)">
+                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="deleteComment(1)">
+                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-keypad"></ion-icon>
+                  </button>
                 </div>
-                <canvas-draw name="right-turn-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
-            </ion-item>              
-          </ion-list>
+              </div>
+            <canvas-draw [hidden]="!typedComments" name="right-turn-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+            <textarea [hidden]="typedComments" [(ngModel)]="sharedData.comments[1]" class="comments-textarea"></textarea>
+          </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-item>
@@ -262,7 +269,7 @@
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="sharedData.hideDemerits.roadPosition || sharedData.roadPosition.length == 0">
+      <ion-card class="top-margin" [hidden]="sharedData.hideDemerits.roadPosition || sharedData.roadPosition.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -291,22 +298,29 @@
               </ion-item-options>
             </ion-item-sliding>
             <ion-item>
-                <div class="comment-control">Comments:
-                  <div style="float: right">
-                    <button ion-button icon-only clear class="comment-button" (click)="clearComment(2)">
-                      <ion-icon class="panel-button" name="md-backspace"></ion-icon>
-                    </button>
-                    <button ion-button icon-only clear class="comment-button" (click)="reloadComment(2)">
-                        <ion-icon class="panel-button" name="md-refresh"></ion-icon>
-                    </button>
-                    <button ion-button icon-only clear class="comment-button" (click)="deleteComment(2)">
-                        <ion-icon class="panel-button" name="md-trash"></ion-icon>
-                    </button>
-                  </div>
+              <div class="comment-control">Comments:
+                <div style="float: right">
+                   <button [hidden]="typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-brush"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="clearComment(2)">
+                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="reloadComment(2)">
+                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="deleteComment(2)">
+                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-keypad"></ion-icon>
+                  </button>
                 </div>
-                <canvas-draw name="road-position-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
-            </ion-item>              
-          </ion-list>
+              </div>
+            <canvas-draw [hidden]="!typedComments" name="road-position-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+            <textarea [hidden]="typedComments" [(ngModel)]="sharedData.comments[2]" class="comments-textarea"></textarea>
+          </ion-item>              
+        </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-item>
@@ -333,7 +347,7 @@
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="sharedData.hideDemerits.speed || sharedData.speed.length == 0">
+      <ion-card class="top-margin" [hidden]="sharedData.hideDemerits.speed || sharedData.speed.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -364,19 +378,26 @@
             <ion-item>
               <div class="comment-control">Comments:
                 <div style="float: right">
-                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(3)">
+                   <button [hidden]="typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-brush"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="clearComment(3)">
                     <ion-icon class="panel-button" name="md-backspace"></ion-icon>
                   </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(3)">
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="reloadComment(3)">
                       <ion-icon class="panel-button" name="md-refresh"></ion-icon>
                   </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(3)">
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="deleteComment(3)">
                       <ion-icon class="panel-button" name="md-trash"></ion-icon>
                   </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-keypad"></ion-icon>
+                  </button>
                 </div>
-            </div>
-              <canvas-draw name="speed-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
-            </ion-item>              
+              </div>
+            <canvas-draw [hidden]="!typedComments" name="road-position-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+            <textarea [hidden]="typedComments" [(ngModel)]="sharedData.comments[3]" class="comments-textarea"></textarea>
+          </ion-item>              
           </ion-list>
         </ion-card-content>
       </ion-card>    
@@ -404,7 +425,7 @@
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="sharedData.hideDemerits.backing || sharedData.backing.length == 0">
+      <ion-card class="top-margin" [hidden]="sharedData.hideDemerits.backing || sharedData.backing.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -435,20 +456,27 @@
             <ion-item>
               <div class="comment-control">Comments:
                 <div style="float: right">
-                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(4)">
+                   <button [hidden]="typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-brush"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="clearComment(4)">
                     <ion-icon class="panel-button" name="md-backspace"></ion-icon>
                   </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(4)">
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="reloadComment(4)">
                       <ion-icon class="panel-button" name="md-refresh"></ion-icon>
                   </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(4)">
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="deleteComment(4)">
                       <ion-icon class="panel-button" name="md-trash"></ion-icon>
                   </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-keypad"></ion-icon>
+                  </button>
                 </div>
-            </div>
-              <canvas-draw name="backing-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
-            </ion-item>              
-         </ion-list>
+              </div>
+            <canvas-draw [hidden]="!typedComments" name="backing-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+            <textarea [hidden]="typedComments" [(ngModel)]="sharedData.comments[4]" class="comments-textarea"></textarea>
+          </ion-item>              
+       </ion-list>
         </ion-card-content>
       </ion-card>   
     </ion-item>
@@ -475,7 +503,7 @@
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="sharedData.hideDemerits.shifting || sharedData.shifting.length == 0">
+      <ion-card class="top-margin" [hidden]="sharedData.hideDemerits.shifting || sharedData.shifting.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -506,19 +534,26 @@
             <ion-item>
               <div class="comment-control">Comments:
                 <div style="float: right">
-                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(5)">
+                   <button [hidden]="typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-brush"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="clearComment(5)">
                     <ion-icon class="panel-button" name="md-backspace"></ion-icon>
                   </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(5)">
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="reloadComment(5)">
                       <ion-icon class="panel-button" name="md-refresh"></ion-icon>
                   </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(5)">
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="deleteComment(5)">
                       <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-keypad"></ion-icon>
                   </button>
                 </div>
               </div>
-              <canvas-draw name="shifting-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
-            </ion-item>              
+            <canvas-draw [hidden]="!typedComments" name="shifting-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+            <textarea [hidden]="typedComments" [(ngModel)]="sharedData.comments[5]" class="comments-textarea"></textarea>
+          </ion-item>              
           </ion-list>
         </ion-card-content>
       </ion-card>   
@@ -546,7 +581,7 @@
         </ion-grid>
       </div>
   
-      <ion-card [hidden]="sharedData.hideDemerits.rightOfWay || sharedData.rightOfWay.length == 0">
+      <ion-card class="top-margin" [hidden]="sharedData.hideDemerits.rightOfWay || sharedData.rightOfWay.length == 0">
         <ion-card-content>
           <ion-list>
               <div class="card-header">
@@ -574,21 +609,28 @@
                   </button>
               </ion-item-options>
             </ion-item-sliding>
-            <ion-item>
-              <div class="comment-control">Comments:
-                <div style="float: right">
-                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(6)">
-                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
-                  </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(6)">
-                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
-                  </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(6)">
-                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
-                  </button>
+              <ion-item>
+                <div class="comment-control">Comments:
+                  <div style="float: right">
+                     <button [hidden]="typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                      <ion-icon class="panel-button" name="md-brush"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="clearComment(6)">
+                      <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="reloadComment(6)">
+                        <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="deleteComment(6)">
+                        <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                      <ion-icon class="panel-button" name="md-keypad"></ion-icon>
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <canvas-draw name="right-of-way-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+              <canvas-draw [hidden]="!typedComments" name="right-of-way-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+              <textarea [hidden]="typedComments" [(ngModel)]="sharedData.comments[6]" class="comments-textarea"></textarea>
             </ion-item>              
           </ion-list>
         </ion-card-content>
@@ -617,7 +659,7 @@
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="sharedData.hideDemerits.uncoupling || sharedData.uncoupling.length == 0">
+      <ion-card class="top-margin" [hidden]="sharedData.hideDemerits.uncoupling || sharedData.uncoupling.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -648,19 +690,26 @@
             <ion-item>
               <div class="comment-control">Comments:
                 <div style="float: right">
-                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(7)">
+                   <button [hidden]="typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-brush"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="clearComment(7)">
                     <ion-icon class="panel-button" name="md-backspace"></ion-icon>
                   </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(7)">
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="reloadComment(7)">
                       <ion-icon class="panel-button" name="md-refresh"></ion-icon>
                   </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(7)">
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="deleteComment(7)">
                       <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                  </button>
+                  <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                    <ion-icon class="panel-button" name="md-keypad"></ion-icon>
                   </button>
                 </div>
               </div>
-              <canvas-draw name="uncoupling-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
-            </ion-item>              
+            <canvas-draw [hidden]="!typedComments" name="uncoupling-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+            <textarea [hidden]="typedComments" [(ngModel)]="sharedData.comments[7]" class="comments-textarea"></textarea>
+          </ion-item>              
           </ion-list>
         </ion-card-content>
       </ion-card>   
@@ -688,7 +737,7 @@
         </ion-grid>
       </div>
 
-      <ion-card [hidden]="sharedData.hideDemerits.coupling || sharedData.coupling.length == 0">
+      <ion-card class="top-margin" [hidden]="sharedData.hideDemerits.coupling || sharedData.coupling.length == 0">
         <ion-card-content>
           <ion-list>
             <div class="card-header">
@@ -716,22 +765,29 @@
                   </button>
               </ion-item-options>
             </ion-item-sliding>
-            <ion-item>
-              <div class="comment-control">Comments:
-                <div style="float: right">
-                  <button ion-button icon-only clear class="comment-button" (click)="clearComment(8)">
-                    <ion-icon class="panel-button" name="md-backspace"></ion-icon>
-                  </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="reloadComment(8)">
-                      <ion-icon class="panel-button" name="md-refresh"></ion-icon>
-                  </button>
-                  <button ion-button icon-only clear class="comment-button" (click)="deleteComment(8)">
-                      <ion-icon class="panel-button" name="md-trash"></ion-icon>
-                  </button>
+              <ion-item>
+                <div class="comment-control">Comments:
+                  <div style="float: right">
+                     <button [hidden]="typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                      <ion-icon class="panel-button" name="md-brush"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="clearComment(8)">
+                      <ion-icon class="panel-button" name="md-backspace"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="reloadComment(8)">
+                        <ion-icon class="panel-button" name="md-refresh"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="deleteComment(8)">
+                        <ion-icon class="panel-button" name="md-trash"></ion-icon>
+                    </button>
+                    <button [hidden]="!typedComments" ion-button icon-only clear class="comment-button" (click)="toggleComments()">
+                      <ion-icon class="panel-button" name="md-keypad"></ion-icon>
+                    </button>
+                  </div>
                 </div>
-                </div>
-              <canvas-draw name="coupling-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
-            </ion-item>              
+              <canvas-draw [hidden]="!typedComments" name="coupling-comments.png" background-img="assets/imgs/comment-pad.png" pen-colour="dark" pen-size="1"></canvas-draw>
+              <textarea [hidden]="typedComments" [(ngModel)]="sharedData.comments[8]" class="comments-textarea"></textarea>
+            </ion-item>                        
           </ion-list>
         </ion-card-content>
       </ion-card>   

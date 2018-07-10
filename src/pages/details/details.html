@@ -135,7 +135,7 @@
           </ion-item>
           <ion-item>
               <ion-label style="padding-left: 10px">DE Signature</ion-label>
-              <button [hidden]="true" ion-button (click)="openFile(this.signaturePad)" item-right>Opener</button>
+              <button [hidden]="false" ion-button (click)="testOpenUrl()" item-right>Opener</button>
               <button ion-button item-right icon-only clear class="comment-button" (click)="redrawBackground(null)">
                   <ion-icon class="panel-button" name="md-backspace"></ion-icon>
               </button>

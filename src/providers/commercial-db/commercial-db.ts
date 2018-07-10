@@ -66,6 +66,8 @@ export class CommercialDbProvider {
 
   handleChange(change) {
 
+    console.log("Entering handleChange(): " + JSON.stringify(change));
+
     let changedDoc = null;
     let changedIndex = null;
    
@@ -81,16 +83,19 @@ export class CommercialDbProvider {
     //A document was deleted
     if (change.deleted) {
       this.data.splice(changedIndex, 1);
+      console.log("A document was deleted " + changedIndex + " = " + JSON.stringify(this.data));
     }
     else {
    
       //A document was updated
       if (changedDoc) {
+        console.log("A document was updated " + changedIndex)
         this.data[changedIndex] = change.doc;
       }
    
       //A document was added
       else {
+        console.log("A document was added " + changedIndex)
         this.data.push(change.doc);
       }
    

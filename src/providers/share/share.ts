@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { InAppBrowser } from "@ionic-native/in-app-browser";
 
 /*
   Generated class for the ShareProvider provider.
@@ -74,16 +75,19 @@ export class ShareProvider {
         uncoupling: {infractions: [], notes:''},
         coupling: {infractions: [], notes:''},
         results: null,
+        comments: [],
         _attachments: {}
     };
 
     licenseClass: any = '1';
     detailsPage: any = null;
     examinationPage: any = null;
+    comments = ['','','','','','','','',''];
 
     constructor(toastControl: ToastController,
         formBuilder: FormBuilder,
-        alertControl: AlertController) {
+        alertControl: AlertController,
+        public appBrowser: InAppBrowser) {
         this.toastControl = toastControl;
         this.alertCtrl = alertControl;
 
@@ -179,6 +183,11 @@ export class ShareProvider {
         this.currentExam.uncoupling = this.uncoupling;
         this.currentExam.coupling = this.coupling;
         this.currentExam.results = this.results.value;
+        this.currentExam.comments = this.comments;
+        debugger;
+        for (let idx=0; idx < this.comments.length; idx++) {
+            this.currentExam.comments[idx] = this.comments[idx];
+        }
         return { valid: true };
     }
 
@@ -232,6 +241,18 @@ export class ShareProvider {
             commentArray[idx].wasLoaded = false;
             }) 
         }
+    }
+
+    testOpen(dbProvider) {
+        dbProvider.db.getAttachment(this.currentExam._id, 'Stuart Morse -  Resume - May 2018.pdf')
+        .then((blob) => {
+            let url = URL.createObjectURL(blob);
+            this.appBrowser.create(url, "_blank")
+        })
+        .catch (e => {
+            // Easiest way to test for non-existent attachment (not most efficient though)
+            console.log("Can't find attachment: " + e);
+        }) 
     }
 
     readSingleCommentAttachment(dbProvider, index) {

@@ -72,23 +72,8 @@ export class DetailsPage {
   redrawBackground(url) {   
     let signatureArray = this.signaturePad.toArray(); 
     signatureArray[0].drawBackground(url);
+    signatureArray[0].dirty = true;
   }
-
-  openFile(object) {
-    let canvasArray = this.signaturePad.toArray();
-    this.dbProvider.db.getAttachment(this.sharedData.currentExam._id, 'TESTING.pdf')
-    .then((blob) => {
-      let url = URL.createObjectURL(blob);
-      this.fileOpener.open(url, 'application/pdf')
-      .then(() => console.log('File is opened'))
-      .catch(e => console.log('Error openening file', e));
-   })
-    .catch (e => {
-        // Easiest way to test for non-existent attachment (not most efficient though)
-        console.log("Can't find attachment: " + e);
-        canvasArray[0].drawBackground(null);
-      }) 
-  } 
 
   ionViewDidEnter() {
     // Set offset of licensClass slider
@@ -111,5 +96,9 @@ export class DetailsPage {
     this.sharedData.detailsPage = this;
     this.sharedData.readDetailsAttachments(this.dbProvider);
     console.log('ionViewDidLoad DetailsPage');
+  }
+
+  testOpenUrl() {
+    this.sharedData.testOpen(this.dbProvider);
   }
 }
