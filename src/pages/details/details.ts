@@ -1,9 +1,9 @@
 import { Component, ViewChildren } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
-import { ModalController, ViewController } from 'ionic-angular';
-import { Http, Headers, RequestOptions } from '@angular/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from 'ionic-angular';
+import { Http } from '@angular/http';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
 import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';

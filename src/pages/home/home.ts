@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
-import { ModalController, ViewController } from 'ionic-angular';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { ModalController } from 'ionic-angular';
+import { Http } from '@angular/http';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
 
 @Component({

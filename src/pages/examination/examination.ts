@@ -1,11 +1,12 @@
 import { Component, ViewChildren } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
 import { Geolocation } from '@ionic-native/geolocation';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
 import { ActionSheetController } from 'ionic-angular';
 import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
+import { GoogleMaps, GoogleMap, GoogleMapsEvent, CameraPosition, MarkerOptions, LatLng, Marker, Polyline, PolylineOptions } from '@ionic-native/google-maps';
 
 /**
  * Generated class for the ExaminationPage page.
@@ -23,6 +24,7 @@ export class ExaminationPage {
 
   @ViewChildren(CanvasDrawComponent) canvases;
 
+  coords = [{"lat":48.4237177,"lng":-123.3680865},{"lat":48.4242613,"lng":-123.3680264},{"lat":48.4236136,"lng":-123.3680262},{"lat":48.4229232,"lng":-123.3687865},{"lat":48.423518,"lng":-123.3680469},{"lat":48.4235309,"lng":-123.3680584},{"lat":48.4234996,"lng":-123.367864},{"lat":48.4234134,"lng":-123.3679486},{"lat":48.4234784,"lng":-123.367642},{"lat":48.4234734,"lng":-123.3676063},{"lat":48.4234678,"lng":-123.3675603},{"lat":48.4234714,"lng":-123.3674573},{"lat":48.4234551,"lng":-123.3675247},{"lat":48.4234602,"lng":-123.3675046},{"lat":48.4233403,"lng":-123.3674852},{"lat":48.4232749,"lng":-123.3674793},{"lat":48.4232726,"lng":-123.3674764},{"lat":48.4232703,"lng":-123.3674801},{"lat":48.423278,"lng":-123.3674764},{"lat":48.4232629,"lng":-123.3674765},{"lat":48.4232444,"lng":-123.3674457},{"lat":48.4232409,"lng":-123.3674616},{"lat":48.4232455,"lng":-123.367465},{"lat":48.4232426,"lng":-123.3674608},{"lat":48.4232396,"lng":-123.3674682},{"lat":48.4232384,"lng":-123.36747},{"lat":48.4232912,"lng":-123.36746},{"lat":48.4232546,"lng":-123.3674692},{"lat":48.423248,"lng":-123.367465},{"lat":48.4232387,"lng":-123.3674711},{"lat":48.4232343,"lng":-123.3674724},{"lat":48.4232454,"lng":-123.3674684},{"lat":48.4232454,"lng":-123.3674707},{"lat":48.4232539,"lng":-123.3674839},{"lat":48.4232315,"lng":-123.3674774},{"lat":48.4232343,"lng":-123.3674719},{"lat":48.4232345,"lng":-123.3674774},{"lat":48.4232622,"lng":-123.3674721},{"lat":48.4232354,"lng":-123.3674748},{"lat":48.4232608,"lng":-123.3674832},{"lat":48.4232758,"lng":-123.3674689},{"lat":48.4232547,"lng":-123.3674738},{"lat":48.4232405,"lng":-123.3674755},{"lat":48.423237,"lng":-123.3674754},{"lat":48.4232334,"lng":-123.3674779},{"lat":48.423234,"lng":-123.3674768},{"lat":48.4232382,"lng":-123.3674805},{"lat":48.4232364,"lng":-123.36748},{"lat":48.4232507,"lng":-123.3674797},{"lat":48.4232434,"lng":-123.3674785},{"lat":48.4232499,"lng":-123.367476},{"lat":48.4232452,"lng":-123.3674759},{"lat":48.4232382,"lng":-123.367468},{"lat":48.4232264,"lng":-123.3674789},{"lat":48.4232444,"lng":-123.3674697},{"lat":48.4232582,"lng":-123.367479},{"lat":48.4232532,"lng":-123.3674848},{"lat":48.4232241,"lng":-123.3674895},{"lat":48.4232519,"lng":-123.3674824},{"lat":48.42331,"lng":-123.3674698}];
   subscription;
   position: any = {
     latitude: '...',
@@ -43,6 +45,8 @@ export class ExaminationPage {
   sharedData: ShareProvider;
   geolocation: Geolocation;
   dbProvider: CommercialDbProvider;
+  map: GoogleMap;
+  line: Polyline = null;
 
   gpsData: any = [];
   gpsView: any = 'Blank';
@@ -53,7 +57,8 @@ export class ExaminationPage {
               alertCtrl: AlertController,
               shareProvider: ShareProvider,
               geolocation: Geolocation,
-              dbProvider: CommercialDbProvider
+              dbProvider: CommercialDbProvider,
+              public platform: Platform
             ) {
     this.alertCtrl = alertCtrl;
     this.sharedData = shareProvider;
@@ -719,15 +724,78 @@ export class ExaminationPage {
     return true;
   }
 
+  loadMap() {
+    let options: PolylineOptions = {
+      points: [{
+        lat: 48.4238642,
+        lng: -123.36846639
+      }],
+      color: '#AA00FF',
+      width: 10,
+      geodesic: true
+    };
+
+    const VICTORIA_BC = {"lat": 48.4238642, "lng": -123.36846639};
+ 
+        this.map = new GoogleMap('map_canvas', {
+          'controls': {
+            'compass': true,
+            'myLocationButton': true,
+            'indoorPicker': true,
+          },
+          'gestures': {
+            'scroll': true,
+            'tilt': true,
+            'rotate': true,
+            'zoom': true
+          },
+          'camera': {
+            target: VICTORIA_BC,
+            zoom: 18,
+            tilt: 30
+          }
+        });
+ 
+        this.map = GoogleMaps.create('map_canvas');
+
+        console.log('Map is ready!');
+        let marker: Marker = this.map.addMarkerSync({
+          title: 'ICBC Home Base',
+          icon: 'blue',
+          animation: 'DROP',
+          position: {
+            lat: 48.4238642,
+            lng: -123.36846639
+          }
+        });
+        //marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+        //  alert('clicked');
+        //});
+
+        if (this.line === null) {
+          this.map.addPolyline(options).then((result) => {
+            console.log("Added polyline" + JSON.stringify(result));
+            this.line = result;
+          });
+        }
+
+    // Wait the maps plugin is ready until the MAP_READY event
+    //this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+    //  console.log('map is ready to use.');
+    //});
+  }
+
   ionViewDidLoad() {
+
     this.sharedData.examinationCanvases = this.canvases;
     this.commentArray = this.sharedData.examinationCanvases.toArray();
+    this.loadMap();
 
     // Initialize all canvas elements to blank backgrounds    
     for (let canvasIdx=0; canvasIdx < this.commentArray.length; canvasIdx++) {
       this.commentArray[canvasIdx].drawBackground();
     }
-    
+
     this.sharedData.examinationPage = this;
     this.sharedData.readExamAttachments(this.dbProvider);
     this.subscription = this.geolocation.watchPosition()
@@ -745,7 +813,11 @@ export class ExaminationPage {
         this.position.longitude = this.position.longitude.toString().substr(0, 9);
         this.position.altitude = this.position.altitude.toString().substr(0, 9);
 
-        this.gpsData.push({ lat: position.coords.latitude, lon: position.coords.longitude});
+        this.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
+
+        if (this.line !== null) {
+          this.line.setPoints(this.gpsData);
+        }
         this.gpsView = JSON.stringify(this.gpsData);
       });
     //this.commentArray = this.canvases.toArray();

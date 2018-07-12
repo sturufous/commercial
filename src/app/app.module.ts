@@ -20,6 +20,7 @@ import { IntersectionsPage } from '../pages/intersections/intersections';
 import { GraphicToolsPage } from '../pages/graphic-tools/graphic-tools';
 import { FileOpener } from '@ionic-native/file-opener';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { GoogleMaps } from "@ionic-native/google-maps";
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     ShareProvider,
     CommercialDbProvider,
     FileOpener,
-    InAppBrowser
+    InAppBrowser,
+    GoogleMaps
   ]
 })
 export class AppModule {}

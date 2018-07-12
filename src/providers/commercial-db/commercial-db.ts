@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import { ShareProvider } from '../share/share';
 import { NavController } from 'ionic-angular';
-import { EmailValidator } from '@angular/forms';
 
 /*
   Generated class for the CommercialDbProvider provider.

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from 'ionic-angular';
@@ -184,7 +183,6 @@ export class ShareProvider {
         this.currentExam.coupling = this.coupling;
         this.currentExam.results = this.results.value;
         this.currentExam.comments = this.comments;
-        debugger;
         for (let idx=0; idx < this.comments.length; idx++) {
             this.currentExam.comments[idx] = this.comments[idx];
         }
@@ -244,7 +242,7 @@ export class ShareProvider {
     }
 
     testOpen(dbProvider) {
-        dbProvider.db.getAttachment(this.currentExam._id, 'Stuart Morse -  Resume - May 2018.pdf')
+        dbProvider.db.getAttachment(this.currentExam._id, 'class-5.png')
         .then((blob) => {
             let url = URL.createObjectURL(blob);
             this.appBrowser.create(url, "_blank")
