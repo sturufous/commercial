@@ -21,6 +21,7 @@ import { GraphicToolsPage } from '../pages/graphic-tools/graphic-tools';
 import { FileOpener } from '@ionic-native/file-opener';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { GoogleMaps } from "@ionic-native/google-maps";
+import { PretripPage } from '../pages/pretrip/pretrip';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { GoogleMaps } from "@ionic-native/google-maps";
     TabsPage,
     CanvasDrawComponent,
     IntersectionsPage,
-    GraphicToolsPage
+    GraphicToolsPage,
+    PretripPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { GoogleMaps } from "@ionic-native/google-maps";
     TabsPage,
     CanvasDrawComponent,
     IntersectionsPage,
-    GraphicToolsPage
+    GraphicToolsPage,
+    PretripPage
   ],
   providers: [
     StatusBar,

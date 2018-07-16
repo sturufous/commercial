@@ -98,6 +98,7 @@ export class HomePage {
     let revision = exam._rev.substring(0, idx);
 
     this.sharedData.detailsTabEnabled = true;
+    this.sharedData.pretripTabEnabled = true;
     this.sharedData.examinationTabEnabled = true;
 
     this.sharedData.currentExam = exam;

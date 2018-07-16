@@ -33,6 +33,7 @@ export class ShareProvider {
 
     homeTabEnabled: boolean = true;
     detailsTabEnabled: boolean = false;
+    pretripTabEnabled: boolean = false;
     examinationTabEnabled: boolean = false;
     examRevision: any = 0;
     attachments: any = [];
@@ -77,6 +78,66 @@ export class ShareProvider {
         comments: [],
         _attachments: {}
     };
+
+    class1Pretest = {
+        wheelsBlocked: false,
+        properTools: false,
+        leaks: false,
+        engineOil: false,
+        coolant: false,
+        otherFluids: false,
+        belts: false,
+        hoses: false,
+        steeringComponents: false
+    }
+
+    class3Pretest = {
+        wheelsBlocked: false,
+        properTools: false,
+        leaks: false,
+        engineOil: false,
+        coolant: false,
+        otherFluids: false,
+        belts: false,
+        hoses: false,
+        steeringComponents: false
+    }
+
+    class2Pretest = {
+        wheelsBlocked: false,
+        properTools: false,
+        leaks: false,
+        engineOil: false,
+        coolant: false,
+        otherFluids: false,
+        belts: false,
+        hoses: false,
+        steeringComponents: false
+    }
+
+    class4UPretest = {
+        wheelsBlocked: false,
+        properTools: false,
+        leaks: false,
+        engineOil: false,
+        coolant: false,
+        otherFluids: false,
+        belts: false,
+        hoses: false,
+        steeringComponents: false
+    }
+
+    class417Pretest = {
+        wheelsBlocked: false,
+        properTools: false,
+        leaks: false,
+        engineOil: false,
+        coolant: false,
+        otherFluids: false,
+        belts: false,
+        hoses: false,
+        steeringComponents: false
+    }
 
     licenseClass: any = '1';
     detailsPage: any = null;

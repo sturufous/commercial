@@ -1,4 +1,4 @@
-import { Component, ViewChildren } from '@angular/core';
+import { Component, ViewChildren, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
@@ -725,14 +725,14 @@ export class ExaminationPage {
   }
 
   loadMap() {
+    
     let options: PolylineOptions = {
-      points: [{
-        lat: 48.4238642,
-        lng: -123.36846639
-      }],
+      points: this.coords,
       color: '#AA00FF',
       width: 10,
-      geodesic: true
+      geodesic: true,
+      zoom: true,
+      strokeOpacity: 1.0
     };
 
     const VICTORIA_BC = {"lat": 48.4238642, "lng": -123.36846639};
@@ -756,34 +756,38 @@ export class ExaminationPage {
           }
         });
  
-        this.map = GoogleMaps.create('map_canvas');
+        // Wait the maps plugin is ready until the MAP_READY event
+          console.log('Map is ready!');
 
-        console.log('Map is ready!');
-        let marker: Marker = this.map.addMarkerSync({
-          title: 'ICBC Home Base',
-          icon: 'blue',
-          animation: 'DROP',
-          position: {
-            lat: 48.4238642,
-            lng: -123.36846639
-          }
-        });
+          let marker = this.map.addMarker({
+            title: 'ICBC Home Base',
+            icon: 'blue',
+            animation: 'DROP',
+            position: {
+              lat: 48.4238642,
+              lng: -123.36846639
+            }
+          })
+          .then((marker) => {
+            marker.showInfoWindow();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+
+          this.map.addPolyline(options)
+          .then((result) => {
+            console.log("Added polyline" + JSON.stringify(result));
+            this.line = result;
+          })
+          .catch((e) => {
+            console.log(e);
+          }); 
+
         //marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
         //  alert('clicked');
         //});
-
-        if (this.line === null) {
-          this.map.addPolyline(options).then((result) => {
-            console.log("Added polyline" + JSON.stringify(result));
-            this.line = result;
-          });
-        }
-
-    // Wait the maps plugin is ready until the MAP_READY event
-    //this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
-    //  console.log('map is ready to use.');
-    //});
-  }
+      }
 
   ionViewDidLoad() {
 
