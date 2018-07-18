@@ -4,10 +4,8 @@ import { IntersectionsPage } from './intersections';
 
 @NgModule({
   declarations: [
-    IntersectionsPage,
   ],
   imports: [
-    IonicPageModule.forChild(IntersectionsPage),
   ]
 })
 export class IntersectionsPageModule {}

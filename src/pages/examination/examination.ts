@@ -42,14 +42,14 @@ export class ExaminationPage {
   typedComments = false;
 
   alertCtrl: AlertController;
-  sharedData: ShareProvider;
-  geolocation: Geolocation;
-  dbProvider: CommercialDbProvider;
-  map: GoogleMap;
-  line: Polyline = null;
+  public sharedData: ShareProvider;
+  public geolocation: Geolocation;
+  public dbProvider: CommercialDbProvider;
+  public map: GoogleMap;
+  public line: Polyline = null;
 
-  gpsData: any = [];
-  gpsView: any = 'Blank';
+  public gpsData: any = [];
+  public gpsView: any = 'Blank';
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -133,7 +133,6 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              debugger;
               this.sharedData.leftTurn.infractions.push(this.getDemeritObject(data, this.sharedData.leftTurn, 'Left Turn', 'left-turn'));          
               console.log("Left turn = " + JSON.stringify(this.sharedData.leftTurn));
               return true;
@@ -703,11 +702,17 @@ export class ExaminationPage {
         marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
           var htmlInfoWindow = new HtmlInfoWindow();
           let msg = this.formatDemeritMessage(demeritData);
-          htmlInfoWindow.setContent('<div style="padding:10px">' +
-            '<h2 style="border-bottom: 1px solid #BBB;margin-bottom:7px">' +
-              '<b>' + desc + '</b><br>' + demeritData.value +
-            '</h2>' + 
-            msg + 
+          htmlInfoWindow.setContent(
+            '<div style="padding:10px">' +
+              '<div style="border-bottom: 1px solid #AAA;margin-bottom: 7px">' +
+                '<span class="iw-header">' +
+                  '<b>' + desc + '</b><br>'  +
+                '</span>' + 
+                '<span class="iw-subheader">' + 
+                  demeritData.value +
+                '</span>' +
+              '</div>' +
+               msg + 
             '</div>');
           htmlInfoWindow.open(marker);
         });
@@ -795,7 +800,7 @@ export class ExaminationPage {
     };
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
-
+debugger;
     this.map.addPolyline(options)
     .then((result) => {
       console.log("Added polyline" + JSON.stringify(result));
@@ -819,27 +824,28 @@ export class ExaminationPage {
 
     this.sharedData.examinationPage = this;
     this.sharedData.readExamAttachments(this.dbProvider);
-    this.subscription = this.geolocation.watchPosition()
+    let _this = this;
+    this.subscription = _this.geolocation.watchPosition()
       .subscribe(position => {
         console.log(position.coords.longitude + ' ' + position.coords.latitude);
-        this.position.latitude = position.coords.latitude != null ? position.coords.latitude : '...';
-        this.position.longitude = position.coords.longitude != null ? position.coords.longitude : '...';
-        this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : '...';
-        this.position.altitude = position.coords.altitude != null ? position.coords.altitude : '...';
-        this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : '...';
-        this.position.speed = position.coords.speed != null ? position.coords.speed : '...';
-        this.position.heading = position.coords.heading != null ? position.coords.heading : '...';
+        _this.position.latitude = position.coords.latitude != null ? position.coords.latitude : '...';
+        _this.position.longitude = position.coords.longitude != null ? position.coords.longitude : '...';
+        _this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : '...';
+        _this.position.altitude = position.coords.altitude != null ? position.coords.altitude : '...';
+        _this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : '...';
+        _this.position.speed = position.coords.speed != null ? position.coords.speed : '...';
+        _this.position.heading = position.coords.heading != null ? position.coords.heading : '...';
 
-        this.position.latitude = this.position.latitude.toString().substr(0, 9);
-        this.position.longitude = this.position.longitude.toString().substr(0, 9);
-        this.position.altitude = this.position.altitude.toString().substr(0, 9);
+        _this.position.latitude = _this.position.latitude.toString().substr(0, 9);
+        _this.position.longitude = _this.position.longitude.toString().substr(0, 9);
+        _this.position.altitude = _this.position.altitude.toString().substr(0, 9);
 
-        this.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
-
-        if (this.line !== null) {
-          this.line.setPoints(this.gpsData);
+        _this.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
+debugger;
+        if (_this.line !== null) {
+          _this.line.setPoints(_this.gpsData);
         }
-        this.gpsView = JSON.stringify(this.gpsData);
+        _this.gpsView = JSON.stringify(_this.gpsData);
       });
     //this.commentArray = this.canvases.toArray();
     console.log('ionViewDidLoad ExaminationPage');

@@ -240,17 +240,25 @@ ion-title {
     padding-top: 0 !important;
 }
 
-#acst-hdr-0, #acst-hdr-1, #acst-hdr-2, #acst-hdr-3, #acst-hdr-4, #acst-hdr-5, #acst-hdr-6, #acst-hdr-7, #acst-hdr-8 {
-    -webkit-border-radius: 10px 10px 0 0;
-    border-radius: 10px 10px 0 0;
-    background-color: #1b8dd6;
-    font-size: 16pt !important;
-    color: white !important;
-    font-family: 'righteous';
-}
-
 .gps-data {
     padding-top: 15px !important;
     clear: both;
+}
+
+.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child {
+    border-bottom: 0;
+}
+
+.list-ios > .item-block:last-child, .list-ios > .item-wrapper:first-child {
+    border-top: 0;
+}
+
+.list-ios {
+    margin: 0;
+}
+
+.card-ios {
+    margin: 0;
+    margin-right: 0;
 }
 
