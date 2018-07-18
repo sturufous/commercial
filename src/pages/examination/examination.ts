@@ -6,7 +6,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
 import { ActionSheetController } from 'ionic-angular';
 import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
-import { GoogleMaps, GoogleMap, GoogleMapsEvent, CameraPosition, MarkerOptions, LatLng, Marker, Polyline, PolylineOptions } from '@ionic-native/google-maps';
+import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, HtmlInfoWindow, Marker, Polyline, PolylineOptions } from '@ionic-native/google-maps';
 
 /**
  * Generated class for the ExaminationPage page.
@@ -133,7 +133,8 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.leftTurn.infractions.push(this.getDemeritObject(data, this.sharedData.leftTurn));
+              debugger;
+              this.sharedData.leftTurn.infractions.push(this.getDemeritObject(data, this.sharedData.leftTurn, 'Left Turn', 'left-turn'));          
               console.log("Left turn = " + JSON.stringify(this.sharedData.leftTurn));
               return true;
             }
@@ -193,7 +194,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.rightTurn.infractions.push(this.getDemeritObject(data, this.sharedData.rightTurn));
+              this.sharedData.rightTurn.infractions.push(this.getDemeritObject(data, this.sharedData.rightTurn, 'Right Turn', 'right-turn'));
               console.log("Right turn = " + JSON.stringify(this.sharedData.rightTurn));
               return true;
             }
@@ -288,7 +289,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.roadPosition.infractions.push(this.getDemeritObject(data, this.sharedData.roadPosition));
+              this.sharedData.roadPosition.infractions.push(this.getDemeritObject(data, this.sharedData.roadPosition,  'Road Position', 'road-position'));
               console.log("Road position = " + JSON.stringify(this.sharedData.roadPosition));
               return true;
             }
@@ -362,7 +363,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.speed.infractions.push(this.getDemeritObject(data, this.sharedData.speed));
+              this.sharedData.speed.infractions.push(this.getDemeritObject(data, this.sharedData.speed,  'Speed', 'speed'));
               console.log("Speed = " + JSON.stringify(this.sharedData.speed));
               return true;
             }
@@ -415,7 +416,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.backing.infractions.push(this.getDemeritObject(data, this.sharedData.backing));
+              this.sharedData.backing.infractions.push(this.getDemeritObject(data, this.sharedData.backing,  'Backing', 'backing'));
               console.log("Backing = " + JSON.stringify(this.sharedData.backing));
               return true;
             }
@@ -468,7 +469,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.shifting.infractions.push(this.getDemeritObject(data, this.sharedData.shifting));
+              this.sharedData.shifting.infractions.push(this.getDemeritObject(data, this.sharedData.shifting,  'Shifting', 'shifting'));
               console.log("Shifting = " + JSON.stringify(this.sharedData.shifting));
               return true;
             }
@@ -521,7 +522,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.rightOfWay.infractions.push(this.getDemeritObject(data, this.sharedData.rightOfWay));
+              this.sharedData.rightOfWay.infractions.push(this.getDemeritObject(data, this.sharedData.rightOfWay,  'Right Of Way', 'right-of-way'));
               console.log("Right of way = " + JSON.stringify(this.sharedData.rightOfWay));
               return true;
             }
@@ -567,7 +568,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.uncoupling.infractions.push(this.getDemeritObject(data, this.sharedData.uncoupling));
+              this.sharedData.uncoupling.infractions.push(this.getDemeritObject(data, this.sharedData.uncoupling, 'Uncoupling', 'uncoupling'));
               console.log("Uncoupling = " + JSON.stringify(this.sharedData.uncoupling));
               return true;
             }
@@ -627,7 +628,7 @@ export class ExaminationPage {
           text: 'Ok',
           handler: data => {
             if (data != null) {
-              this.sharedData.coupling.infractions.push(this.getDemeritObject(data, this.sharedData.coupling));
+              this.sharedData.coupling.infractions.push(this.getDemeritObject(data, this.sharedData.coupling,  'Coupling', 'coupling'));
               console.log("Coupling = " + JSON.stringify(this.sharedData.coupling));
               return true;
             }
@@ -638,7 +639,7 @@ export class ExaminationPage {
     alert.present();
   }
 
-  presentDemerits(demeritObject) {
+  formatDemeritMessage(demeritObject) {
     let dt = demeritObject.time.toString();
     let date: any = ''; 
     let time: any = '';
@@ -651,22 +652,32 @@ export class ExaminationPage {
       date = "undefined";
     }
 
+    let message = 
+      '<table>' +
+      '<tr><td>Date:&nbsp;</td><td style="white-space: nowrap">' + date + '</td></tr>' +
+      '<tr><td>Time:&nbsp;</td><td style="white-space: nowrap">' + time + '</td></tr>' +
+      '<tr><td>Demerits:&nbsp;</td><td>' + demeritObject.demerits + ' Points</td></tr>' +
+      '<tr><td>Latitude:&nbsp;</td><td>' + demeritObject.latitude + '</td></tr>' +
+      '<tr><td>Longitude:&nbsp;</td><td>' + demeritObject.longitude + '</td></tr>' +
+      '<tr><td>Altitude:&nbsp;</td><td>' + demeritObject.altitude + '</td></tr>' +
+      '<tr><td>Speed:&nbsp;</td><td>' + demeritObject.speed + '</td></tr>' +
+      '</table>';
+
+    return message;
+  }
+
+  presentDemerits(demeritObject) {
+    let msg: any = this.formatDemeritMessage(demeritObject);
     let alert = this.alertCtrl.create({
       title: 'DRIVING INCIDENT',
       subTitle: demeritObject.value,
-      message: '<table><tr><td>Date:&nbsp;</td><td>' + date + '</td></tr>' +
-        '<tr><td>Time:&nbsp;</td><td>' + time + '</td></tr>' +
-        '<tr><td>Demerits:&nbsp;</td><td>' + demeritObject.demerits + ' Points</td></tr>' +
-        '<tr><td>Latitude:&nbsp;</td><td>' + demeritObject.latitude + '</td></tr>' +
-        '<tr><td>Longitude:&nbsp;</td><td>' + demeritObject.longitude + '</td></tr>' +
-        '<tr><td>Altitude:&nbsp;</td><td>' + demeritObject.altitude + '</td></tr>' +
-        '<tr><td>Speed:&nbsp;</td><td>' + demeritObject.speed + '</td></tr>',
+      message: msg,
       buttons: ['Dismiss']
     });
     alert.present();
   }
 
-  getDemeritObject(data, arr) {
+  getDemeritObject(data, arr, desc, icon) {
 
     if (data !== undefined) {
       let delimLoc = data.indexOf('#');
@@ -674,9 +685,33 @@ export class ExaminationPage {
       let demerits = data.substring(delimLoc+1, data.length);
       let currTime = new Date();
       this.geolocation.getCurrentPosition().then((resp) => {
-        this.setDemeritObjLocation(currTime, resp, arr);
-        console.log("Lat: " + resp.coords.latitude);
-        console.log("Lon: " + resp.coords.longitude)
+        let demeritData = this.setDemeritObjData(currTime, resp, arr);
+        let marker: Marker = this.map.addMarkerSync({
+          icon: {
+            url: 'assets/imgs/' + icon + '.png',
+            size: {
+              width: 45,
+              height: 45
+            }
+          },
+          animation: 'DROP',
+          position: {
+            lat: resp.coords.latitude,
+            lng: resp.coords.longitude
+          }
+        });
+        marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+          var htmlInfoWindow = new HtmlInfoWindow();
+          let msg = this.formatDemeritMessage(demeritData);
+          htmlInfoWindow.setContent('<div style="padding:10px">' +
+            '<h2 style="border-bottom: 1px solid #BBB;margin-bottom:7px">' +
+              '<b>' + desc + '</b><br>' + demeritData.value +
+            '</h2>' + 
+            msg + 
+            '</div>');
+          htmlInfoWindow.open(marker);
+        });
+
       })
       .catch (e => this.sharedData.presentBasicAlert("Error", e));
 
@@ -695,18 +730,20 @@ export class ExaminationPage {
     return null;
   }
 
-  setDemeritObjLocation(currTime, location, arr) {
-
+  setDemeritObjData(currTime, location, arr) {
+    let idx = 0;
     console.log("Infraction array = " + arr)
-    for (let idx = 0; idx < arr.infractions.length; idx++) {
+    for (idx = 0; idx < arr.infractions.length; idx++) {
       if (arr.infractions[idx].time == currTime) {
         arr.infractions[idx].latitude = location.coords.latitude;
         arr.infractions[idx].longitude = location.coords.longitude;
         arr.infractions[idx].altitude = location.coords.altitude;
         arr.infractions[idx].speed = location.coords.speed;
+        break;
       }
     }
-  }
+    return arr.infractions[idx];
+ }
 
   saveCurrentExam() {
     if (this.sharedData.prepareCurrentExam().valid) {
@@ -726,68 +763,48 @@ export class ExaminationPage {
 
   loadMap() {
     
+    const VICTORIA_BC = {"lat": 48.4238642, "lng": -123.36846639};
+
     let options: PolylineOptions = {
-      points: this.coords,
-      color: '#AA00FF',
+      points: [VICTORIA_BC],
+      color: '#3c7afc',
       width: 10,
       geodesic: true,
       zoom: true,
       strokeOpacity: 1.0
     };
 
-    const VICTORIA_BC = {"lat": 48.4238642, "lng": -123.36846639};
  
-        this.map = new GoogleMap('map_canvas', {
-          'controls': {
-            'compass': true,
-            'myLocationButton': true,
-            'indoorPicker': true,
-          },
-          'gestures': {
-            'scroll': true,
-            'tilt': true,
-            'rotate': true,
-            'zoom': true
-          },
-          'camera': {
-            target: VICTORIA_BC,
-            zoom: 18,
-            tilt: 30
-          }
-        });
- 
-        // Wait the maps plugin is ready until the MAP_READY event
-          console.log('Map is ready!');
-
-          let marker = this.map.addMarker({
-            title: 'ICBC Home Base',
-            icon: 'blue',
-            animation: 'DROP',
-            position: {
-              lat: 48.4238642,
-              lng: -123.36846639
-            }
-          })
-          .then((marker) => {
-            marker.showInfoWindow();
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-
-          this.map.addPolyline(options)
-          .then((result) => {
-            console.log("Added polyline" + JSON.stringify(result));
-            this.line = result;
-          })
-          .catch((e) => {
-            console.log(e);
-          }); 
-
-        //marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-        //  alert('clicked');
-        //});
+    let mapOptions: GoogleMapOptions = {
+      'controls': {
+        'compass': true,
+        'myLocationButton': true,
+        'indoorPicker': true,
+      },
+      'gestures': {
+        'scroll': true,
+        'tilt': true,
+        'rotate': true,
+        'zoom': true
+      },
+      'camera': {
+        target: VICTORIA_BC,
+        zoom: 18,
+        tilt: 30
       }
+    };
+
+    this.map = GoogleMaps.create('map_canvas', mapOptions);
+
+    this.map.addPolyline(options)
+    .then((result) => {
+      console.log("Added polyline" + JSON.stringify(result));
+      this.line = result;
+    })
+    .catch((e) => {
+      console.log(e);
+    }); 
+  }
 
   ionViewDidLoad() {
 
@@ -836,6 +853,11 @@ export class ExaminationPage {
   toggleComments() {
     this.typedComments = !this.typedComments;
     return this.typedComments;
+  }
+
+  toggleMapsCanvas() {
+    this.sharedData.showMaps = !this.sharedData.showMaps;
+    return this.sharedData.showMaps;
   }
 
   reloadComment(index) {

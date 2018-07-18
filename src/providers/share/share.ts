@@ -38,6 +38,7 @@ export class ShareProvider {
     examRevision: any = 0;
     attachments: any = [];
     signatureImg: any;
+    showMaps: any = true;
 
     detailsCanvas;
     examinationCanvases;
