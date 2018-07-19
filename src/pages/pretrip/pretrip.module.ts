@@ -4,8 +4,10 @@ import { PretripPage } from './pretrip';
 
 @NgModule({
   declarations: [
+    PretripPage,
   ],
   imports: [
+    IonicPageModule.forChild(PretripPage),
   ],
 })
 export class PretripPageModule {}

@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-//import { CanvasDrawComponent } from './canvas-draw/canvas-draw';
+import { CanvasDrawComponent } from './canvas-draw/canvas-draw';
+
 @NgModule({
-	declarations: [],
-	imports: [],
-	exports: []
+	declarations: [CanvasDrawComponent],
+	//mports: [CanvasDrawComponent],
+	exports: [CanvasDrawComponent]
 })
 export class ComponentsModule {}

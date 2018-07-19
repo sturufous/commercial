@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, Renderer, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild, Renderer, Input, NgModule } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
  

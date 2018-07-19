@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
 import { ModalController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'

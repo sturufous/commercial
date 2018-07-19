@@ -1,7 +1,7 @@
 import { Component, ViewChildren } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ShareProvider } from '../../providers/share/share';
-import { ModalController } from 'ionic-angular';
+import { ModalController, IonicPage } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ViewChild } from '@angular/core';
@@ -15,7 +15,7 @@ import { FileOpener } from '@ionic-native/file-opener';
  * Ionic pages and navigation.
  */
 
-//@IonicPage()
+@IonicPage()
 @Component({
   selector: 'page-details',
   templateUrl: 'details.html',

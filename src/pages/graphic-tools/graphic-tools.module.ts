@@ -4,8 +4,10 @@ import { GraphicToolsPage } from './graphic-tools';
 
 @NgModule({
   declarations: [
+    GraphicToolsPage,
   ],
   imports: [
+    IonicPageModule.forChild(GraphicToolsPage)
   ]
 })
 export class GraphicToolsModule {}

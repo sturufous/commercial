@@ -4,9 +4,9 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Http, Headers, RequestOptions, HttpModule } from '@angular/http';
 
-import { ExaminationPage } from '../pages/examination/examination';
-import { DetailsPage } from '../pages/details/details';
-import { HomePage } from '../pages/home/home';
+//import { ExaminationPage } from '../pages/examination/examination';
+//import { DetailsPage } from '../pages/details/details';
+//import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ShareProvider } from '../providers/share/share';
 
@@ -16,42 +16,41 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { Geolocation } from '@ionic-native/geolocation';
 import { CommercialDbProvider } from '../providers/commercial-db/commercial-db';
 import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
-import { IntersectionsPage } from '../pages/intersections/intersections';
-import { GraphicToolsPage } from '../pages/graphic-tools/graphic-tools';
+//import { IntersectionsPage } from '../pages/intersections/intersections';
+//import { GraphicToolsPage } from '../pages/graphic-tools/graphic-tools';
 import { FileOpener } from '@ionic-native/file-opener';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { GoogleMaps } from "@ionic-native/google-maps";
-import { PretripPage } from '../pages/pretrip/pretrip';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
     MyApp,
-    ExaminationPage,
-    DetailsPage,
-    HomePage,
-    TabsPage,
-    CanvasDrawComponent,
-    IntersectionsPage,
-    GraphicToolsPage,
-    PretripPage
+    //ExaminationPage,
+    //DetailsPage,
+    //HomePage,
+    //TabsPage,
+    //CanvasDrawComponent,
+    //IntersectionsPage,
+    //GraphicToolsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    TextMaskModule
+    TextMaskModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    ExaminationPage,
-    DetailsPage,
-    HomePage,
-    TabsPage,
-    CanvasDrawComponent,
-    IntersectionsPage,
-    GraphicToolsPage,
-    PretripPage
+    //ExaminationPage,
+    //DetailsPage,
+    //HomePage,
+    //TabsPage,
+    //CanvasDrawComponent,
+    //IntersectionsPage,
+    //GraphicToolsPage
   ],
   providers: [
     StatusBar,

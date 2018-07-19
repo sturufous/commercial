@@ -15,7 +15,7 @@ import { GoogleMaps, GoogleMap, GoogleMapOptions, GoogleMapsEvent, HtmlInfoWindo
  * Ionic pages and navigation.
  */
 
-//@IonicPage()
+@IonicPage()
 @Component({
   selector: 'page-examination',
   templateUrl: 'examination.html',
@@ -771,7 +771,7 @@ export class ExaminationPage {
     const VICTORIA_BC = {"lat": 48.4238642, "lng": -123.36846639};
 
     let options: PolylineOptions = {
-      points: [VICTORIA_BC],
+      points: this.coords, //[VICTORIA_BC],
       color: '#3c7afc',
       width: 10,
       geodesic: true,
@@ -800,15 +800,7 @@ export class ExaminationPage {
     };
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
-debugger;
-    this.map.addPolyline(options)
-    .then((result) => {
-      console.log("Added polyline" + JSON.stringify(result));
-      this.line = result;
-    })
-    .catch((e) => {
-      console.log(e);
-    }); 
+    this.line = this.map.addPolylineSync(options);
   }
 
   ionViewDidLoad() {
@@ -841,7 +833,6 @@ debugger;
         _this.position.altitude = _this.position.altitude.toString().substr(0, 9);
 
         _this.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
-debugger;
         if (_this.line !== null) {
           _this.line.setPoints(_this.gpsData);
         }
