@@ -123,6 +123,7 @@ export class CommercialDbProvider {
         this.sharedData.uncoupling = exam.uncoupling;
         this.sharedData.coupling = exam.coupling;
         this.sharedData.examRevision = revision;
+        this.sharedData.gpsData = [];
 
         this.sharedData.client.setValue(exam.client);
         this.sharedData.examiner.setValue(exam.examiner);

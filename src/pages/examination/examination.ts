@@ -24,7 +24,7 @@ export class ExaminationPage {
 
   @ViewChildren(CanvasDrawComponent) canvases;
 
-  coords = [{"lat":48.4237177,"lng":-123.3680865},{"lat":48.4242613,"lng":-123.3680264},{"lat":48.4236136,"lng":-123.3680262},{"lat":48.4229232,"lng":-123.3687865},{"lat":48.423518,"lng":-123.3680469},{"lat":48.4235309,"lng":-123.3680584},{"lat":48.4234996,"lng":-123.367864},{"lat":48.4234134,"lng":-123.3679486},{"lat":48.4234784,"lng":-123.367642},{"lat":48.4234734,"lng":-123.3676063},{"lat":48.4234678,"lng":-123.3675603},{"lat":48.4234714,"lng":-123.3674573},{"lat":48.4234551,"lng":-123.3675247},{"lat":48.4234602,"lng":-123.3675046},{"lat":48.4233403,"lng":-123.3674852},{"lat":48.4232749,"lng":-123.3674793},{"lat":48.4232726,"lng":-123.3674764},{"lat":48.4232703,"lng":-123.3674801},{"lat":48.423278,"lng":-123.3674764},{"lat":48.4232629,"lng":-123.3674765},{"lat":48.4232444,"lng":-123.3674457},{"lat":48.4232409,"lng":-123.3674616},{"lat":48.4232455,"lng":-123.367465},{"lat":48.4232426,"lng":-123.3674608},{"lat":48.4232396,"lng":-123.3674682},{"lat":48.4232384,"lng":-123.36747},{"lat":48.4232912,"lng":-123.36746},{"lat":48.4232546,"lng":-123.3674692},{"lat":48.423248,"lng":-123.367465},{"lat":48.4232387,"lng":-123.3674711},{"lat":48.4232343,"lng":-123.3674724},{"lat":48.4232454,"lng":-123.3674684},{"lat":48.4232454,"lng":-123.3674707},{"lat":48.4232539,"lng":-123.3674839},{"lat":48.4232315,"lng":-123.3674774},{"lat":48.4232343,"lng":-123.3674719},{"lat":48.4232345,"lng":-123.3674774},{"lat":48.4232622,"lng":-123.3674721},{"lat":48.4232354,"lng":-123.3674748},{"lat":48.4232608,"lng":-123.3674832},{"lat":48.4232758,"lng":-123.3674689},{"lat":48.4232547,"lng":-123.3674738},{"lat":48.4232405,"lng":-123.3674755},{"lat":48.423237,"lng":-123.3674754},{"lat":48.4232334,"lng":-123.3674779},{"lat":48.423234,"lng":-123.3674768},{"lat":48.4232382,"lng":-123.3674805},{"lat":48.4232364,"lng":-123.36748},{"lat":48.4232507,"lng":-123.3674797},{"lat":48.4232434,"lng":-123.3674785},{"lat":48.4232499,"lng":-123.367476},{"lat":48.4232452,"lng":-123.3674759},{"lat":48.4232382,"lng":-123.367468},{"lat":48.4232264,"lng":-123.3674789},{"lat":48.4232444,"lng":-123.3674697},{"lat":48.4232582,"lng":-123.367479},{"lat":48.4232532,"lng":-123.3674848},{"lat":48.4232241,"lng":-123.3674895},{"lat":48.4232519,"lng":-123.3674824},{"lat":48.42331,"lng":-123.3674698}];
+  //coords = [{"lat":48.4237177,"lng":-123.3680865},{"lat":48.4242613,"lng":-123.3680264},{"lat":48.4236136,"lng":-123.3680262},{"lat":48.4229232,"lng":-123.3687865},{"lat":48.423518,"lng":-123.3680469},{"lat":48.4235309,"lng":-123.3680584},{"lat":48.4234996,"lng":-123.367864},{"lat":48.4234134,"lng":-123.3679486},{"lat":48.4234784,"lng":-123.367642},{"lat":48.4234734,"lng":-123.3676063},{"lat":48.4234678,"lng":-123.3675603},{"lat":48.4234714,"lng":-123.3674573},{"lat":48.4234551,"lng":-123.3675247},{"lat":48.4234602,"lng":-123.3675046},{"lat":48.4233403,"lng":-123.3674852},{"lat":48.4232749,"lng":-123.3674793},{"lat":48.4232726,"lng":-123.3674764},{"lat":48.4232703,"lng":-123.3674801},{"lat":48.423278,"lng":-123.3674764},{"lat":48.4232629,"lng":-123.3674765},{"lat":48.4232444,"lng":-123.3674457},{"lat":48.4232409,"lng":-123.3674616},{"lat":48.4232455,"lng":-123.367465},{"lat":48.4232426,"lng":-123.3674608},{"lat":48.4232396,"lng":-123.3674682},{"lat":48.4232384,"lng":-123.36747},{"lat":48.4232912,"lng":-123.36746},{"lat":48.4232546,"lng":-123.3674692},{"lat":48.423248,"lng":-123.367465},{"lat":48.4232387,"lng":-123.3674711},{"lat":48.4232343,"lng":-123.3674724},{"lat":48.4232454,"lng":-123.3674684},{"lat":48.4232454,"lng":-123.3674707},{"lat":48.4232539,"lng":-123.3674839},{"lat":48.4232315,"lng":-123.3674774},{"lat":48.4232343,"lng":-123.3674719},{"lat":48.4232345,"lng":-123.3674774},{"lat":48.4232622,"lng":-123.3674721},{"lat":48.4232354,"lng":-123.3674748},{"lat":48.4232608,"lng":-123.3674832},{"lat":48.4232758,"lng":-123.3674689},{"lat":48.4232547,"lng":-123.3674738},{"lat":48.4232405,"lng":-123.3674755},{"lat":48.423237,"lng":-123.3674754},{"lat":48.4232334,"lng":-123.3674779},{"lat":48.423234,"lng":-123.3674768},{"lat":48.4232382,"lng":-123.3674805},{"lat":48.4232364,"lng":-123.36748},{"lat":48.4232507,"lng":-123.3674797},{"lat":48.4232434,"lng":-123.3674785},{"lat":48.4232499,"lng":-123.367476},{"lat":48.4232452,"lng":-123.3674759},{"lat":48.4232382,"lng":-123.367468},{"lat":48.4232264,"lng":-123.3674789},{"lat":48.4232444,"lng":-123.3674697},{"lat":48.4232582,"lng":-123.367479},{"lat":48.4232532,"lng":-123.3674848},{"lat":48.4232241,"lng":-123.3674895},{"lat":48.4232519,"lng":-123.3674824},{"lat":48.42331,"lng":-123.3674698}];
   subscription;
   position: any = {
     latitude: '...',
@@ -48,10 +48,19 @@ export class ExaminationPage {
   public map: GoogleMap;
   public line: Polyline = null;
 
-  public gpsData: any = [];
-  public gpsView: any = 'Blank';
+  VICTORIA_BC = {"lat": 48.4238642, "lng": -123.36846639};
 
-  constructor(public navCtrl: NavController, 
+  options: PolylineOptions = {
+    points: [this.VICTORIA_BC],
+    color: '#3c7afc',
+    width: 10,
+    geodesic: true,
+    zoom: true,
+    strokeOpacity: 1.0
+  };
+
+
+ constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public actionSheet: ActionSheetController,
               alertCtrl: AlertController,
@@ -716,7 +725,6 @@ export class ExaminationPage {
             '</div>');
           htmlInfoWindow.open(marker);
         });
-
       })
       .catch (e => this.sharedData.presentBasicAlert("Error", e));
 
@@ -767,19 +775,7 @@ export class ExaminationPage {
   }
 
   loadMap() {
-    
-    const VICTORIA_BC = {"lat": 48.4238642, "lng": -123.36846639};
-
-    let options: PolylineOptions = {
-      points: this.coords, //[VICTORIA_BC],
-      color: '#3c7afc',
-      width: 10,
-      geodesic: true,
-      zoom: true,
-      strokeOpacity: 1.0
-    };
-
- 
+     
     let mapOptions: GoogleMapOptions = {
       'controls': {
         'compass': true,
@@ -793,18 +789,16 @@ export class ExaminationPage {
         'zoom': true
       },
       'camera': {
-        target: VICTORIA_BC,
+        target: this.VICTORIA_BC,
         zoom: 18,
         tilt: 30
       }
     };
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
-    this.line = this.map.addPolylineSync(options);
   }
 
   ionViewDidLoad() {
-
     this.sharedData.examinationCanvases = this.canvases;
     this.commentArray = this.sharedData.examinationCanvases.toArray();
     this.loadMap();
@@ -813,33 +807,95 @@ export class ExaminationPage {
     for (let canvasIdx=0; canvasIdx < this.commentArray.length; canvasIdx++) {
       this.commentArray[canvasIdx].drawBackground();
     }
+  }
 
+  ionViewDidEnter() {
     this.sharedData.examinationPage = this;
     this.sharedData.readExamAttachments(this.dbProvider);
-    let _this = this;
-    this.subscription = _this.geolocation.watchPosition()
-      .subscribe(position => {
-        console.log(position.coords.longitude + ' ' + position.coords.latitude);
-        _this.position.latitude = position.coords.latitude != null ? position.coords.latitude : '...';
-        _this.position.longitude = position.coords.longitude != null ? position.coords.longitude : '...';
-        _this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : '...';
-        _this.position.altitude = position.coords.altitude != null ? position.coords.altitude : '...';
-        _this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : '...';
-        _this.position.speed = position.coords.speed != null ? position.coords.speed : '...';
-        _this.position.heading = position.coords.heading != null ? position.coords.heading : '...';
+    if (!this.sharedData.routeWasLoaded) {
+      this.map.clear();
+      this.line = this.map.addPolylineSync(this.options);
+      let _this = this;
+      this.subscription = _this.geolocation.watchPosition()
+        .subscribe(position => {
+          console.log(position.coords.longitude + ' ' + position.coords.latitude);
+          _this.position.latitude = position.coords.latitude != null ? position.coords.latitude : '...';
+          _this.position.longitude = position.coords.longitude != null ? position.coords.longitude : '...';
+          _this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : '...';
+          _this.position.altitude = position.coords.altitude != null ? position.coords.altitude : '...';
+          _this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : '...';
+          _this.position.speed = position.coords.speed != null ? position.coords.speed : '...';
+          _this.position.heading = position.coords.heading != null ? position.coords.heading : '...';
 
-        _this.position.latitude = _this.position.latitude.toString().substr(0, 9);
-        _this.position.longitude = _this.position.longitude.toString().substr(0, 9);
-        _this.position.altitude = _this.position.altitude.toString().substr(0, 9);
+          _this.position.latitude = _this.position.latitude.toString().substr(0, 9);
+          _this.position.longitude = _this.position.longitude.toString().substr(0, 9);
+          _this.position.altitude = _this.position.altitude.toString().substr(0, 9);
 
-        _this.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
-        if (_this.line !== null) {
-          _this.line.setPoints(_this.gpsData);
-        }
-        _this.gpsView = JSON.stringify(_this.gpsData);
-      });
-    //this.commentArray = this.canvases.toArray();
+          _this.sharedData.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
+          if (_this.line !== null) {
+            _this.line.setPoints(_this.sharedData.gpsData);
+          }
+          _this.sharedData.gpsView = JSON.stringify(_this.sharedData.gpsData);
+        });
+      } else {
+          this.map.clear();
+          this.line = this.map.addPolylineSync(this.options);
+          this.line.setPoints(this.sharedData.gpsData);
+
+          this.plotInfractionMarkers(this.sharedData.leftTurn, 'Left Turn', 'left-turn');
+          this.plotInfractionMarkers(this.sharedData.rightTurn, 'Right Turn', 'right-turn');
+          this.plotInfractionMarkers(this.sharedData.roadPosition, 'Road Position', 'road-position');
+          this.plotInfractionMarkers(this.sharedData.speed, 'Speed', 'speed');
+          this.plotInfractionMarkers(this.sharedData.backing, 'Backing', 'backing');
+          this.plotInfractionMarkers(this.sharedData.shifting, 'Shifting', 'shifting');
+          this.plotInfractionMarkers(this.sharedData.rightOfWay, 'Right Of Way', 'right-of-way');
+          this.plotInfractionMarkers(this.sharedData.uncoupling, 'Uncoupline', 'uncoupling');
+          this.plotInfractionMarkers(this.sharedData.coupling, 'Coupling', 'coupling');
+      }
     console.log('ionViewDidLoad ExaminationPage');
+  }
+
+  ionViewDidLeave() {
+    if (this.subscription !== null) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  plotInfractionMarkers(infraction, desc, icon) {
+
+    for (let idx=0; idx < infraction.infractions.length; idx++) {
+      let marker: Marker = this.map.addMarkerSync({
+        icon: {
+          url: 'assets/imgs/' + icon + '.png',
+          size: {
+            width: 45,
+            height: 45
+          }
+        },
+        animation: 'DROP',
+        position: {
+          lat: infraction.infractions[idx].latitude,
+          lng: infraction.infractions[idx].longitude
+        }
+      });
+      marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+        var htmlInfoWindow = new HtmlInfoWindow();
+        let msg = this.formatDemeritMessage(infraction.infractions[idx]);
+        htmlInfoWindow.setContent(
+          '<div style="padding:10px">' +
+            '<div style="border-bottom: 1px solid #AAA;margin-bottom: 7px">' +
+              '<span class="iw-header">' +
+                '<b>' + desc + '</b><br>'  +
+              '</span>' + 
+              '<span class="iw-subheader">' + 
+              infraction.infractions[idx].value +
+              '</span>' +
+            '</div>' +
+             msg + 
+          '</div>');
+        htmlInfoWindow.open(marker);
+      });
+    }
   }
 
   clearComment(index) {
@@ -867,7 +923,7 @@ export class ExaminationPage {
   }
 
   showGpsStream() {
-    JSON.stringify(this.gpsData);
+    JSON.stringify(this.sharedData.gpsData);
   }
 
   showGpsData() {

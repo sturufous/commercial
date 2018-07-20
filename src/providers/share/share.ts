@@ -40,6 +40,10 @@ export class ShareProvider {
     signatureImg: any;
     showMaps: any = true;
 
+    gpsData: any = [];
+    gpsView: any = 'Blank';
+  
+
     detailsCanvas;
     examinationCanvases;
 
@@ -77,6 +81,7 @@ export class ShareProvider {
         coupling: {infractions: [], notes:''},
         results: null,
         comments: [],
+        route: [],
         _attachments: {}
     };
 
@@ -144,6 +149,7 @@ export class ShareProvider {
     detailsPage: any = null;
     examinationPage: any = null;
     comments = ['','','','','','','','',''];
+    routeWasLoaded: any = false;
 
     constructor(toastControl: ToastController,
         formBuilder: FormBuilder,
@@ -245,6 +251,7 @@ export class ShareProvider {
         this.currentExam.coupling = this.coupling;
         this.currentExam.results = this.results.value;
         this.currentExam.comments = this.comments;
+        this.currentExam.route = this.gpsData;
         for (let idx=0; idx < this.comments.length; idx++) {
             this.currentExam.comments[idx] = this.comments[idx];
         }

@@ -4,6 +4,7 @@ import { ShareProvider } from '../../providers/share/share';
 import { ModalController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 @IonicPage()
 @Component({
@@ -24,7 +25,8 @@ export class HomePage {
     shareProvider: ShareProvider, 
     modalController: ModalController,
     dbProvider: CommercialDbProvider,
-    http: Http) {
+    http: Http,
+    public splashScreen: SplashScreen) {
  
       this.sharedData = shareProvider;
       this.modalController = modalController;
@@ -47,6 +49,7 @@ export class HomePage {
       uncoupling: {infractions: [], notes:''},
       coupling: {infractions: [], notes:''},
       results: {dangerousAction: '', trafficViolation: '', other: '', qualified: ''},
+      route: [],
       _attachments: {},
       comments: ['','','','','','','','','']
     };
@@ -72,6 +75,9 @@ export class HomePage {
       qualified: 'Discontinued'
     }
     examTemplate._attachments = {};
+    examTemplate.route = [];
+    this.sharedData.gpsData = [];
+    this.sharedData.routeWasLoaded = false;
 
     // If examinationPage has been loaded, clear all comment canvases and ensure old
     // canvas contents will not be saved against the new record
@@ -84,7 +90,7 @@ export class HomePage {
       }
   
     }
-
+debugger;
     this.dbProvider.navCtrl = this.navCtrl;
     this.dbProvider.createExam(examTemplate);
   }
@@ -122,6 +128,14 @@ export class HomePage {
     this.sharedData.coupling = exam.coupling;
     this.sharedData.loadAttachments(this.dbProvider);
     this.sharedData.comments = exam.comments;
+  
+    if (exam.route.length > 0) {
+      this.sharedData.routeWasLoaded = true;
+      this.sharedData.gpsData = exam.route;
+    } else {
+      this.sharedData.routeWasLoaded = false;
+      this.sharedData.gpsData = [];
+    }
 
     // Set all demerit lists (including comments) to invisible
     let keys = Object.keys(this.sharedData.hideDemerits);
@@ -136,6 +150,8 @@ export class HomePage {
 
 
   ionViewDidEnter() {
+    this.splashScreen.hide();
+
     this.dbProvider.getExams().then((data) => {
       this.exams = data;
     })
