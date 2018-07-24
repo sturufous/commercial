@@ -1,6 +1,10 @@
 .ios, .md {
  
     page-details {
+
+        h2 {
+            padding-top: 0;
+        }    
  
         ion-input {
             padding-left: 10px;

@@ -816,8 +816,8 @@ export class ExaminationPage {
       this.map.clear();
       this.line = this.map.addPolylineSync(this.options);
       let _this = this;
-      this.subscription = _this.geolocation.watchPosition()
-        .subscribe(position => {
+      let watch = _this.geolocation.watchPosition();
+      watch.subscribe(position => {
           console.log(position.coords.longitude + ' ' + position.coords.latitude);
           _this.position.latitude = position.coords.latitude != null ? position.coords.latitude : '...';
           _this.position.longitude = position.coords.longitude != null ? position.coords.longitude : '...';
@@ -830,8 +830,11 @@ export class ExaminationPage {
           _this.position.latitude = _this.position.latitude.toString().substr(0, 9);
           _this.position.longitude = _this.position.longitude.toString().substr(0, 9);
           _this.position.altitude = _this.position.altitude.toString().substr(0, 9);
+          _this.position.accuracy = _this.position.accuracy.toString().substr(0, 9);
 
-          _this.sharedData.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
+          if (position.coords.accuracy !== null && position.coords.accuracy < 30.0) {
+            _this.sharedData.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
+          }
           if (_this.line !== null) {
             _this.line.setPoints(_this.sharedData.gpsData);
           }

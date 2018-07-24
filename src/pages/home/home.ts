@@ -90,7 +90,7 @@ export class HomePage {
       }
   
     }
-debugger;
+
     this.dbProvider.navCtrl = this.navCtrl;
     this.dbProvider.createExam(examTemplate);
   }

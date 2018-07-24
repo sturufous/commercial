@@ -65,7 +65,7 @@ export class IntersectionsPage {
   }
 
   presentPopover(myEvent) { 
-    let popover = this.popoverCtrl.create(GraphicToolsPage); 
+    let popover = this.popoverCtrl.create('GraphicToolsPage'); 
     popover.present({ ev: myEvent }); 
   } 
 }
