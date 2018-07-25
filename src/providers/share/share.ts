@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-import { InAppBrowser } from "@ionic-native/in-app-browser";
 
 /*
   Generated class for the ShareProvider provider.
@@ -153,8 +152,7 @@ export class ShareProvider {
 
     constructor(toastControl: ToastController,
         formBuilder: FormBuilder,
-        alertControl: AlertController,
-        public appBrowser: InAppBrowser) {
+        alertControl: AlertController) {
         this.toastControl = toastControl;
         this.alertCtrl = alertControl;
 
@@ -308,18 +306,6 @@ export class ShareProvider {
             commentArray[idx].wasLoaded = false;
             }) 
         }
-    }
-
-    testOpen(dbProvider) {
-        dbProvider.db.getAttachment(this.currentExam._id, 'class-5.png')
-        .then((blob) => {
-            let url = URL.createObjectURL(blob);
-            this.appBrowser.create(url, "_blank")
-        })
-        .catch (e => {
-            // Easiest way to test for non-existent attachment (not most efficient though)
-            console.log("Can't find attachment: " + e);
-        }) 
     }
 
     readSingleCommentAttachment(dbProvider, index) {

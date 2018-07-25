@@ -834,11 +834,11 @@ export class ExaminationPage {
 
           if (position.coords.accuracy !== null && position.coords.accuracy < 30.0) {
             _this.sharedData.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
+            if (_this.line !== null) {
+              _this.line.setPoints(_this.sharedData.gpsData);
+              _this.sharedData.gpsView = JSON.stringify(_this.sharedData.gpsData);
+            }
           }
-          if (_this.line !== null) {
-            _this.line.setPoints(_this.sharedData.gpsData);
-          }
-          _this.sharedData.gpsView = JSON.stringify(_this.sharedData.gpsData);
         });
       } else {
           this.map.clear();
