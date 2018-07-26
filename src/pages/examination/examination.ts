@@ -33,7 +33,8 @@ export class ExaminationPage {
     altitude: '...',
     altitudeAccuracy: '...',
     speed: '...',
-    heading: '...'
+    heading: '...',
+    activity: '...'
   }
 
   myClass: any = 'bad';
@@ -59,8 +60,9 @@ export class ExaminationPage {
     strokeOpacity: 1.0
   };
 
+  private bgGeo: any;
 
- constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public actionSheet: ActionSheetController,
               alertCtrl: AlertController,
@@ -73,6 +75,85 @@ export class ExaminationPage {
     this.sharedData = shareProvider;
     this.geolocation = geolocation;
     this.dbProvider = dbProvider;
+    platform.ready().then(this.configureBackgroundGeolocation.bind(this));
+  }
+
+  configureBackgroundGeolocation() {
+    // 1. Get a reference to the plugin
+    this.bgGeo = (<any>window).BackgroundGeolocation;
+
+    // 2. Listen to events
+    this.bgGeo.on('location', this.onLocation.bind(this));
+    this.bgGeo.on('motionchange', this.onMotionChange.bind(this));
+    this.bgGeo.on('activitychange', this.onActivityChange.bind(this));
+    this.bgGeo.on('geofence', this.onGeofence.bind(this));
+    this.bgGeo.on('http', this.onHttpSuccess.bind(this), this.onHttpFailure.bind(this));
+
+    // 3. Configure it.
+    this.bgGeo.configure({
+      debug: true,
+      desiredAccuracy: 0,
+      distanceFilter: 1,
+      desiredOdometerAccuracy: 1,
+      //url: 'http://192.168.11.100:8080/locations',
+      autoSync: true
+    }, (state) => {
+      // 4. Start the plugin.
+      this.bgGeo.start();
+    });
+  }
+
+  onLocation(position, taskId) {
+    console.log('- location: ', position);
+    this.position.latitude = position.coords.latitude != null ? position.coords.latitude : '...';
+    this.position.longitude = position.coords.longitude != null ? position.coords.longitude : '...';
+    this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : '...';
+    this.position.altitude = position.coords.altitude != null ? position.coords.altitude : '...';
+    this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : '...';
+    //this.position.speed = position.odometer != null ? position.odometer : '...';
+    this.position.heading = position.coords.heading != null ? position.coords.heading : '...';
+    this.position.activity = position.activity.type != null ? position.activity.type : '...';
+
+    this.position.latitude = this.position.latitude.toString().substr(0, 9);
+    this.position.longitude = this.position.longitude.toString().substr(0, 9);
+    this.position.altitude = this.position.altitude.toString().substr(0, 9);
+    this.position.accuracy = this.position.accuracy.toString().substr(0, 9);
+
+    if (position.coords.accuracy !== null && position.coords.accuracy < 30.0 && !this.sharedData.routeWasLoaded) {
+      this.sharedData.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
+      if (this.line !== null) {
+        this.line.setPoints(this.sharedData.gpsData);
+        this.sharedData.gpsView = JSON.stringify(this.sharedData.gpsData);
+      }
+    }
+    this.bgGeo.finish(taskId);
+  };
+
+  onMotionChange(isMoving, location, taskId) {
+    console.log('- motionchange: ', isMoving, location);
+    if (location.is_moving) {
+      this.position.speed = location.odometer;
+    } else {
+      this.position.speed = 0;
+    }
+    this.bgGeo.finish(taskId);
+  }
+
+  onActivityChange(activity) {
+    console.log('- activitychange: ', activity);
+  }
+
+  onGeofence(params, taskId) {
+    console.log('- geofence: ', params);
+    this.bgGeo.finish(taskId);
+  }
+
+  onHttpSuccess(response) {
+    console.log('- http success: ', response);
+  }
+
+  onHttpFailure(response) {
+    console.log('- http failure: ', response);
   }
 
   deleteInfraction(infraction, infractions) {
@@ -815,32 +896,7 @@ export class ExaminationPage {
     if (!this.sharedData.routeWasLoaded) {
       this.map.clear();
       this.line = this.map.addPolylineSync(this.options);
-      let _this = this;
-      let watch = _this.geolocation.watchPosition();
-      watch.subscribe(position => {
-          console.log(position.coords.longitude + ' ' + position.coords.latitude);
-          _this.position.latitude = position.coords.latitude != null ? position.coords.latitude : '...';
-          _this.position.longitude = position.coords.longitude != null ? position.coords.longitude : '...';
-          _this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : '...';
-          _this.position.altitude = position.coords.altitude != null ? position.coords.altitude : '...';
-          _this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : '...';
-          _this.position.speed = position.coords.speed != null ? position.coords.speed : '...';
-          _this.position.heading = position.coords.heading != null ? position.coords.heading : '...';
-
-          _this.position.latitude = _this.position.latitude.toString().substr(0, 9);
-          _this.position.longitude = _this.position.longitude.toString().substr(0, 9);
-          _this.position.altitude = _this.position.altitude.toString().substr(0, 9);
-          _this.position.accuracy = _this.position.accuracy.toString().substr(0, 9);
-
-          if (position.coords.accuracy !== null && position.coords.accuracy < 30.0) {
-            _this.sharedData.gpsData.push({ lat: position.coords.latitude, lng: position.coords.longitude});
-          }
-          if (_this.line !== null) {
-            _this.line.setPoints(_this.sharedData.gpsData);
-          }
-          _this.sharedData.gpsView = JSON.stringify(_this.sharedData.gpsData);
-        });
-      } else {
+    } else {
           this.map.clear();
           this.line = this.map.addPolylineSync(this.options);
           this.line.setPoints(this.sharedData.gpsData);

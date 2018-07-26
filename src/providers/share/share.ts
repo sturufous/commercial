@@ -60,7 +60,6 @@ export class ShareProvider {
     }
 
     drawingToggle: any = false;
-
     currentColour: string = 'primary';
     brushSize: number = 10;
 
