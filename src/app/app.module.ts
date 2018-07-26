@@ -1,5 +1,4 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Http, Headers, RequestOptions, HttpModule } from '@angular/http';
@@ -19,7 +18,6 @@ import { ComponentsModule } from '../components/components.module';
     MyApp,
   ],
   imports: [
-    BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
     TextMaskModule,
@@ -36,8 +34,6 @@ import { ComponentsModule } from '../components/components.module';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ShareProvider,
     CommercialDbProvider,
-    FileOpener,
-    InAppBrowser,
     GoogleMaps
   ]
 })

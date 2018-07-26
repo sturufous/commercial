@@ -94,7 +94,6 @@ export class ExaminationPage {
       debug: true,
       desiredAccuracy: 0,
       distanceFilter: 1,
-      desiredOdometerAccuracy: 1,
       //url: 'http://192.168.11.100:8080/locations',
       autoSync: true
     }, (state) => {
