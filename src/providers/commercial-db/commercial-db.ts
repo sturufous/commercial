@@ -130,6 +130,8 @@ export class CommercialDbProvider {
         this.sharedData.results.setValue(exam.results);
         this.sharedData.detailsTabEnabled = true;
         this.sharedData.examinationTabEnabled = true;
+        this.sharedData.pretripTabEnabled = true;
+
         this.sharedData.presentToast("New Record Created");
         this.navCtrl.parent.select(1); // Jump to Details tab     
       })
