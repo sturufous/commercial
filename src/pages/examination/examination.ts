@@ -121,7 +121,7 @@ export class ExaminationPage {
     this.position.accuracy = position.coords.accuracy != null ? position.coords.accuracy : '0';
     this.position.altitude = position.coords.altitude != null ? position.coords.altitude : '0';
     this.position.altitudeAccuracy = position.coords.altitudeAccuracy != null ? position.coords.altitudeAccuracy : '0';
-    this.position.speed = position.coords.speed > 0 ? convToKmh(position.coords.speed) : '0';
+    this.position.speed = position.coords.speed > 0 ? this.convToKmh(position.coords.speed) : '0';
     this.position.heading = position.coords.heading != null ? position.coords.heading : '0';
     this.position.activity = position.activity.type != null ? position.activity.type : '0';
     this.position.odometer = position.odometer != null ? position.odometer : '0';

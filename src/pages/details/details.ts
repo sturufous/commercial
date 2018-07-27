@@ -7,7 +7,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { CommercialDbProvider } from '../../providers/commercial-db/commercial-db';
 import { CanvasDrawComponent } from '../../components/canvas-draw/canvas-draw';
-import { FileOpener } from '@ionic-native/file-opener';
 /**
  * Generated class for the DetailsPage page.
  *
@@ -42,7 +41,6 @@ export class DetailsPage {
     dbProvider: CommercialDbProvider,
     http: Http,
     navparams: NavParams,
-    public fileOpener: FileOpener,
     public formBuilder: FormBuilder) {
       this.sharedData = shareProvider;
       this.modalController = modalController;
@@ -96,9 +94,5 @@ export class DetailsPage {
     this.sharedData.detailsPage = this;
     this.sharedData.readDetailsAttachments(this.dbProvider);
     console.log('ionViewDidLoad DetailsPage');
-  }
-
-  testOpenUrl() {
-    this.sharedData.testOpen(this.dbProvider);
   }
 }
